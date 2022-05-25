@@ -1,0 +1,108 @@
+<div class="main-div">
+  <div *ngIf="editMode; else newAchat">
+    <div class="">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> modifier autre dépense</mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <form class="example-form" [formGroup]="autreDepenseForm" (ngSubmit)="onSubmit()" novalidate *ngIf="autreDepenseForm">
+          <div class="achat">
+            <div class="row">
+              <div formArrayName="detailAutres">
+                <div *ngFor="let itemrow of autreDepenseForm.controls.detailAutres['controls']; let i=index"
+                     [formGroupName]="i">
+                  <mat-form-field  class="example-full-width">
+                    <input  #montant type="text" matInput placeholder="Libelle" formControlName="libelle">
+                  </mat-form-field>
+                  <mat-form-field  class="example-full-width">
+                    <input  #montant type="number" matInput placeholder="Montant" formControlName="montant">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <hr>
+            <div fxLayout="row" fxLayoutAlign="space-between">
+              <button mat-raised-button class="boutonEnr" type="submit"> Enregistrer
+              </button>
+              <button mat-raised-button class="boutonAnn" type="button" type="reset">Annuler
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+  <ng-template #newAchat>
+
+    <form class="example-form" [formGroup]="autreDepenseForm" (ngSubmit)="onSubmit()" *ngIf ="autreDepenseForm">
+          <mat-card>Paiement pour la caisse</mat-card>
+          <br>
+      <div formArrayName="detailAutres">
+                <div *ngFor="let itemrow of autreDepenseForm.controls.detailAutres['controls']; let i=index"
+                     [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <ng-container [ngSwitch]="stepperOrientation | async">
+                        <div *ngSwitchCase="'horizontal'"></div>
+                        <div *ngSwitchCase="'vertical'"></div>
+                      </ng-container>
+                  <mat-stepper [linear]="isLinear" #stepper class="example-stepper">
+                    <mat-step>
+                      <ng-template matStepLabel>INFORMATIONS SUR L'OPERATION</ng-template>
+                      <input type="hidden" formControlName="id">
+                      <mat-form-field class="example-full-width">
+                        <input #dat matInput [matDatepicker]="picker" placeholder="Date" formControlName="date" id="date"
+                               readonly (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Designation</mat-label>
+                        <input #designation matInput placeholder="Designation" formControlName="designation">
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Prix unitaire</mat-label>
+                        <input #prixUnitaire matInput placeholder="Prix unitaire" formControlName="prixUnitaire">
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Quantite</mat-label>
+                        <input #quantite matInput placeholder="Quantite" formControlName="quantite">
+                      </mat-form-field>
+                      <mat-form-field  class="example-full-width">
+                        <input   #montant type="text" matInput placeholder="{{montant || 0 | number}}" (click)="getCalcul()">
+                        <mat-error>Ce champ est obligatoire.</mat-error>
+                      </mat-form-field>
+                      <div>
+                        <button mat-button matStepperNext type="button">Suivant</button>
+                      </div>
+                    </mat-step>
+                    <mat-step  label="INFORMATIONS COMPLEMENTAIRES">
+                      <mat-form-field  class="example-full-width">
+                        <input  #nomPrenom type="text" matInput placeholder="Nom et Prenom" formControlName="nomPrenom">
+                        <mat-error>Ce champ est obligatoire.</mat-error>
+                      </mat-form-field>
+                      <div>
+                        <button mat-button matStepperPrevious type="button">Retour</button>
+                        <button mat-button type="submit" [disabled]="autreDepenseForm.invalid">Valider</button>
+                      </div>
+                    </mat-step>
+                  </mat-stepper>
+
+
+            </div>
+          </div>
+                </div>
+      </div>
+
+
+
+        </form>
+
+
+  </ng-template>
+
+</div>
+
+

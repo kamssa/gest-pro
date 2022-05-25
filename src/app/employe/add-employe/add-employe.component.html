@@ -1,0 +1,67 @@
+<mat-toolbar>
+  <span>{{employeService.form.controls['id'].value?"Modifier l' employé":"Nouvel employé"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="employeService.form" (submit)="onSubmit()">
+
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>INFORMATIONS SUR L'EMPLOYE</ng-template>
+      <input type="hidden" formControlName="id">
+      <mat-form-field style="position: relative; margin-top:20px;" class="example-full-width" appearance="fill">
+          <mat-label >Selection un service</mat-label>
+          <mat-select (selectionChange)="greetDep($event)">
+            <mat-option *ngFor="let d of departements" [value]="d.id">
+              {{d.libelle}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="nom" formControlName="nom" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Prénom</mat-label>
+        <input matInput placeholder="prénom" formControlName="prenom" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput placeholder="Mot de passe" formControlName="password" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext type="button">Suivant</button>
+      </div>
+    </mat-step>
+    <mat-step  label="INFORMATIONS COMPLEMENTAIRES">
+      <div>
+        <mat-form-field appearance="fill">
+          <input matInput type="text" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'ci'}"
+                 (intlTelInputObject)="telInputObject($event)"
+                 (countryChange)="onCountryChange($event)"
+                 formControlName="telephone" required>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Post occupé</mat-label>
+        <input matInput placeholder="Post occupé" formControlName="fonction" required>
+      </mat-form-field>
+
+      <section class="example-section">
+        <mat-checkbox class="example-margin" formControlName='activated'>Activer</mat-checkbox>
+      </section>
+      <section class="example-section">
+
+      </section>
+      <div>
+        <button mat-button matStepperPrevious type="button">Retour</button>
+        <button mat-button type="submit" [disabled]="employeService.form.invalid">Valider</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</form>

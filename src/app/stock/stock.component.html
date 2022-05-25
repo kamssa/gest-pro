@@ -1,0 +1,36 @@
+<div class="main-content" >
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="search-div">
+
+          <div class="mat-elevation-z8" *ngIf="ROLE_MANAGER">
+          <p>
+            <mat-toolbar color="primary">
+              <mat-toolbar-row>
+                <span>Stock</span>
+                <span class="example-spacer"></span>
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+                (click)="onCategorie($event)"  matTooltip="Détail du stock">
+                  <mat-icon>menu</mat-icon>
+                </button>
+              </mat-toolbar-row>
+
+              <mat-toolbar-row>
+                <span>{{montantStock?.entreprise?.nom}}</span>
+                <span class="example-spacer"></span>
+                <button mat-icon-button class="example-icon favorite-icon"
+                        aria-label="Example icon-button with heart icon" style="margin-right: 100px">
+                 {{montantStock?.montant | number }} F CFA
+                </button>
+
+              </mat-toolbar-row>
+            </mat-toolbar>
+          </p>
+        </div>
+        <div *ngIf="error" class="btn login_btn">{{error}}</div>
+
+      </div>
+    </div>
+  </div>
+</div>

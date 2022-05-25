@@ -1,0 +1,33 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Gestion banque</h4>
+          </div>
+          <div class="card-body">
+
+              <div class="example-button-row">
+                <button mat-button color="accent" (click)="retrait()">Rechercher des Operations</button>
+                <button mat-button color="accent" (click)="banque()"> Voir la liste des operations</button>
+                <button mat-button color="accent" (click)="openDialog()">Ajouter une banque</button>
+                <button mat-button color="accent" (click)="openDialog()">Effectué une opération</button>
+
+              </div>
+
+            <mat-divider></mat-divider>
+            <br>
+            <div>
+              <app-list-operation *ngIf="edit==0"></app-list-operation>
+              <app-retrait *ngIf="edit==1"></app-retrait>
+              <app-versement *ngIf="edit==2"></app-versement>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

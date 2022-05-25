@@ -1,0 +1,137 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="">
+          <div class="action-2">
+            <div *ngIf="!role">
+              <a mat-mini-fab matTooltip="Accueil appli" routerLink="/accueil" matTooltipPosition="before">
+                <mat-icon>home</mat-icon>
+              </a>
+              <a mat-mini-fab color="primary" matTooltip="Accueil des projets" routerLink="/finance"
+                 matTooltipPosition="after">
+                <mat-icon>face</mat-icon>
+              </a>
+
+            </div>
+
+          </div>
+          <br>
+          <div class="card-header card-header-danger" style="background-color: #d50000">
+            <h4 class="card-title" routerLink="active" style="color: #FFFFFF">Gestion financière </h4>
+          </div>
+          <div class="card-body">
+            <div class="input-group no-border">
+              <mat-form-field style="width: 100%">
+                <input matInput placeholder="Filtre" #searchbox (keyup)="search(searchbox.value)">
+              </mat-form-field>
+            </div>
+            <div>
+              <div>
+                <div class="listes">
+                  <span>{{travaux?.length}} projet(s)</span>
+                  <div class="item">
+                    <div class="">
+                      <div>
+
+                          <div>
+                            <div class="row">
+                              <div class="col-md-8">
+                              <!--<mat-form-field>
+                                <input  matInput #searchbox (keyup)="search(searchbox.value)" placeholder="Rechercher un projet">
+
+                              </mat-form-field>-->
+
+                              </div>
+                            </div>
+                            <div >
+                              <div  *ngFor="let tr of oTravaux | async"  class="list-group">
+                                <a class="list-group-item  clearfix"
+                                   [routerLink]="[tr.id]"
+                                   (click)="onSelect(tr)">
+                                  <span class="pull-left"  >
+                                    <p >{{tr.libelle}}</p>
+                                    <p> {{tr.budget | number}}</p>
+                                  </span>
+                                </a>
+                                <div  fxLayout="row" fxLayoutAlign="space-around center">
+                                  <button  mat-button color="primary" (click)="onAchat(tr)">Liste retrait Stock</button>
+                                  <button  mat-button color="primary" (click)="onAutreAchat(tr)">Liste achat</button>
+                                  <button  mat-button color="primary" (click)="onLocation(tr)">Liste Location</button>
+                                  <button  mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                  <mat-menu #menu = "matMenu" yPosition="above">
+                                    <button  mat-button color="primary" (click)="onLoyer(tr)">
+                                      <span> Liste Loyer</span>
+                                    </button>
+                                    <button mat-menu-item (click)="onOeuvre(tr)">
+                                      <span>Liste Main d'oeuvre</span>
+                                    </button>
+                                    <button mat-menu-item (click)="onTransport(tr)">
+                                      <span>Liste Transport</span>
+                                    </button>
+                                    <button mat-menu-item (click)="onAutres(tr)">
+                                      <span>Liste Caisse</span>
+                                    </button>
+                                  </mat-menu>
+                                </div>
+                                <mat-divider></mat-divider>
+                              </div>
+                            </div>
+                          </div>
+
+
+                      </div>
+                      <div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action">
+                      <div class="action-1">
+                        <a mat-mini-fab matTooltip="Accueil appli" routerLink="/finance"
+                           matTooltipPosition="before" color="primary">
+                          <mat-icon>home</mat-icon>
+                        </a>
+                      </div>
+
+                      <div class="action-2">
+                        <div>
+                          <!--<a mat-mini-fab color="primary" matTooltip="Accueil des projets" routerLink="/finance"
+                             matTooltipPosition="after">
+                            <mat-icon>face</mat-icon>
+                          </a>-->
+                        </div>
+                      </div>
+                      <div class="action-3">
+                        <div class="" matTooltip="créer un nouvau chantier" matTooltipPosition="right">
+                          <a mat-mini-fab routerLink="creer" color="warn">
+                            <mat-icon>add</mat-icon>
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="editer">
+                      <div class="edit-1">
+                        <router-outlet></router-outlet>
+                      </div>
+                      <div class="edit-2"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+

@@ -1,0 +1,133 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+  <div *ngIf="editMode; else newAchat">
+    <div class="">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> modifier un stock  pour les travaux</mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" novalidate *ngIf="stockForm">
+          <div class="well">
+            <mat-card>
+              <div class="achat">
+                <div class="row">
+                  <div formArrayName="detailStock">
+                    <div *ngFor="let itemrow of stockForm.controls.detailStock['controls']; let i=index"
+                         [formGroupName]="i">
+                      <mat-form-field class="example-full-width" color="accent">
+                        <input matInput disabled value="{{stock.libelle}}" >
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input #value matInput type="number" placeholder="Prix unitaire" formControlName="prixUnitaire">
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input  #quantite type="number" matInput placeholder="quantite" formControlName="quantite">
+                      </mat-form-field>
+                      <mat-form-field  class="example-full-width">
+                        <input   #frais type="number" matInput placeholder="Frais" formControlName="frais">
+                        <mat-error>Ce champ est obligatoire.</mat-error>
+                      </mat-form-field>
+                      <mat-form-field formGroupName="fournisseur">
+                        <input matInput placeholder="fournisseur" formControlName="libelle">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div fxLayout="row" fxLayoutAlign="space-between">
+                  <button mat-raised-button class="boutonEnr" type="submit"> Modifier
+                  </button>
+                  <button mat-raised-button class="boutonAnn" type="button" type="reset">Annuler
+                  </button>
+                </div>
+              </div>
+
+            </mat-card>
+
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+  <ng-template #newAchat>
+    <div class="container">
+      <div class="row">
+        <span class="fill-remaining-space"></span>
+        <a class="btn-dialog-close" mat-stroked-button routerLink="/listDetailStock"> <mat-icon>undo</mat-icon></a>
+        <div class="col-md-12">
+    <form class="example-form" [formGroup]="stockForm" (ngSubmit)="onSubmit()"  *ngIf="stockForm">
+      <mat-card> Ajouter un enregistrement au stock</mat-card>
+      <br>
+      <div class="achat">
+
+            <div formArrayName="detailStock">
+              <div *ngFor="let itemrow of stockForm.controls.detailStock['controls']; let i=index"
+                   [formGroupName]="i">
+                <mat-action-row>
+                  <button type="button" mat-mini-fab color="warn" (click)="deleteRow(i)">
+                    <mat-icon class="material-icons">delete</mat-icon>
+                  </button>
+                </mat-action-row>
+
+                <mat-form-field style="position: relative; margin-top:20px;"
+                                class="example-full-width" appearance="fill">
+                  <mat-label >Selectionner un article</mat-label>
+                  <input type="text" matInput matInput [formControl]="myControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option?.libelle}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field  class="example-full-width">
+                  <input #value  type="number" matInput placeholder="Prix unitaire" formControlName="prixUnitaire">
+                  <mat-error>Ce champ est obligatoire.</mat-error>
+                </mat-form-field>
+                <mat-form-field  class="example-full-width">
+                  <input  #quantite  type="number" matInput placeholder="quantite" formControlName="quantite">
+                  <mat-error>Ce champ est obligatoire.</mat-error>
+                </mat-form-field>
+                <mat-form-field  class="example-full-width">
+                  <input   #frais type="number" matInput placeholder="Frais" formControlName="frais">
+                  <mat-error>Ce champ est obligatoire.</mat-error>
+                </mat-form-field>
+                <mat-form-field  class="example-full-width">
+                  <input   #montant type="number" matInput placeholder="{{montant || 0 | number}}" (click)="getCalcul()">
+                  <mat-error>Ce champ est obligatoire.</mat-error>
+                </mat-form-field>
+                <mat-form-field  class="example-full-width" formGroupName="fournisseur">
+                  <input matInput  #fournisseur placeholder="fournisseur" formControlName="libelle">
+                </mat-form-field>
+              </div>
+            </div>
+        <mat-action-row>
+            <button type="button" mat-raised-button color="warn" (click)="addNewRows()">
+              <span class="material-icons">add</span>
+            </button>
+          </mat-action-row>
+          <hr>
+          <div fxLayout="row" fxLayoutAlign="space-between">
+
+            <button mat-raised-button class="boutonEnr" type="submit"> Enregistrer
+            </button>
+            <button mat-raised-button class="boutonAnn" type="button" type="reset">Annuler
+            </button>
+          </div>
+        </div>
+
+
+    </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+    </div>
+  </div>
+</div>
+
+
