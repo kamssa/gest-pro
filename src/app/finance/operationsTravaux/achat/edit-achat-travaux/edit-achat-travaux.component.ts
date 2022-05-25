@@ -243,6 +243,7 @@ export class EditAchatTravauxComponent implements OnInit {
               libelleMateriaux: this.detailAticleStockGenerale.libelleMateriaux,
               prixUnitaire: this.detailAticleStockGenerale.prixUnitaire,
               quantite: parseInt(this.quantiteInput.nativeElement.value),
+              travauxId: this.travauxId
             }
           ]
         };

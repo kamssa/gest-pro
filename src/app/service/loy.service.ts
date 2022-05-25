@@ -7,7 +7,6 @@ import {MessageService} from "./message.service";
 import {Loyer} from "../model/Loyer";
 import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
-import {DetailLocation} from '../model/DetailLocation';
 import {DetailLoyer} from '../model/DetailLoyer';
 
 
@@ -74,7 +73,15 @@ export class LoyService {
         catchError(this.handleError<Resultat<Loyer[]>>('getLocationByTravaux'))
       );
   }
-
+  getDetailLoyerMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantLoyer/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
   travauxCreer(res: Resultat<Loyer>) {
     console.log('Travail a ete  creer correctement essaie source');
     this.travauxCreerSource.next(res);

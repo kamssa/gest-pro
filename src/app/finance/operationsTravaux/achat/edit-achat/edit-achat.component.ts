@@ -6,6 +6,8 @@ import {SteTravauxService} from '../../../../service/ste-travaux.service';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {switchMap} from 'rxjs/operators';
 import {AchatTravauxService} from '../../../../service/achat-travaux.service';
+import {CumulDepensesComponent} from '../../cumul-depenses/cumul-depenses.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-achat',
@@ -26,6 +28,7 @@ export class EditAchatComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private travauxService: SteTravauxService, private  router: Router,
               private mediaObserver: MediaObserver,
+              public dialog: MatDialog,
               private achatService: AchatTravauxService) {
 
   }
@@ -54,5 +57,14 @@ export class EditAchatComponent implements OnInit {
 
   achat() {
     this.edit = 0;
+  }
+
+  onCumulDepense(id: number) {
+    console.log(id);
+    this.dialog.open(CumulDepensesComponent,{
+      data: {
+        travaux: id
+      }
+    });
   }
 }

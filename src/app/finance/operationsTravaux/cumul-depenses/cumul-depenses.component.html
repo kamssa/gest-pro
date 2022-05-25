@@ -1,7 +1,7 @@
 <div class="container">
   <div id="content" #content>
     <div>
-  <table class="table" >
+  <table class="table" *ngIf="detailAutreAchatTravaux.length!= 0">
     <thead>
     <h3>Achat de materiel</h3>
     </thead>
@@ -23,11 +23,18 @@
       <td>{{autre.montant}}</td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row">TOTAL</th>
+      <td style="text-align: end">{{somme}}</td>
+    </tr>
+    </tfoot>
+
   </table>
     </div>
     <hr>
 <div>
-  <table class="table" >
+  <table class="table" *ngIf="detailLocation.length!= 0">
     <thead>
     <h3>Location de materiel</h3>
     </thead>
@@ -48,11 +55,17 @@
     </tr>
 
     </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row">TOTAL</th>
+      <td style="text-align: end">{{somme1}}</td>
+    </tr>
+    </tfoot>
   </table>
 </div>
 <hr>
 <div>
-  <table class="table" >
+  <table class="table"  *ngIf="detailLoyeTravaux.length!= 0">
     <thead>
     <h3>Payement de loyer</h3>
     </thead>
@@ -70,11 +83,17 @@
       <td>{{loy.montant}}</td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row">TOTAL</th>
+      <td style="text-align: end">{{somme2}}</td>
+    </tr>
+    </tfoot>
   </table>
 </div>
 <hr>
 <div>
-  <table class="table" >
+  <table class="table"  *ngIf="detailMainOeuvre.length!= 0">
     <thead>
     <h3>Payement de main d'oeuvre</h3>
     </thead>
@@ -96,11 +115,17 @@
       <td>{{mainOeuvre.montantVerser}}</td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row">TOTAL</th>
+      <td style="text-align: end">{{somme3}}</td>
+    </tr>
+    </tfoot>
   </table>
 </div>
 <hr>
 <div>
-  <table class="table" >
+  <table class="table"  *ngIf="detailTransport.length!= 0">
     <thead>
     <h3>Payement de transport</h3>
     </thead>
@@ -119,11 +144,17 @@
       <td>{{trans.montant}}</td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row">TOTAL</th>
+      <td style="text-align: end">{{somme4}}</td>
+    </tr>
+    </tfoot>
   </table>
 </div>
 <hr>
 <div>
-  <table class="table" >
+  <table class="table"  *ngIf="detailAutre.length!= 0">
     <thead>
     <h3>Payement de autre dépense </h3>
     </thead>
@@ -146,9 +177,47 @@
       <td>{{trans.montant}}</td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row">TOTAL</th>
+      <td style="text-align: end">{{somme5}}</td>
+    </tr>
+    </tfoot>
   </table>
 
 </div>
+    <hr>
+    <div>
+      <table class="table"  *ngIf="detailAchatTravaux.length!= 0">
+        <thead>
+        <h3>Retirer du stock </h3>
+        </thead>
+        <thead>
+        <tr>
+          <th scope="col">Designation</th>
+          <th scope="col">Prix</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">montant</th>
+
+        </tr>
+        </thead>
+        <tbody *ngFor="let trans of detailAchatTravaux">
+        <tr>
+          <td>{{trans.designation}}</td>
+          <td>{{trans.prixUnitaire}}</td>
+          <td>{{trans.quantite}}</td>
+          <td>{{trans.montant}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th scope="row">TOTAL</th>
+          <td style="text-align: end">{{somme6}}</td>
+        </tr>
+        </tfoot>
+      </table>
+
+    </div>
 </div>
 </div>
 <button mat-raised-button color="primary" (click)="makePDF()">Télécharger en PDF</button>

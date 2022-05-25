@@ -8,7 +8,6 @@ import {Loyer} from "../model/Loyer";
 import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
 import {Transport} from "../model/Transport";
-import {DetailLoyer} from '../model/DetailLoyer';
 import {DetailTransport} from '../model/DetailTransport';
 
 
@@ -75,6 +74,16 @@ export class TransportService {
         catchError(this.handleError<Resultat<DetailTransport[]>>('getAchatTravauxByTravaux'))
       );
   }
+  getDetailTransportMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantTransport/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
+
   travauxCreer(res: Resultat<LocationTravaux>) {
     console.log('Travail a ete  creer correctement essaie source');
     this.travauxCreerSource.next(res);

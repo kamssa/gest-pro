@@ -6,8 +6,8 @@ import {environment} from '../../environments/environment';
 import {catchError, map, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
-import {AchatTravaux} from '../model/AchatTravaux';
 import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
+import {DetailAchatTravaux} from '../model/DtailAchat';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +44,15 @@ export class AutreAchatTravauxService {
           this.travauxCreer(res);
         }),
         catchError(this.handleError<Resultat<AutreAchatTravaux>>('ajoutAchatTravaux'))
+      );
+  }
+  getAutreDetailAchatTravauxMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantAutreAchat/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
       );
   }
   modifAchatTravaux(achatTravaux: AutreAchatTravaux): Observable<Resultat<AutreAchatTravaux>> {

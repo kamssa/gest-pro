@@ -45,7 +45,7 @@
                               </div>
                             </div>
                             <div >
-                              <div  *ngFor="let tr of oTravaux | async"  class="list-group">
+                              <ul  *ngFor="let tr of oTravaux | async"  class="list-group">
                                 <a class="list-group-item  clearfix"
                                    [routerLink]="[tr.id]"
                                    (click)="onSelect(tr)">
@@ -77,7 +77,7 @@
                                   </mat-menu>
                                 </div>
                                 <mat-divider></mat-divider>
-                              </div>
+                              </ul>
                             </div>
                           </div>
 

@@ -73,6 +73,15 @@ export class MainoeuvreService {
         catchError(this.handleError<Resultat<DetailMainOeuvre[]>>('getDetailMainOeuvreByTravaux'))
       );
   }
+  getDetailMainDoeuvreMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantMainDoeuvre/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
 
   travauxCreer(res: Resultat<LocationTravaux>) {
     console.log('Travail a ete  creer correctement essaie source');

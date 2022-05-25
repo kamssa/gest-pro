@@ -21,6 +21,14 @@ import {TransportService} from '../../../service/transport.service';
 import {AutresService} from '../../../service/autres.service';
 import {DetailAutres} from '../../../model/DetailAutres';
 import {jsPDF} from 'jspdf';
+import {AchatTravauxService} from '../../../service/achat-travaux.service';
+import {Manager} from '../../../model/Manager';
+import {Employe} from '../../../model/Employe';
+import {AuthService} from '../../../service/auth.service';
+import {AdminService} from '../../../service/admin.service';
+import {ManagerService} from '../../../service/manager.service';
+import {EmployeService} from '../../../service/employe.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-cumul-depenses',
@@ -29,11 +37,8 @@ import {jsPDF} from 'jspdf';
 })
 export class CumulDepensesComponent implements OnInit {
   displayedColumns: string[] = ['date', 'nom',  'salaire', 'nombreJour', 'montantVerser' ];
-  displayedColumns1: string[] = ['materiaux', 'prix_unitaire', 'quantite', 'montant', 'delete'];
   dataSource: MatTableDataSource<DetailMainOeuvre>;
   receptacle: any = [];
-  dataSource1: MatTableDataSource<DetailAchatTravaux>;
-  receptacle1: any = [];
   detailMainOeuvre: DetailMainOeuvre[] = [];
   detailAutreAchatTravaux: DetailAutreAchatTravaux[];
   detailAchatTravaux: DetailAchatTravaux[] = [];
@@ -42,7 +47,20 @@ export class CumulDepensesComponent implements OnInit {
   detailAutre: DetailTransport[] = [];
   detailLocation: DetailLocation[];
   somme: any;
-  array:  any;
+  somme1: any;
+  somme2: any;
+  somme3: any;
+  somme4: any;
+  somme5: any;
+  somme6: any;
+  array: any;
+  personne: any;
+  manager: Manager;
+  employe: Employe;
+  res: any;
+  nav: boolean;
+  type: string;
+  currentUser: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild('content', {static: false}) el: ElementRef;
@@ -51,59 +69,125 @@ export class CumulDepensesComponent implements OnInit {
               public dialogRef: MatDialogRef<DialogMainouvreComponent>,
               private snackBar: MatSnackBar,
               private router: Router,
+              private achatTravauxService: AchatTravauxService,
               private  autreAchatTravauxService: AutreAchatTravauxService,
               private locationService: LocationService,
               private loyeService: LoyService,
               private  transportService: TransportService,
-              private  autresService: AutresService) {
+              private  autresService: AutresService,
+              private authService: AuthService,  private adminService: AdminService,
+              private managerService: ManagerService,
+              private employeService: EmployeService,  private helper: JwtHelperService) {
 
 
-    this.autreAchatTravauxService.getDetailAutreAchatByTravaux(data['travaux']).subscribe(result => {
+
+  }
+
+  ngOnInit(): void {
+    this.autreAchatTravauxService.getDetailAutreAchatByTravaux(this.data['travaux']).subscribe(result => {
       console.log('detail autre achat travaux par id travaux', result);
       this.detailAutreAchatTravaux = result;
-      this.detailAutreAchatTravaux.forEach(el => {
-       // this.somme  += el.montant;
-        console.log(el.montant);
-        const initialValue = 0;
+      this.autreAchatTravauxService.getAutreDetailAchatTravauxMontantByTravaux(this.data['travaux'])
+        .subscribe(res => {
+          console.log(res);
+          this.somme = res;
+          console.log(this.somme);
+        });
 
-      });
-      console.log('Voir reduce', this.array);
-
-      /*const sumWithInitial = this.array.reduce(
-        (previousValue, currentValue) => previousValue + currentValue
-
-      );*/
     });
-    this.locationService.getDetailLocationByTravaux(data['travaux']).subscribe(result => {
+    this.locationService.getDetailLocationByTravaux(this.data['travaux']).subscribe(result => {
       console.log('detail detail location par id travaux', result);
       this.detailLocation = result;
+      this.locationService.getDetailLocationMontantByTravaux(this.data['travaux'])
+        .subscribe( res => {
+          this.somme1 = res;
+        })
 
     });
-    this.loyeService.getDetailLoyeByTravaux(data['travaux']).subscribe(result => {
+    this.loyeService.getDetailLoyeByTravaux(this.data['travaux']).subscribe(result => {
       console.log('detail detail loyer par id travaux', result);
       this.detailLoyeTravaux = result;
+      this.loyeService.getDetailLoyerMontantByTravaux(this.data['travaux'])
+        .subscribe(res => {
+          this.somme2 = res;
+        });
     });
-    this.mainoeuvreService.getDetailMainOeuvreByTravaux(data['travaux']).subscribe(result => {
+    this.mainoeuvreService.getDetailMainOeuvreByTravaux(this.data['travaux']).subscribe(result => {
       console.log('detail detail main oeuvre par id travaux', result);
       this.detailMainOeuvre = result;
+      this.mainoeuvreService.getDetailMainDoeuvreMontantByTravaux(this.data['travaux'])
+        .subscribe(res => {
+          this.somme3 = res;
+        });
     });
-    this.transportService.getDetailTransportByTravaux(data['travaux']).subscribe(result => {
+    this.transportService.getDetailTransportByTravaux(this.data['travaux']).subscribe(result => {
       console.log('detail detail transport par id travaux', result);
       this.detailTransport = result;
+      this.transportService.getDetailTransportMontantByTravaux(this.data['travaux'])
+        .subscribe(res => {
+          this.somme4 = res;
+        });
     });
-    this.autresService.getDetailAutreByTravaux(data['travaux']).subscribe(result => {
+    this.autresService.getDetailAutreByTravaux(this.data['travaux']).subscribe(result => {
       console.log('detail detail autre par id travaux', result);
       this.detailAutre = result;
+      this.autresService.getAutresMontantByTravaux(this.data['travaux'])
+        .subscribe(res => {
+          this.somme5 = res;
+        });
     });
-  }
-  ngOnInit(): void {
+    this.achatTravauxService.getDetailAchatTravauxByTravaux(this.data['travaux']).subscribe(result => {
+      console.log('detail detail autre par id travaux', result);
+      this.detailAchatTravaux = result;
+      this.achatTravauxService.getDetailAchatTravauxMontantByTravaux(this.data['travaux'])
+        .subscribe(res => {
+          this.somme6 = res;
+        });
+    });
+    if(localStorage.getItem('currentUser')) {
+      const token = localStorage.getItem('currentUser');
+      const decoded = this.helper.decodeToken(token);
+      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+
+        this.personne = resultat.body;
+        this.type = this.personne.type;
+        if (this.type === 'MANAGER'){
+          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+            this.personne = result.body;
+            this.nav = true;
+
+          });
+        }else if (this.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe(
+            rest => {
+              this.personne = rest.body;
+              this.nav = false;
+            }
+          );
+
+        }
+
+      });
+
+    }
   }
 makePDF(){
+  if (this.type === 'MANAGER'){
     let pdf = new jsPDF('p', 'pt', 'a4');
     pdf.html(this.el.nativeElement, {
       callback: (pdf) => {
-        pdf.save('NEFF-CI.pdf');
+        pdf.save(this.personne.entreprise.nom);
       }
     });
+
+  }else if (this.type === 'EMPLOYE'){
+    let pdf = new jsPDF('p', 'pt', 'a4');
+    pdf.html(this.el.nativeElement, {
+      callback: (pdf) => {
+        pdf.save(this.personne.departement.entreprise.nom);
+      }
+    });
+  }
+
 }
 }

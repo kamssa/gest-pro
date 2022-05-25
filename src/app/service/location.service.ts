@@ -8,7 +8,6 @@ import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
 import {LocationTravaux} from "../model/LocationTravaux";
 import {Autres} from "../model/Autres";
-import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
 import {DetailLocation} from '../model/DetailLocation';
 
 @Injectable({
@@ -72,6 +71,16 @@ export class LocationService {
         tap(res =>
           this.log(`travaux trouve =${res}`))),
         catchError(this.handleError<Resultat<DetailLocation[]>>('getAchatTravauxByTravaux'))
+      );
+  }
+  // recuperer achat par id travaux
+  getDetailLocationMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantLocation/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
       );
   }
   travauxCreer(res: Resultat<LocationTravaux>) {

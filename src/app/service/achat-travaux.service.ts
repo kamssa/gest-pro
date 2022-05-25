@@ -74,6 +74,16 @@ export class AchatTravauxService {
         catchError(this.handleError<Resultat<DetailAchatTravaux[]>>('getAchatTravauxByTravaux'))
       );
   }
+  // recuperer achat par id travaux
+  getDetailAchatTravauxMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantAchatTravaux/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
 
   supprimerUnAchat(id: number): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/api/achat/${id}`)

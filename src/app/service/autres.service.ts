@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of, Subject} from "rxjs";
 import {Resultat} from "../model/resultat";
-import {LocationTravaux} from "../model/LocationTravaux";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "./message.service";
 import {Loyer} from "../model/Loyer";
@@ -9,7 +8,6 @@ import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
 import {Autres} from "../model/Autres";
 import {AchatTravaux} from '../model/AchatTravaux';
-import {DetailLocation} from '../model/DetailLocation';
 import {DetailAutres} from '../model/DetailAutres';
 
 
@@ -72,6 +70,16 @@ export class AutresService {
         tap(res =>
           this.log(`location trouve =${res}`))),
         catchError(this.handleError<Resultat<Loyer[]>>('getautresByTravaux'))
+      );
+  }
+  // recuperer achat par id travaux
+  getAutresMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/autres/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`location trouve =${res}`))),
+        catchError(this.handleError<any>('getautresByTravaux'))
       );
   }
 // recuperer achat par id travaux
