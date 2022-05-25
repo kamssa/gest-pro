@@ -6,9 +6,7 @@ import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import {catchError, map, tap} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {MessageService} from "./message.service";
-import {AchatTravaux} from "../model/AchatTravaux";
 import {Photo} from "../model/Photo";
-import {Categorie} from '../model/Categorie';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +47,7 @@ export class SteTravauxService {
           this.travauxModif(res);
         }),
         catchError(this.handleError<Resultat<Travaux>>('modifierTravaux'))
-      );;
+      );
   }
   getTravauxById(id: number): Observable<Resultat<Travaux>> {
     return this.http.get<Resultat<Travaux>>(`${environment.apiUrl}/api/travaux/${id}`);
@@ -58,8 +56,8 @@ export class SteTravauxService {
     return this.http.get<Resultat<Travaux[]>>(`${environment.apiUrl}/api/travauxByIdSite/${id}`);
   }
 
-  rechercheTravauxParMc(mc: string): Observable<Array<Travaux>> {
-    return this.http.get<Resultat<Array<Travaux>>>(`${environment.apiUrl}/api/rechemc/?mc=${mc}`)
+  rechercheTravauxParMc(mc: string, nom: string): Observable<Array<Travaux>> {
+    return this.http.get<Resultat<Array<Travaux>>>(`${environment.apiUrl}/api/rechemc/?mc=${mc}&nom=${nom}`)
       .pipe(map(res => res.body,
         tap(res =>
           this.log(`travaux trouve =${res}`))),
