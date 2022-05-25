@@ -14,6 +14,7 @@ import {AddTravauxSiteComponent} from '../add-travaux-site/add-travaux-site.comp
 import {AutresService} from '../../../service/autres.service';
 import {EditAchatTravauxComponent} from '../../operationsTravaux/achat/edit-achat-travaux/edit-achat-travaux.component';
 import {CumulDepensesComponent} from '../../operationsTravaux/cumul-depenses/cumul-depenses.component';
+import {RechercheParDateComponent} from '../../operationsTravaux/cumul-depenses/recherche-par-date/recherche-par-date.component';
 
 @Component({
   selector: 'app-liste-site-travaux-operation',
@@ -43,11 +44,11 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.refreshData();
+    /*this.refreshData();
     setInterval(() => {
       this.refreshData();
-    }, 3000);
-  // this.refreshData();
+    }, 3000);*/
+   this.refreshData();
   }
   refreshData(){
     this.mediaSub = this.mediaObserver.media$.subscribe(
@@ -179,6 +180,12 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
           }
         });
 
+  }
+
+  onDate() {
+    this.dialog.open(RechercheParDateComponent,{
+
+    });
   }
 }
 

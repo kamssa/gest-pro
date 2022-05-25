@@ -72,7 +72,7 @@ export class FinanceComponent implements OnInit{
                 debounceTime(100),
                 distinctUntilChanged(),
                 switchMap(mc => mc ?  this.siteTravauxService.rechercheTravauxParMc(mc, this.personne.entreprise.nom)
-                  : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',''))
+                  : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',' '))
               );
             this.toutsLesTravaux();
             // renvoie le site créé

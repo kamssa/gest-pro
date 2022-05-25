@@ -47,6 +47,7 @@ import { ListAutreAchatComponent } from './operationsTravaux/autreAchatTravaux/l
 import { DialogAutreAchatTravauxComponent } from './operationsTravaux/autreAchatTravaux/dialog-autre-achat-travaux/dialog-autre-achat-travaux.component';
 import { EditAutreAchatTravauxComponent } from './operationsTravaux/autreAchatTravaux/edit-autre-achat-travaux/edit-autre-achat-travaux.component';
 import { CumulDepensesComponent } from './operationsTravaux/cumul-depenses/cumul-depenses.component';
+import { RechercheParDateComponent } from './operationsTravaux/cumul-depenses/recherche-par-date/recherche-par-date.component';
 
 
 
@@ -110,7 +111,8 @@ import { CumulDepensesComponent } from './operationsTravaux/cumul-depenses/cumul
     ListAutreAchatComponent,
     DialogAutreAchatTravauxComponent,
     EditAutreAchatTravauxComponent,
-    CumulDepensesComponent
+    CumulDepensesComponent,
+    RechercheParDateComponent
 
 
   ],
