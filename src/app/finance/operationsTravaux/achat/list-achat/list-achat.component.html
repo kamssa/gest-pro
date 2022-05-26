@@ -7,11 +7,11 @@
   <table mat-table [dataSource]="listData" matSort>
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-        <td mat-cell *matCellDef="let achatTravaux"> {{achatTravaux.createdAt | date:'dd-MM-yyyy'}} </td>
+        <td mat-cell *matCellDef="let achatTravaux"> {{achatTravaux?.createdAt | date:'dd-MM-yyyy'}} </td>
       </ng-container>
     <ng-container matColumnDef="total">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> total </th>
-      <td mat-cell *matCellDef="let achatTravaux"> {{achatTravaux.montant | number}} </td>
+      <td mat-cell *matCellDef="let achatTravaux"> {{achatTravaux?.montant | number}} </td>
     </ng-container>
     <ng-container matColumnDef="details">
       <th mat-header-cell *matHeaderCellDef> Details </th>

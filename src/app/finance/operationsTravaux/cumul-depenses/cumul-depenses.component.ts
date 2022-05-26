@@ -134,6 +134,7 @@ export class CumulDepensesComponent implements OnInit {
       this.autresService.getAutresMontantByTravaux(this.data['travaux'])
         .subscribe(res => {
           this.somme5 = res;
+          console.log('somme 5', this.somme5);
         });
     });
     this.achatTravauxService.getDetailAchatTravauxByTravaux(this.data['travaux']).subscribe(result => {

@@ -102,7 +102,7 @@ export class EditMainouvreTravauxComponent implements OnInit {
       id: [''],
       version: [''],
       salaire: ['', Validators.required],
-      montantVerser: [''],
+      montantVerser: ['', Validators.required],
       reste: [''],
       nbreJours: ['', Validators.required],
       date: [''],

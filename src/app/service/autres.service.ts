@@ -75,7 +75,7 @@ export class AutresService {
   // recuperer achat par id travaux
   getAutresMontantByTravaux(id: number): Observable<any> {
     // @ts-ignore
-    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/autres/${id}`)
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantAutre/${id}`)
       .pipe(map(res => res.body,
         tap(res =>
           this.log(`location trouve =${res}`))),
