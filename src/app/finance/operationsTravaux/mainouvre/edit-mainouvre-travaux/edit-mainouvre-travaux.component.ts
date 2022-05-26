@@ -101,7 +101,7 @@ export class EditMainouvreTravauxComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      salaire: ['', Validators.required],
+      salaire: [''],
       montantVerser: ['', Validators.required],
       reste: [''],
       nbreJours: ['', Validators.required],

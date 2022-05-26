@@ -34,6 +34,13 @@ export class EditAutreAchatTravauxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.refreshData();
+    setInterval(() => {
+      this.refreshData();
+    }, 3000);
+    //this.refreshData();
+  }
+  refreshData(){
     this.mediaSub = this.mediaObserver.media$.subscribe(
       (result: MediaChange) => {
         console.log(result.mqAlias);
@@ -45,10 +52,9 @@ export class EditAutreAchatTravauxComponent implements OnInit {
     ).subscribe(result => {
       this.travaux = result.body;
       this.travauxId = result.body.id;
-
+      console.log(result.body);
     });
   }
-
   getTravauxById() {
     this.travauxService.getTravauxById(this.id).subscribe(res => {
       this.travaux = res.body;
