@@ -11,6 +11,7 @@ import {ManagerService} from '../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AutresService} from '../../../service/autres.service';
 import {UpdateEvolutionService} from '../../../service/update-evolution.service';
+import {CumulDepensesComponent} from '../../../finance/operationsTravaux/cumul-depenses/cumul-depenses.component';
 
 @Component({
   selector: 'app-list-projet',
@@ -36,6 +37,7 @@ export class ListProjetComponent implements OnInit {
   ROLE_NAME: any;
   error = '';
   ROLE_MANAGER: any;
+  isActive = false;
   constructor(private route: ActivatedRoute,
               private managerService: ManagerService,
               private autresService: AutresService,
@@ -130,5 +132,14 @@ export class ListProjetComponent implements OnInit {
 
   onAutres(travail: Travaux) {
     this.router.navigate(['finance/autre', travail.id]);
+  }
+
+  cumulDepense(id: number) {
+    this.dialog.open(CumulDepensesComponent,{
+      data: {
+        travaux: id
+      }
+    });
+
   }
 }

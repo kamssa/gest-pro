@@ -40,10 +40,13 @@
                 <button mat-button color="primary"  class="site">Date de livraison :  {{travaux.dateLivraison | date: 'dd/MM/yyyy'}} </button>
               </li>
             </ul>
+            <div [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
             <mat-card-actions>
-              <button mat-button (click)="update(travaux.id)">Modifier</button>
-              <button mat-button (click)="updateEvolution(travaux.id)">Mise à jour</button>
+              <button mat-flat-button (click)="update(travaux.id)">Modifier</button>
+              <button mat-flat-button (click)="updateEvolution(travaux.id)">Mise à jour</button>
+              <button mat-flat-button  (click)="cumulDepense(travaux.id)">Voir dépense par date</button>
             </mat-card-actions>
+            </div>
           </mat-card>
           <hr>
           <div  fxLayout="row" fxLayoutAlign="space-around center">
