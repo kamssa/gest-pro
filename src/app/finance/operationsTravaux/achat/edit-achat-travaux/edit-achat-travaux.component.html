@@ -28,8 +28,6 @@
                       <mat-label>
                         <input matInput #montant  placeholder="{{montant}}"  (click)="getCalcul()">
                       </mat-label>
-
-
                     </div>
                   </div>
                 </div>
@@ -91,11 +89,11 @@
                 </div>
               </div>
             </div>
-            <mat-action-row>
+           <!-- <mat-action-row>
               <button type="button" mat-raised-button color="warn" (click)="addNewRows()">
              <span class="material-icons">add</span>
               </button>
-            </mat-action-row>
+            </mat-action-row>-->
             <hr>
             <div fxLayout="row" fxLayoutAlign="space-between">
               <button mat-raised-button class="boutonEnr" type="submit" [disabled]="!achatTravauxForm.valid"> Enregistrer

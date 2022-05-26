@@ -263,7 +263,6 @@ export class EditAchatTravauxComponent implements OnInit {
       //localStorage.removeItem('materiau');
       this.travauxService.getTravauxById(this.travauxId)
         .subscribe(res => {
-          if(res.body.debousserSec !== null){
 
             this.achatTravauxService.ajoutAchatTravaux(this.achatTravaux)
               .subscribe(data => {
@@ -274,10 +273,7 @@ export class EditAchatTravauxComponent implements OnInit {
                 }
               });
             this.achatTravauxForm.reset();
-          }else {
-            this.notificationService.warn("Le déboursé sec n\'est pas renseigné");
 
-          }
 
         });
 
