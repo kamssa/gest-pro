@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
 import {SteTravauxService} from "../../../../service/ste-travaux.service";
 import {MainOeuvre} from "../../../../model/MainOeuvre";
@@ -101,16 +101,16 @@ export class EditMainouvreTravauxComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      salaire: [''],
+      salaire: ['', Validators.required],
       montantVerser: [''],
       reste: [''],
-      nbreJours: [''],
+      nbreJours: ['', Validators.required],
       date: [''],
       journalier: this.fb.group({
         id: [''],
         version: [''],
-         nom: [''] ,
-         prenom: [''],
+         nom: ['',  Validators.required] ,
+         prenom: ['',  Validators.required],
          fonction: ['']
       }),
     });

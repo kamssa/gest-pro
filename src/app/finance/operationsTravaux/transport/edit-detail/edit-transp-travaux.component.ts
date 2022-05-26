@@ -1,12 +1,9 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
-import {MainoeuvreService} from "../../../../service/mainoeuvre.service";
 import {SteTravauxService} from "../../../../service/ste-travaux.service";
-import {MainOeuvre} from "../../../../model/MainOeuvre";
 import {Transport} from "../../../../model/Transport";
 import {TransportService} from "../../../../service/transport.service";
-import {Loyer} from "../../../../model/Loyer";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {NotificationService} from '../../../../helper/notification.service';
 
@@ -92,8 +89,8 @@ export class EditTranspTravauxComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      libelle: [''],
-      montant: [''],
+      libelle: ['', Validators.required],
+      montant: ['', Validators.required],
       date: ['']
     });
   }

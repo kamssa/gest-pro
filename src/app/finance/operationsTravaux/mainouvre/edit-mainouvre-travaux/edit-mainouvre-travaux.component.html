@@ -92,7 +92,7 @@
             </mat-action-row>-->
             <hr>
             <div fxLayout="row" fxLayoutAlign="space-between">
-              <button mat-raised-button class="boutonEnr" type="submit"> Enregistrer
+              <button mat-raised-button class="boutonEnr" type="submit" [disabled]="!mainOuvreForm.valid"> Enregistrer
               </button>
               <button mat-raised-button class="boutonAnn" type="button" type="reset">Annuler
               </button>

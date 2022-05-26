@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
 import {LocationService} from "../../../../service/location.service";
 import {LocationTravaux} from "../../../../model/LocationTravaux";
@@ -77,11 +77,11 @@ export class EditLocationTravauxComponent implements OnInit {
       id: [''],
       version: [''],
       montant: [''],
-      date: [''],
+      date: ['', Validators.required],
       materiaux: this.fb.group({
         id: [''],
         version: [''],
-        libelle: ['']
+        libelle: ['', Validators.required],
       }),
       fournisseur: this.fb.group({
         id: [''],

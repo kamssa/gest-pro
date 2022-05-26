@@ -1,11 +1,9 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {SteTravauxService} from '../../../../service/ste-travaux.service';
 import {LoyService} from '../../../../service/loy.service';
 import {Loyer} from '../../../../model/Loyer';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {LocationTravaux} from "../../../../model/LocationTravaux";
 import {NotificationService} from '../../../../helper/notification.service';
 
 @Component({
@@ -86,9 +84,9 @@ export class DetailLoyerComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      libelle: [''],
-      montant: [''],
-      date: [''],
+      libelle: ['', Validators.required],
+      montant: ['', Validators.required],
+      date: ['', Validators.required],
       travauxId: ['']
     });
   }

@@ -85,7 +85,6 @@
                   </mat-form-field>
                 <mat-form-field>
                   <input #libelleMateriaux matInput type="text" placeholder="Désignation" formControlName="libelleMateriaux" name="libelleMateriaux">
-                  <mat-error *ngIf="autreAchatTravauxForm.get('libelleMateriaux').hasError('required')">Désignation est obligatoire</mat-error>
 
                 </mat-form-field>
                 <mat-form-field>
@@ -116,7 +115,7 @@
           </mat-action-row>
           <hr>
           <div fxLayout="row" fxLayoutAlign="space-between">
-            <button mat-raised-button class="boutonEnr" type="submit"> Enregistrer
+            <button mat-raised-button class="boutonEnr" type="submit" [disabled]="!autreAchatTravauxForm.valid"> Enregistrer
             </button>
             <button mat-raised-button class="boutonAnn" type="button" type="reset">Annuler
             </button>
