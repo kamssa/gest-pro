@@ -83,7 +83,9 @@
                   </mat-form-field>
 
                   <mat-form-field  class="example-full-width">
-                    <input  #quantite type="number" matInput placeholder="quantite" formControlName="quantite">
+                    <input  #quantite type="number" matInput placeholder="quantité" formControlName="quantite" id="quantite">
+                    <mat-error *ngIf="achatTravauxForm.value.quantite">La quantité est obligatoire</mat-error>
+
                   </mat-form-field>
 
                 </div>
@@ -96,7 +98,7 @@
             </mat-action-row>
             <hr>
             <div fxLayout="row" fxLayoutAlign="space-between">
-              <button mat-raised-button class="boutonEnr" type="submit"> Enregistrer
+              <button mat-raised-button class="boutonEnr" type="submit" [disabled]="!achatTravauxForm.valid"> Enregistrer
               </button>
               <button mat-raised-button class="boutonAnn" type="button" type="reset">Annuler
               </button>

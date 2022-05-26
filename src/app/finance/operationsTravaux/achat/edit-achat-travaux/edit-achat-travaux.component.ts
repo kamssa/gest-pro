@@ -226,6 +226,9 @@ export class EditAchatTravauxComponent implements OnInit {
     });
 
   }
+  public myError = (controlName: string, errorName: string) => {
+    return this.achatTravauxForm.controls[controlName].hasError(errorName);
+  }
   get formArr() {
     return this.achatTravauxForm.get('detailStock') as FormArray;
   }

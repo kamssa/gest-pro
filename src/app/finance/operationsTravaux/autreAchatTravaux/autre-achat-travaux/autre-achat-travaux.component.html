@@ -16,7 +16,8 @@
                          [formGroupName]="i">
 
                       <mat-form-field formGroupName="materiaux">
-                        <input  matInput placeholder="Materiel" formControlName="libelle">
+                        <input  matInput placeholder="Désignation" formControlName="libelle" name="libelle">
+
                       </mat-form-field>
                       <mat-form-field>
                         <input #value matInput type="number" placeholder="Prix unitaire" formControlName="prixUnitaire">
@@ -83,7 +84,9 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 <mat-form-field>
-                  <input #libelleMateriaux matInput type="text" placeholder="Désignation" formControlName="libelleMateriaux">
+                  <input #libelleMateriaux matInput type="text" placeholder="Désignation" formControlName="libelleMateriaux" name="libelleMateriaux">
+                  <mat-error *ngIf="autreAchatTravauxForm.get('libelleMateriaux').hasError('required')">Désignation est obligatoire</mat-error>
+
                 </mat-form-field>
                 <mat-form-field>
                   <input #value matInput type="number" placeholder="Prix unitaire" formControlName="prixUnitaire">

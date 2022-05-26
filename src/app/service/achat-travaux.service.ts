@@ -75,6 +75,17 @@ export class AchatTravauxService {
       );
   }
   // recuperer achat par id travaux
+  getDetailAchatTravauxByDateTravaux(travauxId: number, dateDebut: Date, dateFin: Date): Observable<DetailAchatTravaux[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<DetailAchatTravaux[]>>(
+      `${environment.apiUrl}/api/detailAchatTravauxDate/?travauxId=${travauxId}&dateDebut=${dateDebut}&dateFin=${dateFin}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<DetailAchatTravaux[]>>('getAchatTravauxByTravaux'))
+      );
+  }
+  // recuperer achat par id travaux
   getDetailAchatTravauxMontantByTravaux(id: number): Observable<any> {
     // @ts-ignore
     return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantAchatTravaux/${id}`)

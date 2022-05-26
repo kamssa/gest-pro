@@ -198,14 +198,14 @@ export class AutreAchatTravauxComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      libelleMateriaux: [''],
+      libelleMateriaux: ['', Validators.required],
+      date: ['', Validators.required],
       unite: [''],
-      prixUnitaire: [''],
-      frais: [''],
+      prixUnitaire: ['', Validators.required],
+      frais: ['', Validators.required],
       fournisseur: [''],
       quantite: ['', Validators.required],
       montant: [''],
-      date: [''],
       travauxId: ['']
     });
   }

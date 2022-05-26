@@ -182,9 +182,11 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
 
   }
 
-  onDate() {
+  onDate(id: number) {
     this.dialog.open(RechercheParDateComponent,{
-
+      data: {
+        travaux: id
+      }
     });
   }
 }
