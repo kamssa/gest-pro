@@ -48,7 +48,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
     setInterval(() => {
       this.refreshData();
     }, 3000);
-  // this.refreshData();
+   //this.refreshData();
   }
   refreshData(){
     this.mediaSub = this.mediaObserver.media$.subscribe(
