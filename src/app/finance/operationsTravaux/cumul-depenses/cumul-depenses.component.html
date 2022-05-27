@@ -1,8 +1,11 @@
-
 <div class="container">
   <div id="content" #content>
     <div>
-  <table class="table" *ngIf="detailAutreAchatTravaux.length!== 0">
+      <div style="font-size: 12px ">
+      <h3 style="color: #d50000">{{travaux.libelle}}</h3>
+      </div>
+      <div>
+        <table class="table table-striped"  style="font-size: 12px"  *ngIf="detailAutreAchatTravaux.length!== 0">
     <thead>
     <h3>Achat de materiel</h3>
     </thead>
@@ -35,7 +38,7 @@
     </div>
 
 <div>
-  <table class="table" *ngIf="detailLocation.length!== 0">
+  <table class="table table-striped" style="font-size: 12px" *ngIf="detailLocation.length!== 0">
     <thead>
     <h3>Location de materiel</h3>
     </thead>
@@ -68,7 +71,7 @@
 </div>
 
 <div>
-  <table class="table"  *ngIf="detailLoyeTravaux.length!== 0">
+  <table class="table table-striped" style="font-size: 12px" *ngIf="detailLoyeTravaux.length!== 0">
     <thead>
     <h3>Payement de loyer</h3>
     </thead>
@@ -96,7 +99,7 @@
 </div>
 
 <div class="mat-card">
-  <table class="table"  *ngIf="detailMainOeuvre.length!== 0">
+  <table style="font-size: 12px" *ngIf="detailMainOeuvre.length!== 0">
     <thead>
     <h3>Payement de main d'oeuvre</h3>
     </thead>
@@ -128,7 +131,7 @@
 </div>
 
 <div>
-  <table class="table"  *ngIf="detailTransport.length!== 0">
+  <table class="table table-striped" style="font-size: 12px"  *ngIf="detailTransport.length!== 0">
     <thead>
     <h3>Payement de transport</h3>
     </thead>
@@ -157,7 +160,7 @@
 </div>
 
 <div>
-  <table class="table"  *ngIf="detailAutre.length!== 0">
+  <table class="table table-striped" style="font-size: 12px"  *ngIf="detailAutre.length!== 0">
     <thead>
     <h3>Payement de autre dépense </h3>
     </thead>
@@ -191,7 +194,7 @@
 </div>
 
     <div>
-      <table class="table"  *ngIf="detailAchatTravaux.length!== 0">
+      <table class="table table-striped" style="font-size: 12px"  *ngIf="detailAchatTravaux.length!== 0">
         <thead>
         <h3>Retirer du stock </h3>
         </thead>
@@ -221,6 +224,7 @@
       </table>
 
     </div>
+</div>
 </div>
 </div>
 <button mat-raised-button color="primary" (click)="makePDF()">Télécharger en PDF</button>

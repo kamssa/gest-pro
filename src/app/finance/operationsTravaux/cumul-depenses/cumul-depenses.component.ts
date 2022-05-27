@@ -29,6 +29,7 @@ import {AdminService} from '../../../service/admin.service';
 import {ManagerService} from '../../../service/manager.service';
 import {EmployeService} from '../../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {SteTravauxService} from '../../../service/ste-travaux.service';
 
 @Component({
   selector: 'app-cumul-depenses',
@@ -61,6 +62,7 @@ export class CumulDepensesComponent implements OnInit {
   nav: boolean;
   type: string;
   currentUser: any;
+  travaux : Travaux;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild('content', {static: false}) el: ElementRef;
@@ -77,9 +79,13 @@ export class CumulDepensesComponent implements OnInit {
               private  autresService: AutresService,
               private authService: AuthService,  private adminService: AdminService,
               private managerService: ManagerService,
-              private employeService: EmployeService,  private helper: JwtHelperService) {
+              private employeService: EmployeService,
+              private helper: JwtHelperService, private siteTravauxService: SteTravauxService) {
 
-
+this.siteTravauxService.getTravauxById(this.data['travaux'])
+  .subscribe(res => {
+  this.travaux = res.body;
+  });
 
   }
 
@@ -191,11 +197,13 @@ makePDF(){
 
     pdf.setFontSize(16);
     pdf.setTextColor(0, 255, 0);
-    pdf.html(this.el.nativeElement, {
-      callback: (pdf) => {
-        pdf.save(this.personne.departement.entreprise.nom);
+    pdf.html(this.el.nativeElement,  {
+      'width': 90,
+
       }
-    });
+
+    );
+    pdf.save(this.personne.departement.entreprise.nom);
   }
 
 }
