@@ -42,16 +42,18 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
-      <th scope="col">Montant</th>
       <th scope="col">Fournisseur</th>
+      <th scope="col">Montant</th>
+
     </tr>
     </thead>
     <tbody *ngFor="let loc of detailLocation">
     <tr>
       <td>{{loc?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{loc?.materiaux.libelle}}</td>
-      <td>{{loc?.montant | number}}</td>
       <td>{{loc?.fournisseur.libelle}}</td>
+      <td>{{loc?.montant | number}}</td>
+
     </tr>
 
     </tbody>
