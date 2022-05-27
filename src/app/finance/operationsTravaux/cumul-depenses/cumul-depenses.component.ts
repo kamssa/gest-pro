@@ -199,7 +199,6 @@ makePDF(){
     pdf.setTextColor(0, 255, 0);
     pdf.html(this.el.nativeElement,  {
       'width': 90,
-
       }
 
     );
