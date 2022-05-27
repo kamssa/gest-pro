@@ -5,12 +5,13 @@
       <h3 style="color: #d50000">{{travaux.libelle}}</h3>
       </div>
       <div>
-        <table class="table table-striped"  style="font-size: 12px"  *ngIf="detailAutreAchatTravaux.length!== 0">
-    <thead>
+
+        <table class="table table-striped" style="font-size: 12px"  *ngIf="detailAutreAchatTravaux.length!== 0">
+       <thead>
     <h3>Achat de materiel</h3>
     </thead>
     <thead>
-    <tr>
+    <tr style="font-size: 10px">
       <th scope="col">Date</th>
       <th scope="col">Désignation</th>
       <th scope="col">Prix unitaire</th>
@@ -99,7 +100,7 @@
 </div>
 
 <div class="mat-card">
-  <table style="font-size: 12px" *ngIf="detailMainOeuvre.length!== 0">
+  <table class="" style="font-size: 12px" *ngIf="detailMainOeuvre.length!== 0">
     <thead>
     <h3>Payement de main d'oeuvre</h3>
     </thead>
