@@ -1,7 +1,8 @@
+
 <div class="container">
   <div id="content" #content>
     <div>
-  <table class="table" *ngIf="detailAutreAchatTravaux.length!= 0">
+  <table class="table" *ngIf="detailAutreAchatTravaux.length!== 0">
     <thead>
     <h3>Achat de materiel</h3>
     </thead>
@@ -18,9 +19,9 @@
     <tr>
       <td>{{autre?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{autre?.libelleMateriaux}}</td>
-      <td>{{autre?.prixUnitaire | number}}</td>
+      <td>{{autre?.prixUnitaire}}</td>
       <td>{{autre?.quantite}}</td>
-      <td>{{autre?.montant | number}}</td>
+      <td>{{autre?.montant }}</td>
     </tr>
     </tbody>
    <!-- <tfoot>
@@ -32,9 +33,9 @@
 
   </table>
     </div>
-    <hr>
+
 <div>
-  <table class="table" *ngIf="detailLocation.length!= 0">
+  <table class="table" *ngIf="detailLocation.length!== 0">
     <thead>
     <h3>Location de materiel</h3>
     </thead>
@@ -52,7 +53,7 @@
       <td>{{loc?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{loc?.materiaux.libelle}}</td>
       <td>{{loc?.fournisseur.libelle}}</td>
-      <td>{{loc?.montant | number}}</td>
+      <td>{{loc?.montant}}</td>
 
     </tr>
 
@@ -65,9 +66,9 @@
     </tfoot>-->
   </table>
 </div>
-<hr>
+
 <div>
-  <table class="table"  *ngIf="detailLoyeTravaux.length!= 0">
+  <table class="table"  *ngIf="detailLoyeTravaux.length!== 0">
     <thead>
     <h3>Payement de loyer</h3>
     </thead>
@@ -82,7 +83,7 @@
     <tr>
       <td>{{loy?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{loy?.libelle}}</td>
-      <td>{{loy?.montant | number}}</td>
+      <td>{{loy?.montant}}</td>
     </tr>
     </tbody>
    <!-- <tfoot>
@@ -93,9 +94,9 @@
     </tfoot>-->
   </table>
 </div>
-<hr>
-<div>
-  <table class="table"  *ngIf="detailMainOeuvre.length!= 0">
+
+<div class="mat-card">
+  <table class="table"  *ngIf="detailMainOeuvre.length!== 0">
     <thead>
     <h3>Payement de main d'oeuvre</h3>
     </thead>
@@ -103,18 +104,18 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Nom et Prénom</th>
-      <th scope="col">Salaire</th>
-      <th scope="col">Nombre de jours</th>
-      <th scope="col">Total</th>
-    </tr>
+      <!--<th scope="col">Salaire</th>
+      <th scope="col">Jour(s)</th>-->
+      <th scope="col">Montant</th>
+
     </thead>
     <tbody *ngFor="let mainOeuvre of detailMainOeuvre">
     <tr>
       <td>{{mainOeuvre?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{mainOeuvre?.journalier.nomComplet}}</td>
-      <td>{{mainOeuvre?.salaire | number}}</td>
-      <td>{{mainOeuvre?.nbreJours}}</td>
-      <td>{{mainOeuvre?.montantVerser | number}}</td>
+    <!--  <td>{{mainOeuvre?.salaire }}</td>
+      <td>{{mainOeuvre?.nbreJours}}</td>-->
+      <td>{{mainOeuvre?.montantVerser }}</td>
     </tr>
     </tbody>
    <!-- <tfoot>
@@ -125,9 +126,9 @@
     </tfoot>-->
   </table>
 </div>
-<hr>
+
 <div>
-  <table class="table"  *ngIf="detailTransport.length!= 0">
+  <table class="table"  *ngIf="detailTransport.length!== 0">
     <thead>
     <h3>Payement de transport</h3>
     </thead>
@@ -135,15 +136,15 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
-      <th scope="col">montant</th>
+      <th scope="col">Montant</th>
 
-    </tr>
+
     </thead>
     <tbody *ngFor="let trans of detailTransport">
     <tr>
       <td>{{trans?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{trans?.libelle}}</td>
-      <td>{{trans?.montant | number}}</td>
+      <td>{{trans?.montant }}</td>
     </tr>
     </tbody>
     <!--<tfoot>
@@ -154,9 +155,9 @@
     </tfoot>-->
   </table>
 </div>
-<hr>
+
 <div>
-  <table class="table"  *ngIf="detailAutre.length!= 0">
+  <table class="table"  *ngIf="detailAutre.length!== 0">
     <thead>
     <h3>Payement de autre dépense </h3>
     </thead>
@@ -174,9 +175,9 @@
     <tr>
       <td>{{trans?.date | date: 'dd/MM/yyyy'}}</td>
       <td>{{trans?.designation}}</td>
-      <td>{{trans?.prixUnitaire | number}}</td>
+      <td>{{trans?.prixUnitaire }}</td>
       <td>{{trans?.quantite}}</td>
-      <td>{{trans?.montant | number}}</td>
+      <td>{{trans?.montant }}</td>
     </tr>
     </tbody>
     <!--<tfoot>
@@ -188,9 +189,9 @@
   </table>
 
 </div>
-    <hr>
+
     <div>
-      <table class="table"  *ngIf="detailAchatTravaux.length!= 0">
+      <table class="table"  *ngIf="detailAchatTravaux.length!== 0">
         <thead>
         <h3>Retirer du stock </h3>
         </thead>
@@ -206,9 +207,9 @@
         <tbody *ngFor="let trans of detailAchatTravaux">
         <tr>
           <td>{{trans?.designation}}</td>
-          <td>{{trans?.prixUnitaire | number}}</td>
+          <td>{{trans?.prixUnitaire}}</td>
           <td>{{trans?.quantite}}</td>
-          <td>{{trans?.montant | number}}</td>
+          <td>{{trans?.montant }}</td>
         </tr>
         </tbody>
        <!-- <tfoot>
