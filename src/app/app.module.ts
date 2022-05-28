@@ -20,12 +20,8 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
-import {Ng2TelInputModule} from 'ng2-tel-input';
 import {MatTableModule} from '@angular/material/table';
 import {ChartistModule} from 'ng-chartist';
-
-import { AdvanceProjetComponent } from './administration/advance-projet/advance-projet.component';
-
 import { FusionChartsModule } from 'angular-fusioncharts';
 
 // Load FusionCharts
@@ -34,7 +30,6 @@ import FusionCharts from 'fusioncharts/core';
 import Column2d from 'fusioncharts/viz/column2d';
 // Load Fusion Theme
 import FusionTheme from 'fusioncharts/themes/es/fusioncharts.theme.fusion';
-import { ListProjetComponent } from './administration/advance-projet/list-projet/list-projet.component'
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
 FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
@@ -74,7 +69,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
     { provide: LOCALE_ID, useValue: 'fr-FR'},
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}],
   bootstrap: [AppComponent]
