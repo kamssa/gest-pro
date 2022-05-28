@@ -107,7 +107,7 @@
     <thead>
     <tr>
       <th scope="col">Date</th>
-      <th scope="col">Nom et Prénom</th>
+      <th scope="col">Désignation</th>
       <!--<th scope="col">Salaire</th>
       <th scope="col">Jour(s)</th>-->
       <th scope="col">Montant</th>
@@ -116,7 +116,7 @@
     <tbody *ngFor="let mainOeuvre of detailMainOeuvre">
     <tr>
       <td>{{mainOeuvre?.date | date: 'dd/MM/yyyy'}}</td>
-      <td>{{mainOeuvre?.journalier.nomComplet}}</td>
+      <td>{{mainOeuvre?.libelle}}</td>
     <!--  <td>{{mainOeuvre?.salaire }}</td>
       <td>{{mainOeuvre?.nbreJours}}</td>-->
       <td>{{mainOeuvre?.montantVerser }}</td>

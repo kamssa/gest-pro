@@ -10,6 +10,7 @@ export class DetailMainOeuvre {
               public nbreJours?: number,
               public date?: Date,
               public travauxId?: number,
+              public libelle?: string,
               public  journalier?: Journalier) {
   }
 }

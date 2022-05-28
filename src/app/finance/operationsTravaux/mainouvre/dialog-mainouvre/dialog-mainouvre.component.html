@@ -9,13 +9,13 @@
       <th mat-header-cell *matHeaderCellDef> Date </th>
       <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre.date | date: 'dd/MM/yyyy'}} </td>
     </ng-container>
-    <ng-container matColumnDef="nom">
-      <th mat-header-cell *matHeaderCellDef> Nom et Prenom</th>
-      <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre.journalier.nomComplet}} </td>
+    <ng-container matColumnDef="libelle">
+      <th mat-header-cell *matHeaderCellDef>Désignation</th>
+      <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre?.libelle}} </td>
     </ng-container>
     <ng-container matColumnDef="salaire">
       <th mat-header-cell *matHeaderCellDef> Salaire </th>
-      <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre.salaire|number}} </td>
+      <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre?.salaire|number}} </td>
     </ng-container>
     <ng-container matColumnDef="nbreJours">
       <th mat-header-cell *matHeaderCellDef> Nombre de jours </th>

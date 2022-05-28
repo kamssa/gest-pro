@@ -54,6 +54,7 @@ export class EditMainouvreTravauxComponent implements OnInit {
                   reste: detailMainOeuvre.reste,
                   nbreJours: detailMainOeuvre.nbreJours,
                   date: detailMainOeuvre.date,
+                  libelle: detailMainOeuvre.libelle,
                   journalier: this.fb.group({
                     id: detailMainOeuvre.journalier.id,
                     version: detailMainOeuvre.journalier.version,
@@ -106,11 +107,12 @@ export class EditMainouvreTravauxComponent implements OnInit {
       reste: [''],
       nbreJours: ['', Validators.required],
       date: [''],
+      libelle: ['', Validators.required],
       journalier: this.fb.group({
         id: [''],
         version: [''],
-         nom: ['',  Validators.required] ,
-         prenom: ['',  Validators.required],
+         nom: [''] ,
+         prenom: [''],
          fonction: ['']
       }),
     });
