@@ -181,11 +181,13 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
 makePDF(){
   if (this.type === 'MANAGER'){
 
-    const pdf =  new jsPDF('landscape', 'pt',  [800, 900]);
+    const pdf =  new jsPDF('landscape', 'pt',  'a4');
+
     pdf.canvas.height = 70 * 10;
     pdf.canvas.width = 70 * 7.5;
+    pdf.setFontSize(10);
+    pdf.setTextColor(255, 0, 0);
     pdf.html(this.el.nativeElement,  {
-
       callback: (pdf) => {
         pdf.save(this.personne.entreprise.nom);
       }

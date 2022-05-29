@@ -107,12 +107,12 @@ export class EditMainouvreTravauxComponent implements OnInit {
       reste: [''],
       nbreJours: ['', Validators.required],
       date: [''],
-      libelle: ['', Validators.required],
+      libelle: [''],
       journalier: this.fb.group({
         id: [''],
         version: [''],
-         nom: ['', Validators.required] ,
-         prenom: ['', Validators.required],
+         nom: [''] ,
+         prenom: [''],
          fonction: ['']
       }),
     });

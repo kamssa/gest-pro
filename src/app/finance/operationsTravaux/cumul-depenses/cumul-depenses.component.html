@@ -1,10 +1,15 @@
-  <div id="content" #content>
-    <div class="container">
+<div class="container">
+
+<div id="content" #content>
       <div class="row">
         <div class="col-md-12" id="htmlData">
     <div>
       <div style="">
       <h3  style="color: #d50000; font-size: 12px; text-align: center">{{travaux.libelle}}</h3>
+      </div>
+      <div class="box">
+      <button mat-raised-button	>Dépense totale</button>
+      <button mat-raised-button	>{{travaux.total}}</button>
       </div>
       <div>
       <div  *ngIf="detailAutreAchatTravaux.length!== 0">
@@ -13,7 +18,7 @@
     <h3>Achat de materiel</h3>
     </thead>
     <thead>
-    <tr class="table-primary">
+    <tr>
       <th scope="col">Date</th>
       <th scope="col">Désignation</th>
       <th scope="col">Prix unitaire</th>
@@ -32,20 +37,20 @@
     </tbody>
 
   </table>
-        <!--<div>
+        <div class="box">
+          <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
           <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme}}</h3>
-          <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme}}</h3>
-        </div>-->
+        </div>
 
       </div>
       </div>
-<div>
-  <table class="table table-striped" style="font-size: 12px" *ngIf="detailLocation.length!== 0">
+<div *ngIf="detailLocation.length!== 0">
+  <table class="table table-striped" style="font-size: 12px" >
     <thead>
     <h3>Location de materiel</h3>
     </thead>
     <thead>
-    <tr class="table-primary">
+    <tr>
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Fournisseur</th>
@@ -70,15 +75,19 @@
     </tr>
     </tfoot>-->
   </table>
+  <div class="box">
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme1}}</h3>
+  </div>
 </div>
 
-<div>
-  <table class="table table-striped" style="font-size: 12px" *ngIf="detailLoyeTravaux.length!== 0">
+<div *ngIf="detailLoyeTravaux.length!== 0">
+  <table class="table table-striped" style="font-size: 12px" >
     <thead>
     <h3>Payement de loyer</h3>
     </thead>
     <thead>
-    <tr class="table-primary">
+    <tr>
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Montant</th>
@@ -98,15 +107,19 @@
     </tr>
     </tfoot>-->
   </table>
+  <div class="box">
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme2}}</h3>
+  </div>
 </div>
 
-<div class="mat-card">
-  <table class="" style="font-size: 12px" *ngIf="detailMainOeuvre.length!== 0">
+<div  *ngIf="detailMainOeuvre.length!== 0">
+  <table class="table table-striped" style="font-size: 12px">
     <thead>
     <h3>Payement de main d'oeuvre</h3>
     </thead>
     <thead>
-    <tr class="table-primary">
+    <tr>
       <th scope="col">Date</th>
       <th scope="col">Désignation</th>
       <!--<th scope="col">Salaire</th>
@@ -117,7 +130,7 @@
     <tbody *ngFor="let mainOeuvre of detailMainOeuvre">
     <tr>
       <td>{{mainOeuvre?.date | date: 'dd/MM/yyyy'}}</td>
-      <td>{{mainOeuvre?.journalier.nomComplet}}</td>
+      <td>{{mainOeuvre?.journalier?.nomComplet}}</td>
     <!--  <td>{{mainOeuvre?.salaire }}</td>
       <td>{{mainOeuvre?.nbreJours}}</td>-->
       <td>{{mainOeuvre?.montantVerser }}</td>
@@ -130,15 +143,19 @@
     </tr>
     </tfoot>-->
   </table>
+  <div class="box">
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme3}}</h3>
+  </div>
 </div>
 
-<div>
-  <table class="table table-striped" style="font-size: 12px"  *ngIf="detailTransport.length!== 0">
+<div  *ngIf="detailTransport.length!== 0">
+  <table class="table table-striped" style="font-size: 12px" >
     <thead>
     <h3>Payement de transport</h3>
     </thead>
     <thead>
-    <tr class="table-primary">
+    <tr>
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Montant</th>
@@ -159,15 +176,19 @@
     </tr>
     </tfoot>-->
   </table>
+  <div class="box">
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme4}}</h3>
+  </div>
 </div>
 
-<div>
-  <table class="table table-striped" style="font-size: 12px"  *ngIf="detailAutre.length!== 0">
+<div *ngIf="detailAutre.length!== 0">
+  <table class="table table-striped" style="font-size: 12px"  >
     <thead>
     <h3>Payement de autre dépense </h3>
     </thead>
     <thead>
-    <tr class="table-primary">
+    <tr>
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Prix</th>
@@ -192,16 +213,18 @@
     </tr>
     </tfoot>-->
   </table>
-
+  <div class="box">
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+    <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme5}}</h3>
+  </div>
 </div>
-
-    <div>
-      <table class="table table-striped" style="font-size: 12px"  *ngIf="detailAchatTravaux.length!== 0">
+      <div *ngIf="detailAchatTravaux.length!== 0">
+      <table class="table table-striped" style="font-size: 12px"  >
         <thead>
         <h3>Retirer du stock </h3>
         </thead>
         <thead>
-        <tr class="table-primary">
+        <tr>
           <th scope="col">Designation</th>
           <th scope="col">Prix</th>
           <th scope="col">Quantité</th>
@@ -224,7 +247,10 @@
         </tr>
         </tfoot>-->
       </table>
-
+        <div class="box">
+          <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+          <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme6}}</h3>
+        </div>
     </div>
 </div>
 </div>

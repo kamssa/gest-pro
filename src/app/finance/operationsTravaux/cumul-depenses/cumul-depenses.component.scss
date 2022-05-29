@@ -1,10 +1,15 @@
+.container{
+  margin-top: 20px;
+}
 #content{
-  //block-size: 1000px;
+  block-size: 400px;
   //writing-mode: horizontal-tb;
 }
 table {
- /*max-width: 2480px;
-  max-height: 400px;*/
+  max-width: 2480px;
+  max-height: 200px;
+  width: 100%;
+
 }
 
 th  {
@@ -14,14 +19,14 @@ th  {
   writing-mode: horizontal-tb;
   text-overflow: clip;
 }
-tr  {
+th  {
   font-family : "Times New Roman", Times, sans-serif;
-  color: #9e9e9e;
-  font-size: 5px;
+  color: #000000;
+  size: 10px;
 }
 td{
   color: #000000;
-  font-size: 15px;
+  font-size: 12px;
 
 }
 .example-full-width {
@@ -38,9 +43,7 @@ h3{
   font-family : "Times New Roman", Times, serif;
   color: #0d47a1;
 }
-table {
- width: 100%;
-}
+
 tfoot{
   border: 2px solid #555;
   border-collapse: collapse;
