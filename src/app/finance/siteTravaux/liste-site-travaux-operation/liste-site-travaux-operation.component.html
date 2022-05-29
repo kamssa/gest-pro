@@ -1,10 +1,11 @@
 <div class="row">
 <div *ngIf="travaux">
-  <button mat-button color="primary" (click)="onCumulDepense(travaux.id)">Ouvrir dépense</button>
-<!--
-  <button mat-button color="primary" (click)="onDate(travaux.id)">Ouvrir date</button>
--->
-
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <button mat-raised-button (click)="onCumulDepense(travaux.id)">Dépense totale</button>
+    <button mat-raised-button (click)="onDate(travaux.id)">Dépense par date</button>
+  </div>
+  <div>
+  </div>
   <mat-accordion class="example-headers-align" >
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">

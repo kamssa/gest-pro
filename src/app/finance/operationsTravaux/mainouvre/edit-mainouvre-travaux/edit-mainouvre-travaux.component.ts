@@ -111,8 +111,8 @@ export class EditMainouvreTravauxComponent implements OnInit {
       journalier: this.fb.group({
         id: [''],
         version: [''],
-         nom: [''] ,
-         prenom: [''],
+         nom: ['', Validators.required] ,
+         prenom: ['', Validators.required],
          fonction: ['']
       }),
     });

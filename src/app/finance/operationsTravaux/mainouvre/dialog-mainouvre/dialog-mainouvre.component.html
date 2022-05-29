@@ -11,7 +11,7 @@
     </ng-container>
     <ng-container matColumnDef="libelle">
       <th mat-header-cell *matHeaderCellDef>Désignation</th>
-      <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre?.libelle}} </td>
+      <td mat-cell *matCellDef="let detailMainOeuvre"> {{detailMainOeuvre?.journalier.nomComplet}} </td>
     </ng-container>
     <ng-container matColumnDef="salaire">
       <th mat-header-cell *matHeaderCellDef> Salaire </th>

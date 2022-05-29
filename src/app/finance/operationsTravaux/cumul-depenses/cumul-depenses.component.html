@@ -1,17 +1,19 @@
-<div class="container" style="margin-top: 10px">
   <div id="content" #content>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" id="htmlData">
     <div>
       <div style="">
       <h3  style="color: #d50000; font-size: 12px; text-align: center">{{travaux.libelle}}</h3>
       </div>
       <div>
-
-        <table class="table table-striped" style="font-size: 12px"  *ngIf="detailAutreAchatTravaux.length!== 0">
+      <div  *ngIf="detailAutreAchatTravaux.length!== 0">
+        <table class="table table-striped" style="font-size: 12px">
        <thead>
     <h3>Achat de materiel</h3>
     </thead>
     <thead>
-    <tr>
+    <tr class="table-primary">
       <th scope="col">Date</th>
       <th scope="col">Désignation</th>
       <th scope="col">Prix unitaire</th>
@@ -28,23 +30,22 @@
       <td>{{autre?.montant }}</td>
     </tr>
     </tbody>
-   <!-- <tfoot>
-    <tr>
-      <th scope="row">TOTAL</th>
-      <td style="text-align: end">{{somme}}</td>
-    </tr>
-    </tfoot>-->
 
   </table>
-    </div>
+        <!--<div>
+          <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme}}</h3>
+          <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme}}</h3>
+        </div>-->
 
+      </div>
+      </div>
 <div>
   <table class="table table-striped" style="font-size: 12px" *ngIf="detailLocation.length!== 0">
     <thead>
     <h3>Location de materiel</h3>
     </thead>
     <thead>
-    <tr>
+    <tr class="table-primary">
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Fournisseur</th>
@@ -62,7 +63,7 @@
     </tr>
 
     </tbody>
-   <!-- <tfoot>
+    <!--<tfoot>
     <tr>
       <th scope="row">TOTAL</th>
       <td style="text-align: end">{{somme1}}</td>
@@ -77,7 +78,7 @@
     <h3>Payement de loyer</h3>
     </thead>
     <thead>
-    <tr>
+    <tr class="table-primary">
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Montant</th>
@@ -105,7 +106,7 @@
     <h3>Payement de main d'oeuvre</h3>
     </thead>
     <thead>
-    <tr>
+    <tr class="table-primary">
       <th scope="col">Date</th>
       <th scope="col">Désignation</th>
       <!--<th scope="col">Salaire</th>
@@ -116,7 +117,7 @@
     <tbody *ngFor="let mainOeuvre of detailMainOeuvre">
     <tr>
       <td>{{mainOeuvre?.date | date: 'dd/MM/yyyy'}}</td>
-      <td>{{mainOeuvre?.libelle}}</td>
+      <td>{{mainOeuvre?.journalier.nomComplet}}</td>
     <!--  <td>{{mainOeuvre?.salaire }}</td>
       <td>{{mainOeuvre?.nbreJours}}</td>-->
       <td>{{mainOeuvre?.montantVerser }}</td>
@@ -137,7 +138,7 @@
     <h3>Payement de transport</h3>
     </thead>
     <thead>
-    <tr>
+    <tr class="table-primary">
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Montant</th>
@@ -151,7 +152,7 @@
       <td>{{trans?.montant }}</td>
     </tr>
     </tbody>
-    <!--<tfoot>
+   <!-- <tfoot>
     <tr>
       <th scope="row">TOTAL</th>
       <td style="text-align: end">{{somme4}}</td>
@@ -166,7 +167,7 @@
     <h3>Payement de autre dépense </h3>
     </thead>
     <thead>
-    <tr>
+    <tr class="table-primary">
       <th scope="col">Date</th>
       <th scope="col">Designation</th>
       <th scope="col">Prix</th>
@@ -184,7 +185,7 @@
       <td>{{trans?.montant }}</td>
     </tr>
     </tbody>
-    <!--<tfoot>
+  <!--  <tfoot>
     <tr>
       <th scope="row">TOTAL</th>
       <td style="text-align: end">{{somme5}}</td>
@@ -200,7 +201,7 @@
         <h3>Retirer du stock </h3>
         </thead>
         <thead>
-        <tr>
+        <tr class="table-primary">
           <th scope="col">Designation</th>
           <th scope="col">Prix</th>
           <th scope="col">Quantité</th>
@@ -228,4 +229,6 @@
 </div>
 </div>
 </div>
+    </div>
+  </div>
 <button mat-raised-button color="primary" (click)="makePDF()">Télécharger en PDF</button>

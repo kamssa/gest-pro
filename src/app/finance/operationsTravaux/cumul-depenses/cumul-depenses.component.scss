@@ -1,6 +1,6 @@
 #content{
-  block-size: 1000px;
-  writing-mode: horizontal-tb;
+  //block-size: 1000px;
+  //writing-mode: horizontal-tb;
 }
 table {
  /*max-width: 2480px;
@@ -15,14 +15,14 @@ th  {
   text-overflow: clip;
 }
 tr  {
-  font-family : "Times New Roman", Times, serif;
+  font-family : "Times New Roman", Times, sans-serif;
   color: #9e9e9e;
-  size: 5px;
-  writing-mode: horizontal-tb;
+  font-size: 5px;
 }
 td{
-  text-overflow: "-";
   color: #000000;
+  font-size: 15px;
+
 }
 .example-full-width {
   width: 100%;
@@ -31,7 +31,7 @@ td{
   height: 400px;
   width: 700px;
 }
-div {
+.container {
   overflow-y: scroll;
 }
 h3{
@@ -47,4 +47,10 @@ tfoot{
 }
 table th table td {
 border: 1px solid;
+}
+.box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 600px;
 }

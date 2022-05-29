@@ -107,7 +107,7 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
       this.locationService.getDetailLocationMontantByTravaux(this.data['travaux'])
         .subscribe( res => {
           this.somme1 = res;
-        })
+        });
 
     });
     this.loyeService.getDetailLoyeByTravaux(this.data['travaux']).subscribe(result => {
@@ -180,8 +180,12 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
   }
 makePDF(){
   if (this.type === 'MANAGER'){
-    let pdf = new jsPDF('p', 'pt', 'a4');
-    pdf.html(this.el.nativeElement, {
+
+    const pdf =  new jsPDF('landscape', 'pt',  [800, 900]);
+    pdf.canvas.height = 70 * 10;
+    pdf.canvas.width = 70 * 7.5;
+    pdf.html(this.el.nativeElement,  {
+
       callback: (pdf) => {
         pdf.save(this.personne.entreprise.nom);
       }
@@ -192,11 +196,11 @@ makePDF(){
     let pdf = new jsPDF('landscape', 'pt', 'a4');
     pdf.canvas.height = 70 * 10;
     pdf.canvas.width = 70 * 7.5;
-    /*pdf.setFontSize(22);
+    pdf.setFontSize(22);
     pdf.setTextColor(255, 0, 0);
 
     pdf.setFontSize(16);
-    pdf.setTextColor(0, 255, 0);*/
+    pdf.setTextColor(0, 255, 0);
     pdf.html(this.el.nativeElement,  {
       'width': 50,
       }
