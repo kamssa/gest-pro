@@ -1,4 +1,8 @@
 <div class="main-div" *ngIf="edit">
+  <mat-toolbar>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  </mat-toolbar>
   <div *ngIf="editMode; else newAchat">
     <div class="">
       <mat-card>
@@ -6,7 +10,7 @@
           <mat-card-title> modifier autre dépense</mat-card-title>
           <mat-card-subtitle></mat-card-subtitle>
         </mat-card-header>
-        <form class="example-form" [formGroup]="caisseForm" (ngSubmit)="onSubmit()" novalidate *ngIf="autreDepenseForm">
+        <form class="example-form" [formGroup]="caisseForm" (ngSubmit)="onSubmit()" novalidate *ngIf="caisseForm">
           <div class="achat">
             <div class="row">
               <div formArrayName="caisseDetail">
@@ -70,7 +74,7 @@
                       <input #quantite matInput placeholder="Quantite" formControlName="quantite">
                     </mat-form-field>
                     <mat-label>
-                      <input matInput #montant  placeholder="{{montant}}"  (click)="getCalcul()">
+                      <input   #montant type="number" matInput placeholder="{{montant || 0 | number}}" (click)="getCalcul()">
                     </mat-label>
                     <div>
                       <button mat-button matStepperNext type="button">Suivant</button>

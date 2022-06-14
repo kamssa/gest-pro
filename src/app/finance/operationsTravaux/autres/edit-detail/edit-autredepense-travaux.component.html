@@ -37,7 +37,7 @@
   <ng-template #newAchat>
 
     <form class="example-form" [formGroup]="autreDepenseForm" (ngSubmit)="onSubmit()" *ngIf ="autreDepenseForm">
-          <mat-card>Paiement pour la caisse</mat-card>
+          <mat-card>Paiement de divers</mat-card>
           <br>
       <div formArrayName="detailAutres">
                 <div *ngFor="let itemrow of autreDepenseForm.controls.detailAutres['controls']; let i=index"

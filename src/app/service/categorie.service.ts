@@ -90,7 +90,7 @@ export class CategorieService {
       .pipe(map(res => res,
         tap(res =>
           this.log(`categorie supp =${res}`))),
-        catchError(this.handleError<Resultat<Categorie[]>>('supprimerCategorie'))
+        catchError(this.handleError<Resultat<Categorie>>('supprimerCategorie'))
       );
 
   }

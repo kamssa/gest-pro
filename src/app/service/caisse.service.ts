@@ -7,6 +7,7 @@ import {MessageService} from './message.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {catchError, map, tap} from 'rxjs/operators';
+import {Categorie} from '../model/Categorie';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,15 @@ export class CaisseService {
       }),
       catchError(this.handleError<Resultat<Caisse>>('modifClient'))
     );
+  }
+  supprimerCaisse(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/api/caisse/${id}`)
+      .pipe(map(res => res,
+        tap(res =>
+          this.log(`Caisse supp =${res}`))),
+        catchError(this.handleError<Resultat<Caisse>>('supprimerCaisse'))
+      );
+
   }
   getCaisseById(id: number): Observable<Resultat<Caisse>> {
     return this.http.get<Resultat<Caisse>>(`${environment.apiUrl}/api/caisse/${id}`);

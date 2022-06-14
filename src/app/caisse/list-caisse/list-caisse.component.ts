@@ -9,13 +9,12 @@ import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {NotificationService} from '../../helper/notification.service';
 import {AdminService} from '../../service/admin.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {CaisseService} from '../../service/caisse.service';
-import {EditOperationComponent} from '../../banque/edit-operation/edit-operation.component';
 import {EditOperationCaisseComponent} from '../edit-operation-caisse/edit-operation-caisse.component';
 import {ManagerService} from '../../service/manager.service';
 import {CaisseDetail} from '../../model/CaisseDetail';
 import {EmployeService} from '../../service/employe.service';
 import {CaisseDetailService} from '../../service/caisse-detail.service';
+import {CaisseService} from '../../service/caisse.service';
 
 @Component({
   selector: 'app-list-caisse',
@@ -44,6 +43,7 @@ export class ListCaisseComponent implements OnInit {
   constructor(
               private managerService: ManagerService,
               private  caisseDetailService: CaisseDetailService,
+              private caisseService: CaisseService,
               public dialog: MatDialog,
               private router: Router,
               private  dialogService: DialogConfirmService,
@@ -144,7 +144,39 @@ export class ListCaisseComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
     const dialogRef = this.dialog.open(EditOperationCaisseComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(resul => {
+      this.caisseService.caisseCreer$
+        .subscribe(result => {
+          if (result.status === 0){
+            /*this.array.unshift(result.body);
+            this.listData = new MatTableDataSource(this.array);
+            this.listData.sort = this.sort;
+            this.listData.paginator = this.paginator;*/
+            this.caisseDetailService.getCaisseDetailByEntrepriseId(this.personne.entreprise.id).subscribe(list => {
 
+              this.array = list.body.map(item => {
+                return {
+                  id: item.id,
+                  ...item
+                };
+              });
+              this.listData = new MatTableDataSource(this.array);
+              this.listData.sort = this.sort;
+              this.listData.paginator = this.paginator;
+              this.listData.filterPredicate = (data, filter) => {
+                return this.displayedColumns.some(ele => {
+                  return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                });
+              };
+
+            });
+          }else {
+            this.listData = new MatTableDataSource(this.array);
+            this.listData.sort = this.sort;
+            this.listData.paginator = this.paginator;
+          }
+        });
+    });
   }
 
   applyFilter() {
@@ -160,6 +192,26 @@ export class ListCaisseComponent implements OnInit {
   }
 
   onDelete(row: any) {
+      if (confirm('Voulez-vous vraiment supprimer la caisse ?')){
+        this.caisseService.supprimerCaisse(row.id).subscribe(result => {
+          if(result.status === 0){
+            this.notificationService.warn('Suppression avec succès');
+            const index: number = this.array.indexOf(row);
+            if (index !== -1) {
+              this.array.splice(index, 1);
+              this.listData = new MatTableDataSource(this.array);
+              this.listData.sort = this.sort;
+              this.listData.paginator = this.paginator;
+
+            }
+          }else {
+            this.notificationService.warn('Vous devez d\'abord supprimer les articles');
+
+          }
+        });
+
+      }
+
 
   }
 
