@@ -78,12 +78,12 @@ export class AchatTravauxService {
   // recuperer achat par id travaux
   getDetailAchatTravauxByDateTravaux(dateDebut: Date, dateFin: Date, travauxId: number, ): Observable<DetailAutreAchatTravaux[]> {
     // @ts-ignore
-    return this.http.get<Resultat<DetailAutreAchatTravaux[]>>(
+    return this.http.get<Resultat<DetailAchatTravaux[]>>(
       `${environment.apiUrl}/api/detailAchatTravauxDate/?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
       .pipe(map(res => res.body,
         tap(res =>
           this.log(`travaux trouve =${res}`))),
-        catchError(this.handleError<Resultat<DetailAutreAchatTravaux[]>>('getAchatTravauxByTravaux'))
+        catchError(this.handleError<Resultat<DetailAchatTravaux[]>>('getAchatTravauxByTravaux'))
       );
   }
   // recuperer achat par id travaux
