@@ -12,6 +12,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {AutresService} from '../../../service/autres.service';
 import {UpdateEvolutionService} from '../../../service/update-evolution.service';
 import {CumulDepensesComponent} from '../../../finance/operationsTravaux/cumul-depenses/cumul-depenses.component';
+import {RechercheParDateComponent} from '../../../finance/operationsTravaux/cumul-depenses/recherche-par-date/recherche-par-date.component';
 
 @Component({
   selector: 'app-list-projet',
@@ -141,5 +142,13 @@ export class ListProjetComponent implements OnInit {
       }
     });
 
+  }
+
+  cumulDepenseDate(id: number) {
+    this.dialog.open(RechercheParDateComponent,{
+      data: {
+        travaux: id
+      }
+    });
   }
 }
