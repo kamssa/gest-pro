@@ -16,7 +16,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {JwtInterceptor} from './helper/jwt.interceptor';
 import {ErrorInterceptor} from './helper/error.interceptor';
-import { registerLocaleData } from '@angular/common';
+import {DatePipe, registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
@@ -30,6 +30,11 @@ import FusionCharts from 'fusioncharts/core';
 import Column2d from 'fusioncharts/viz/column2d';
 // Load Fusion Theme
 import FusionTheme from 'fusioncharts/themes/es/fusioncharts.theme.fusion';
+import { CarburantComponent } from './comptabilite/carburant/carburant.component';
+import { FournisseurComponent } from './comptabilite/fournisseur/fournisseur.component';
+import { ClientComponent } from './comptabilite/client/client.component';
+import { MissionComponent } from './comptabilite/mission/mission.component';
+import { PrevisionTresorerieComponent } from './comptabilite/prevision-tresorerie/prevision-tresorerie.component';
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
 FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
@@ -38,6 +43,11 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
 @NgModule({
   declarations: [
     AppComponent,
+    CarburantComponent,
+    FournisseurComponent,
+    ClientComponent,
+    MissionComponent,
+    PrevisionTresorerieComponent,
 
 
 
@@ -64,6 +74,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: MAT_DIALOG_DATA, useValue: {} },

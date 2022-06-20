@@ -9,6 +9,7 @@ import {catchError, map, tap} from "rxjs/operators";
 import {LocationTravaux} from "../model/LocationTravaux";
 import {Autres} from "../model/Autres";
 import {DetailLocation} from '../model/DetailLocation';
+import {DetailAchatTravaux} from '../model/DtailAchat';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,16 @@ export class LocationService {
         tap(res =>
           this.log(`travaux trouve =${res}`))),
         catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
+  getDetailLocationByDateTravaux( dateDebut: string, dateFin: string, travauxId: number): Observable<DetailLocation[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<DetailLocation[]>>(
+      `${environment.apiUrl}/api/detailLocationDate?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<DetailLocation[]>>('getAchatTravauxByTravaux'))
       );
   }
   travauxCreer(res: Resultat<LocationTravaux>) {

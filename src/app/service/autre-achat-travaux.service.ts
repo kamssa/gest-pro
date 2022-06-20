@@ -7,6 +7,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
+import {DetailAchatTravaux} from '../model/DtailAchat';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,17 @@ export class AutreAchatTravauxService {
         tap(res =>
           this.log(`travaux trouve =${res}`))),
         catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
+  // recuperer achat par id travaux
+  getDetailAutreAchatTravauxByDateTravaux( dateDebut: string, dateFin: string, travauxId: number): Observable<DetailAutreAchatTravaux[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<DetailAutreAchatTravaux[]>>(
+      `${environment.apiUrl}/api/detailAutreAchatTravauxDate?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<DetailAutreAchatTravaux[]>>('getAchatTravauxByTravaux'))
       );
   }
   modifAchatTravaux(achatTravaux: AutreAchatTravaux): Observable<Resultat<AutreAchatTravaux>> {

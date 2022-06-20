@@ -1,0 +1,260 @@
+<div class="container">
+
+  <div id="content" #content>
+    <div class="row">
+      <div class="col-md-12" id="htmlData">
+        <div>
+          <div style="">
+            <h3  style="color: #d50000; font-size: 12px; text-align: center">{{travaux?.libelle}}</h3>
+          </div>
+          <div class="box">
+           <!-- <button mat-raised-button	>Dépense totale</button>
+            <button mat-raised-button	>{{travaux.total}}</button>-->
+          </div>
+          <div>
+            <div>
+              <table class="table table-striped" style="font-size: 12px">
+                <thead>
+                <h3>Achat de materiel</h3>
+                </thead>
+                <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Désignation</th>
+                  <th scope="col">Prix unitaire</th>
+                  <th scope="col">Quantité</th>
+                  <th scope="col">Montant</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let autre of detailAutreAchatTravaux">
+                <tr>
+                  <td>{{autre?.date | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{autre?.libelleMateriaux}}</td>
+                  <td>{{autre?.prixUnitaire}}</td>
+                  <td>{{autre?.quantite}}</td>
+                  <td>{{autre?.montant }}</td>
+                </tr>
+                </tbody>
+
+              </table>
+              <!--<div class="box">
+                <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+                <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme}}</h3>
+              </div>-->
+
+            </div>
+          </div>
+          <div>
+            <table class="table table-striped" style="font-size: 12px" >
+              <thead>
+              <h3>Location de materiel</h3>
+              </thead>
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Fournisseur</th>
+                <th scope="col">Montant</th>
+
+              </tr>
+              </thead>
+              <tbody *ngFor="let loc of detailLocation">
+              <tr>
+                <td>{{loc?.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{loc?.materiaux.libelle}}</td>
+                <td>{{loc?.fournisseur.libelle}}</td>
+                <td>{{loc?.montant}}</td>
+
+              </tr>
+
+              </tbody>
+              <!--<tfoot>
+              <tr>
+                <th scope="row">TOTAL</th>
+                <td style="text-align: end">{{somme1}}</td>
+              </tr>
+              </tfoot>-->
+            </table>
+          <!--  <div class="box">
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme1}}</h3>
+            </div>-->
+          </div>
+
+          <div>
+            <table class="table table-striped" style="font-size: 12px" >
+              <thead>
+              <h3>Payement de loyer</h3>
+              </thead>
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Montant</th>
+              </tr>
+              </thead>
+              <tbody *ngFor="let loy of detailLoyeTravaux">
+              <tr>
+                <td>{{loy?.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{loy?.libelle}}</td>
+                <td>{{loy?.montant}}</td>
+              </tr>
+              </tbody>
+              <!-- <tfoot>
+               <tr>
+                 <th scope="row">TOTAL</th>
+                 <td style="text-align: end">{{somme2}}</td>
+               </tr>
+               </tfoot>-->
+            </table>
+           <!-- <div class="box">
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme2}}</h3>
+            </div>-->
+          </div>
+
+          <div>
+            <table class="table table-striped" style="font-size: 12px">
+              <thead>
+              <h3>Payement de main d'oeuvre</h3>
+              </thead>
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Désignation</th>
+                <!--<th scope="col">Salaire</th>
+                <th scope="col">Jour(s)</th>-->
+                <th scope="col">Montant</th>
+
+              </thead>
+              <tbody *ngFor="let mainOeuvre of detailMainOeuvre">
+              <tr>
+                <td>{{mainOeuvre?.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{mainOeuvre?.journalier?.nomComplet}}</td>
+                <!--  <td>{{mainOeuvre?.salaire }}</td>
+                  <td>{{mainOeuvre?.nbreJours}}</td>-->
+                <td>{{mainOeuvre?.montantVerser }}</td>
+              </tr>
+              </tbody>
+              <!-- <tfoot>
+               <tr>
+                 <th scope="row">TOTAL</th>
+                 <td style="text-align: end">{{somme3}}</td>
+               </tr>
+               </tfoot>-->
+            </table>
+           <!-- <div class="box">
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme3}}</h3>
+            </div>-->
+          </div>
+
+          <div>
+            <table class="table table-striped" style="font-size: 12px" >
+              <thead>
+              <h3>Payement de transport</h3>
+              </thead>
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Montant</th>
+
+
+              </thead>
+              <tbody *ngFor="let trans of detailTransport">
+              <tr>
+                <td>{{trans?.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{trans?.libelle}}</td>
+                <td>{{trans?.montant }}</td>
+              </tr>
+              </tbody>
+              <!-- <tfoot>
+               <tr>
+                 <th scope="row">TOTAL</th>
+                 <td style="text-align: end">{{somme4}}</td>
+               </tr>
+               </tfoot>-->
+            </table>
+          <!--  <div class="box">
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme4}}</h3>
+            </div>-->
+          </div>
+
+          <div>
+            <table class="table table-striped" style="font-size: 12px"  >
+              <thead>
+              <h3>Payement de divers </h3>
+              </thead>
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">montant</th>
+
+              </tr>
+              </thead>
+              <tbody *ngFor="let trans of detailAutre">
+              <tr>
+                <td>{{trans?.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{trans?.designation}}</td>
+                <td>{{trans?.prixUnitaire }}</td>
+                <td>{{trans?.quantite}}</td>
+                <td>{{trans?.montant }}</td>
+              </tr>
+              </tbody>
+              <!--  <tfoot>
+                <tr>
+                  <th scope="row">TOTAL</th>
+                  <td style="text-align: end">{{somme5}}</td>
+                </tr>
+                </tfoot>-->
+            </table>
+           <!-- <div class="box">
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme5}}</h3>
+            </div>-->
+          </div>
+          <div>
+            <table class="table table-striped" style="font-size: 12px"  >
+              <thead>
+              <h3>Retirer du stock </h3>
+              </thead>
+              <thead>
+              <tr>
+                <th scope="col">Designation</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">montant</th>
+
+              </tr>
+              </thead>
+              <tbody *ngFor="let trans of detailAchatTravaux">
+              <tr>
+                <td>{{trans?.designation}}</td>
+                <td>{{trans?.prixUnitaire}}</td>
+                <td>{{trans?.quantite}}</td>
+                <td>{{trans?.montant }}</td>
+              </tr>
+              </tbody>
+              <!-- <tfoot>
+               <tr>
+                 <th scope="row">TOTAL</th>
+                 <td style="text-align: end">{{somme6}}</td>
+               </tr>
+               </tfoot>-->
+            </table>
+            <div class="box">
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme6}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button mat-raised-button color="primary" (click)="makePDF()">Télécharger en PDF</button>

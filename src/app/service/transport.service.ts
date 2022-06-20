@@ -9,6 +9,7 @@ import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
 import {Transport} from "../model/Transport";
 import {DetailTransport} from '../model/DetailTransport';
+import {DetailMainOeuvre} from '../model/DetailMainDoeuvre';
 
 
 @Injectable({
@@ -83,7 +84,16 @@ export class TransportService {
         catchError(this.handleError<any>('getAchatTravauxByTravaux'))
       );
   }
-
+  getDetailAutreByDateTravaux( dateDebut: string, dateFin: string, travauxId: number): Observable<DetailTransport[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<DetailTransport[]>>(
+      `${environment.apiUrl}/api/detailTransportDate?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<DetailTransport[]>>('getAchatTravauxByTravaux'))
+      );
+  }
   travauxCreer(res: Resultat<LocationTravaux>) {
     console.log('Travail a ete  creer correctement essaie source');
     this.travauxCreerSource.next(res);

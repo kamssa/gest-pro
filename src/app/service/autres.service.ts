@@ -9,6 +9,7 @@ import {catchError, map, tap} from "rxjs/operators";
 import {Autres} from "../model/Autres";
 import {AchatTravaux} from '../model/AchatTravaux';
 import {DetailAutres} from '../model/DetailAutres';
+import {DetailAchatTravaux} from '../model/DtailAchat';
 
 
 @Injectable({
@@ -50,6 +51,16 @@ export class AutresService {
   modifAutreTravaux(autres: Autres): Observable<Resultat<Autres>> {
     console.log('methode du service qui modifier Autres', Autres);
     return this.http.put<Resultat<Autres>>(`${environment.apiUrl}/api/autres`, autres);
+  }
+  getDetailAutreByDateTravaux( dateDebut: string, dateFin: string, travauxId: number): Observable<DetailAutres[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<DetailAutres[]>>(
+      `${environment.apiUrl}/api/detailAutreDate?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<DetailAutres[]>>('getAchatTravauxByTravaux'))
+      );
   }
   getAutresById(id: Autres): Observable<Resultat<Autres>> {
     return this.http.get<Resultat<Autres>>(`${environment.apiUrl}/api/autre/${id}`);

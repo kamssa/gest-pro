@@ -8,6 +8,7 @@ import {Loyer} from "../model/Loyer";
 import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
 import {DetailLoyer} from '../model/DetailLoyer';
+import {DetailLocation} from '../model/DetailLocation';
 
 
 @Injectable({
@@ -80,6 +81,16 @@ export class LoyService {
         tap(res =>
           this.log(`travaux trouve =${res}`))),
         catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
+  getDetaiLoyeByDateTravaux( dateDebut: string, dateFin: string, travauxId: number): Observable<DetailLoyer[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<DetailLoyer[]>>(
+      `${environment.apiUrl}/api/detailLocationDate?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<DetailLoyer[]>>('getAchatTravauxByTravaux'))
       );
   }
   travauxCreer(res: Resultat<Loyer>) {

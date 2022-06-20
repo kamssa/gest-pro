@@ -7,6 +7,7 @@ import {environment} from "../../environments/environment";
 import {catchError, map, tap} from "rxjs/operators";
 import {AchatTravaux} from "../model/AchatTravaux";
 import {DetailAchatTravaux} from '../model/DtailAchat';
+import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
 
 @Injectable({
   providedIn: 'root'
@@ -75,14 +76,14 @@ export class AchatTravauxService {
       );
   }
   // recuperer achat par id travaux
-  getDetailAchatTravauxByDateTravaux(travauxId: number, dateDebut: Date, dateFin: Date): Observable<DetailAchatTravaux[]> {
+  getDetailAchatTravauxByDateTravaux(dateDebut: Date, dateFin: Date, travauxId: number, ): Observable<DetailAutreAchatTravaux[]> {
     // @ts-ignore
-    return this.http.get<Resultat<DetailAchatTravaux[]>>(
-      `${environment.apiUrl}/api/detailAchatTravauxDate/?travauxId=${travauxId}&dateDebut=${dateDebut}&dateFin=${dateFin}`)
+    return this.http.get<Resultat<DetailAutreAchatTravaux[]>>(
+      `${environment.apiUrl}/api/detailAchatTravauxDate/?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
       .pipe(map(res => res.body,
         tap(res =>
           this.log(`travaux trouve =${res}`))),
-        catchError(this.handleError<Resultat<DetailAchatTravaux[]>>('getAchatTravauxByTravaux'))
+        catchError(this.handleError<Resultat<DetailAutreAchatTravaux[]>>('getAchatTravauxByTravaux'))
       );
   }
   // recuperer achat par id travaux

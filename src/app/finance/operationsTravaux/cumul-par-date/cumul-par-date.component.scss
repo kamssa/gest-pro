@@ -1,0 +1,59 @@
+.container{
+  margin-top: 20px;
+}
+#content{
+  block-size: 400px;
+  //writing-mode: horizontal-tb;
+}
+table {
+  max-width: 2480px;
+  max-height: 200px;
+  width: 100%;
+
+}
+
+th  {
+  font-family : "Times New Roman", Times, serif;
+  color: #000000;
+  font-size: 10px;
+  writing-mode: horizontal-tb;
+  text-overflow: clip;
+}
+th  {
+  font-family : "Times New Roman", Times, sans-serif;
+  color: #000000;
+  size: 10px;
+}
+td{
+  color: #000000;
+  font-size: 12px;
+
+}
+.example-full-width {
+  width: 100%;
+}
+.container{
+  height: 400px;
+  width: 700px;
+}
+.container {
+  overflow-y: scroll;
+}
+h3{
+  font-family : "Times New Roman", Times, serif;
+  color: #0d47a1;
+}
+
+tfoot{
+  border: 2px solid #555;
+  border-collapse: collapse;
+}
+table th table td {
+  border: 1px solid;
+}
+.box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 600px;
+}
