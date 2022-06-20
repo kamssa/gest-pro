@@ -36,16 +36,13 @@ import {MainoeuvreService} from '../../../service/mainoeuvre.service';
 })
 export class CumulParDateComponent implements OnInit {
   @Output() submitClicked = new EventEmitter<any>();
-  displayedColumns: string[] = ['date', 'nom',  'salaire', 'nombreJour', 'montantVerser' ];
-  dataSource: MatTableDataSource<DetailMainOeuvre>;
-  receptacle: any = [];
   detailMainOeuvre: DetailMainOeuvre[] = [];
   detailAutreAchatTravaux: DetailAutreAchatTravaux[];
   detailAchatTravaux: DetailAchatTravaux[] = [];
   detailLoyeTravaux: DetailLoyer[] = [];
   detailTransport: DetailAutres[] = [];
   detailAutre: DetailTransport[] = [];
-  detailLocation: DetailLocation[];
+  detailLocation: DetailLocation[] = [];
   somme: any;
   somme1: any;
   somme2: any;

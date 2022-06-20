@@ -12,7 +12,7 @@
             <button mat-raised-button	>{{travaux.total}}</button>-->
           </div>
           <div>
-            <div>
+            <div  *ngIf="detailAutreAchatTravaux?.length > 0">
               <table class="table table-striped" style="font-size: 12px">
                 <thead>
                 <h3>Achat de materiel</h3>
@@ -44,7 +44,7 @@
 
             </div>
           </div>
-          <div>
+          <div *ngIf="detailLocation?.length > 0">
             <table class="table table-striped" style="font-size: 12px" >
               <thead>
               <h3>Location de materiel</h3>
@@ -81,7 +81,7 @@
             </div>-->
           </div>
 
-          <div>
+          <div *ngIf="detailLoyeTravaux?.length > 0">
             <table class="table table-striped" style="font-size: 12px" >
               <thead>
               <h3>Payement de loyer</h3>
@@ -113,7 +113,7 @@
             </div>-->
           </div>
 
-          <div>
+          <div  *ngIf="detailMainOeuvre?.length > 0">
             <table class="table table-striped" style="font-size: 12px">
               <thead>
               <h3>Payement de main d'oeuvre</h3>
@@ -149,7 +149,7 @@
             </div>-->
           </div>
 
-          <div>
+          <div *ngIf="detailTransport?.length > 0">
             <table class="table table-striped" style="font-size: 12px" >
               <thead>
               <h3>Payement de transport</h3>
@@ -182,7 +182,7 @@
             </div>-->
           </div>
 
-          <div>
+          <div *ngIf="detailAutre?.length > 0">
             <table class="table table-striped" style="font-size: 12px"  >
               <thead>
               <h3>Payement de divers </h3>
@@ -218,7 +218,7 @@
               <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme5}}</h3>
             </div>-->
           </div>
-          <div>
+          <div *ngIf="detailAchatTravaux?.length > 0">
             <table class="table table-striped" style="font-size: 12px"  >
               <thead>
               <h3>Retirer du stock </h3>
@@ -248,8 +248,6 @@
                </tfoot>-->
             </table>
             <div class="box">
-              <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
-              <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme6}}</h3>
             </div>
           </div>
         </div>
