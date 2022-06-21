@@ -50,7 +50,7 @@ export class CumulParDateComponent implements OnInit {
   somme4: any;
   somme5: any;
   somme6: any;
-  array: any;
+  array: number[] = [];
   personne: any;
   manager: Manager;
   employe: Employe;
@@ -106,6 +106,17 @@ export class CumulParDateComponent implements OnInit {
       console.log('detail detail autre par id travaux', result);
       if (result.length !== 0){
         this.detailAutreAchatTravaux = result;
+        this.detailAutreAchatTravaux.forEach( v => {
+          const m = v.montant;
+          this.array.push(v.montant);
+
+          console.log('push', this.array);
+          this.somme  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+
+          console.log('Somme cumulée',  this.somme );
+        });
+
       }else {
         console.log('pas de detilAutreAchat');
       }
@@ -115,6 +126,11 @@ export class CumulParDateComponent implements OnInit {
       console.log('detail detail location par id travaux', result);
       if (result.length !== 0){
         this.detailLocation = result;
+        this.detailLocation.forEach( v => {
+          this.array.push(v.montant);
+          this.somme1  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+        });
       }else {
         console.log('pas de detailLocation');
       }
@@ -125,6 +141,11 @@ export class CumulParDateComponent implements OnInit {
       console.log('detail detail loyer par id travaux', result);
       if (result.length !== 0){
         this.detailLoyeTravaux = result;
+        this.detailLoyeTravaux.forEach( v => {
+          this.array.push(v.montant);
+          this.somme2  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+        });
       }else {
         console.log('pas de detailLoye');
       }
@@ -134,6 +155,11 @@ export class CumulParDateComponent implements OnInit {
       console.log('detail detail main oeuvre par id travaux', result);
       if (result.length !== 0){
         this.detailMainOeuvre = result;
+        this.detailMainOeuvre.forEach( v => {
+          this.array.push(v.montantVerser);
+          this.somme3  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+        });
       }else {
         console.log('pas de detailLMain');
       }
@@ -143,6 +169,11 @@ export class CumulParDateComponent implements OnInit {
       console.log('detail detail transport par id travaux', result);
       if (result.length !== 0){
         this.detailTransport = result;
+        this.detailTransport.forEach( v => {
+          this.array.push(v.montant);
+          this.somme4  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+        });
       }else {
         console.log('pas de detailLTransport');
       }
@@ -152,6 +183,11 @@ export class CumulParDateComponent implements OnInit {
       console.log('detail detail autre par id travaux', result);
       if (result.length !== 0){
         this.detailAutre = result;
+        this.detailAutre.forEach( v => {
+          this.array.push(v.montant);
+          this.somme5  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+        });
       }else {
         console.log('pas de detailLAutre');
       }
@@ -159,6 +195,11 @@ export class CumulParDateComponent implements OnInit {
     this.achatTravauxService.getDetailAchatTravauxByDateTravaux(dateDebut, dateFin, id).subscribe(result => {
       if (result.length !== 0){
         this.detailAchatTravaux = result;
+        this.detailAchatTravaux.forEach( v => {
+          this.array.push(v.montant);
+          this.somme6  = this.array.reduce(
+            (previousValue, currentValue) => previousValue + currentValue);
+        });
       }else {
         console.log('pas de detailLAchat');
       }
@@ -234,5 +275,7 @@ export class CumulParDateComponent implements OnInit {
 
 
   }
-
+getSomme(){
+ return   this.somme + this.somme1;
+}
 }
