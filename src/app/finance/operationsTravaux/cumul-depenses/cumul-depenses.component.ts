@@ -62,7 +62,14 @@ export class CumulDepensesComponent implements OnInit {
   nav: boolean;
   type: string;
   currentUser: any;
-  travaux : Travaux;
+  travaux: Travaux;
+  role: boolean;
+  role1: boolean;
+  role2: boolean;
+  role3: boolean;
+
+  ROLES: any;
+  ROLE_NAME: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild('content', {static: false}) el: ElementRef;
@@ -163,12 +170,21 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
             this.personne = result.body;
             this.nav = true;
 
+
           });
         }else if (this.type === 'EMPLOYE'){
           this.employeService.getEmployeById(this.personne.id).subscribe(
             rest => {
               this.personne = rest.body;
               this.nav = false;
+              this.personne = rest.body;
+              console.log(this.personne);
+              this.ROLES = this.personne.roles;
+              const names = this.ROLES.map(el => el.name);
+              this.role = names.includes("ROLE_ADMINISTRATION");
+              this.role1 = names.includes("ROLE_EMPLOYE");
+              this.role2 = names.includes("ROLE_TECHNICIEN");
+              this.role3 = names.includes("ROLE_COMPTABILITE");
             }
           );
 
@@ -193,22 +209,19 @@ makePDF(){
       }
     });
 
-  }else if (this.type === 'EMPLOYE'){
+  }else if (this.role && this.role1 && this.role2 && this.role3){
    // let pdf = new jsPDF('p', 'pt', 'a4');
-    let pdf = new jsPDF('landscape', 'pt', 'a4');
+    const pdf =  new jsPDF('landscape', 'pt',  'a4');
+
     pdf.canvas.height = 70 * 10;
     pdf.canvas.width = 70 * 7.5;
-    pdf.setFontSize(22);
+    pdf.setFontSize(10);
     pdf.setTextColor(255, 0, 0);
-
-    pdf.setFontSize(16);
-    pdf.setTextColor(0, 255, 0);
     pdf.html(this.el.nativeElement,  {
-      'width': 50,
+      callback: (pdf) => {
+        pdf.save(this.personne.departement.entreprise.nom);
       }
-
-    );
-    pdf.save(this.personne.departement.entreprise.nom);
+    });
   }
 
 }
