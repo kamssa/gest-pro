@@ -30,6 +30,7 @@ import {ManagerService} from '../../../service/manager.service';
 import {EmployeService} from '../../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {SteTravauxService} from '../../../service/ste-travaux.service';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-cumul-depenses',
@@ -73,6 +74,7 @@ export class CumulDepensesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild('content', {static: false}) el: ElementRef;
+  @ViewChild('invoice') invoiceElement!: ElementRef;
   constructor(private mainoeuvreService: MainoeuvreService,
               @Inject(MAT_DIALOG_DATA) public data: Travaux,
               public dialogRef: MatDialogRef<DialogMainouvreComponent>,
@@ -196,31 +198,40 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
   }
 makePDF(){
   if (this.type === 'MANAGER'){
-
-    const pdf =  new jsPDF('landscape', 'pt',  'a4');
-
-    pdf.canvas.height = 70 * 10;
-    pdf.canvas.width = 70 * 7.5;
-    pdf.setFontSize(10);
-    pdf.setTextColor(255, 0, 0);
-    pdf.html(this.el.nativeElement,  {
-      callback: (pdf) => {
-        pdf.save(this.personne.entreprise.nom);
+    html2canvas(this.invoiceElement.nativeElement, { scale: 3 }).then((canvas:any) => {
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      heightLeft -= pageHeight;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+        heightLeft -= pageHeight;
       }
+      doc.save(this.personne.entreprise.nom);
     });
-
   }else if (this.role && this.role1 && this.role2 && this.role3){
-   // let pdf = new jsPDF('p', 'pt', 'a4');
-    const pdf =  new jsPDF('landscape', 'pt',  'a4');
-
-    pdf.canvas.height = 70 * 10;
-    pdf.canvas.width = 70 * 7.5;
-    pdf.setFontSize(10);
-    pdf.setTextColor(255, 0, 0);
-    pdf.html(this.el.nativeElement,  {
-      callback: (pdf) => {
-        pdf.save(this.personne.departement.entreprise.nom);
+    html2canvas(this.invoiceElement.nativeElement, { scale: 3 }).then((canvas:any) => {
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      heightLeft -= pageHeight;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+        heightLeft -= pageHeight;
       }
+      doc.save(this.personne.entreprise.nom);
     });
   }
 

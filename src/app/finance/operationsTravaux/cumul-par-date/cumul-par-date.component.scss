@@ -1,8 +1,11 @@
 .container{
   margin-top: 20px;
+  overflow-y: scroll;
+  height: 400px;
+  width: 700px;
 }
 #content{
-  block-size: 400px;
+  block-size: 1000px;
   //writing-mode: horizontal-tb;
 }
 table {
@@ -32,13 +35,7 @@ td{
 .example-full-width {
   width: 100%;
 }
-.container{
-  height: 400px;
-  width: 700px;
-}
-.container {
-  overflow-y: scroll;
-}
+
 h3{
   font-family : "Times New Roman", Times, serif;
   color: #0d47a1;

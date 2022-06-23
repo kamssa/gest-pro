@@ -1,38 +1,39 @@
-<div class="container">
 
-  <div id="content" #content>
-    <div class="row">
-      <div class="col-md-12" id="htmlData">
-        <div>
-          <div style="">
-            <h3  style="color: #d50000; font-size: 12px; text-align: center">{{travaux?.libelle}}</h3>
-          </div>
-          <div class="box">
-            <!--<button mat-raised-button	>Dépense totale</button>
-            <button mat-raised-button	>{{getSomme() }}</button>-->
-          </div>
+
+  <div class="container">
+
+    <div id="content" #content>
+      <div class="row">
+        <div class="col-md-12" id="invoice" #invoice>
           <div>
+            <div style="">
+              <h3  style="color: #d50000; font-size: 12px; text-align: center">{{travaux.libelle}}</h3>
+            </div>
+            <div class="box">
+             <!-- <button mat-raised-button	>Dépense totale</button>
+              <button mat-raised-button	></button>-->
+            </div>
             <div  *ngIf="detailAutreAchatTravaux?.length > 0">
               <table class="table table-striped" style="font-size: 12px">
-                <thead>
+                <thead >
                 <h3>Achat de materiel</h3>
                 </thead>
                 <thead>
                 <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Désignation</th>
-                  <th scope="col">Prix unitaire</th>
-                  <th scope="col">Quantité</th>
-                  <th scope="col">Montant</th>
+                  <th>Date</th>
+                  <th >Désignation</th>
+                  <th >Prix unitaire</th>
+                  <th>Quantité</th>
+                  <th >Montant</th>
                 </tr>
                 </thead>
-                <tbody *ngFor="let autre of detailAutreAchatTravaux">
+                <tbody  *ngFor="let autre of detailAutreAchatTravaux">
                 <tr>
-                  <td>{{autre?.date | date: 'dd/MM/yyyy'}}</td>
-                  <td>{{autre?.libelleMateriaux}}</td>
-                  <td>{{autre?.prixUnitaire}}</td>
-                  <td>{{autre?.quantite}}</td>
-                  <td>{{autre?.montant }}</td>
+                  <td >{{autre?.date | date: 'dd/MM/yyyy'}}</td>
+                  <td >{{autre?.libelleMateriaux}}</td>
+                  <td >{{autre?.prixUnitaire}}</td>
+                  <td >{{autre?.quantite}}</td>
+                  <td >{{autre?.montant }}</td>
                 </tr>
                 </tbody>
 
@@ -43,7 +44,7 @@
               </div>
 
             </div>
-          </div>
+
           <div *ngIf="detailLocation?.length > 0">
             <table class="table table-striped" style="font-size: 12px" >
               <thead>
@@ -68,12 +69,7 @@
               </tr>
 
               </tbody>
-              <!--<tfoot>
-              <tr>
-                <th scope="row">TOTAL</th>
-                <td style="text-align: end">{{somme1}}</td>
-              </tr>
-              </tfoot>-->
+
             </table>
             <div class="box">
               <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
@@ -100,12 +96,7 @@
                 <td>{{loy?.montant}}</td>
               </tr>
               </tbody>
-              <!-- <tfoot>
-               <tr>
-                 <th scope="row">TOTAL</th>
-                 <td style="text-align: end">{{somme2}}</td>
-               </tr>
-               </tfoot>-->
+
             </table>
             <div class="box">
               <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
@@ -136,12 +127,7 @@
                 <td>{{mainOeuvre?.montantVerser }}</td>
               </tr>
               </tbody>
-              <!-- <tfoot>
-               <tr>
-                 <th scope="row">TOTAL</th>
-                 <td style="text-align: end">{{somme3}}</td>
-               </tr>
-               </tfoot>-->
+
             </table>
             <div class="box">
               <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
@@ -169,12 +155,7 @@
                 <td>{{trans?.montant }}</td>
               </tr>
               </tbody>
-              <!-- <tfoot>
-               <tr>
-                 <th scope="row">TOTAL</th>
-                 <td style="text-align: end">{{somme4}}</td>
-               </tr>
-               </tfoot>-->
+
             </table>
             <div class="box">
               <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
@@ -206,12 +187,7 @@
                 <td>{{trans?.montant }}</td>
               </tr>
               </tbody>
-              <!--  <tfoot>
-                <tr>
-                  <th scope="row">TOTAL</th>
-                  <td style="text-align: end">{{somme5}}</td>
-                </tr>
-                </tfoot>-->
+
             </table>
             <div class="box">
               <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
@@ -240,21 +216,20 @@
                 <td>{{trans?.montant }}</td>
               </tr>
               </tbody>
-              <!-- <tfoot>
-               <tr>
-                 <th scope="row">TOTAL</th>
-                 <td style="text-align: end">{{somme6}}</td>
-               </tr>
-               </tfoot>-->
+
             </table>
             <div class="box">
               <h3  style="color: #d50000; font-size: 12px; text-align: end">Total</h3>
               <h3  style="color: #d50000; font-size: 12px; text-align: end">{{somme6}}</h3>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+
+
+
 <button mat-raised-button color="primary" (click)="makePDF()">Télécharger en PDF</button>
+
