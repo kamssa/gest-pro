@@ -14,6 +14,8 @@ import {EmployeService} from '../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
+import {SiteService} from '../../service/site.service';
+import {Site} from '../../model/site';
 
 @Component({
   selector: 'app-advance-projet',
@@ -29,6 +31,7 @@ export class AdvanceProjetComponent implements OnInit {
   isOpen = false;
   title = 'la liste des sites';
   travaux: Travaux[] = [];
+  site: Site[] = [];
   travauxId: number;
   selectedTravaux: Travaux;
   travau: Travaux;
@@ -49,6 +52,7 @@ export class AdvanceProjetComponent implements OnInit {
   currentUser: any;
   constructor(
     private  router: Router, private  fb: FormBuilder,
+    private siteService: SiteService,
     private  siteTravauxService: SteTravauxService,
     private snackBar: MatSnackBar,  private travauxService: SteTravauxService,
     private achatTravauxService: AchatTravauxService,
@@ -57,6 +61,7 @@ export class AdvanceProjetComponent implements OnInit {
     private employeService: EmployeService,  private helper: JwtHelperService) { }
 
   ngOnInit(): void {
+
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
@@ -75,6 +80,11 @@ export class AdvanceProjetComponent implements OnInit {
                 switchMap(mc => mc ?  this.siteTravauxService.rechercheTravauxParMc(mc, this.personne.entreprise.nom)
                   : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',''))
               );
+            this.siteService.getSiteEntreprise(this.personne.entreprise.nom)
+              .subscribe(data =>
+              {
+                this.site = data.body;
+              });
             this.toutsLesTravaux();
             // renvoie le site créé
             this.siteTravauxService.travauxCreer$.subscribe(res => {
@@ -128,6 +138,11 @@ export class AdvanceProjetComponent implements OnInit {
                     : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',''))
                 );
               this.toutsLesTravaux();
+              this.siteService.getSiteEntreprise(this.personne.departement.entreprise.nom)
+                .subscribe(data =>
+                {
+                  this.site = data.body;
+                });
               // renvoie le site créé
               this.siteTravauxService.travauxCreer$.subscribe(res => {
                   this.travaux.push(res.body);

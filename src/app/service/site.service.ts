@@ -26,8 +26,9 @@ export class SiteService {
     console.log('methode du service qui ajoute un travail', site);
     return this.http.post<Resultat<Site>>(`${environment.apiUrl}/api/site`, site);
   }
-
-
+  getSiteEntreprise(nom: string): Observable<Resultat<Site[]>> {
+    return this.http.get<Resultat<Site[]>>(`${environment.apiUrl}/api/siteEntreprise/${nom}`);
+  }
   private log(message: string) {
     this.messageService.add('siteService: ' + message);
 
