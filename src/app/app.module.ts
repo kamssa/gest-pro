@@ -16,7 +16,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {JwtInterceptor} from './helper/jwt.interceptor';
 import {ErrorInterceptor} from './helper/error.interceptor';
-import {DatePipe, registerLocaleData} from '@angular/common';
+import {DatePipe, DecimalPipe, registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
@@ -74,7 +74,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
-    DatePipe,
+    DatePipe, DecimalPipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: MAT_DIALOG_DATA, useValue: {} },
