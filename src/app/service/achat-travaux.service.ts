@@ -140,7 +140,7 @@ export class AchatTravauxService {
     return (error: any): Observable<T> => {
 
 
-      console.error(error);
+     // console.error(error);
 
 
       this.log(`${operation} non disponible: ${error.message}`);

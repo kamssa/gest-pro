@@ -47,7 +47,7 @@ export class ListTransportComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     console.log(this.travauxId);
-    this.serviceTransport.getTransportByTravaux(this.travauxId)
+    this.serviceTransport.getTransportByTravaux(this.data['travaux'])
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {

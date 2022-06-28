@@ -14,6 +14,9 @@ import {AdminService} from '../service/admin.service';
 import {ManagerService} from '../service/manager.service';
 import {EmployeService} from '../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {CumulDepensesComponent} from './operationsTravaux/cumul-depenses/cumul-depenses.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ListTransportComponent} from './operationsTravaux/transport/list-transport/list-transport.component';
 declare const $: any;
 @Component({
   selector: 'app-finance',
@@ -53,7 +56,9 @@ export class FinanceComponent implements OnInit{
     private  autresService: AutresService,
     private authService: AuthService,  private adminService: AdminService,
     private managerService: ManagerService,
-    private employeService: EmployeService,  private helper: JwtHelperService) { }
+    private employeService: EmployeService,
+    private helper: JwtHelperService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('currentUser')) {
@@ -72,7 +77,7 @@ export class FinanceComponent implements OnInit{
                 debounceTime(100),
                 distinctUntilChanged(),
                 switchMap(mc => mc ?  this.siteTravauxService.rechercheTravauxParMc(mc, this.personne.entreprise.nom)
-                  : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',' '))
+                  : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !','Aucun projet trouvé !'))
               );
             this.toutsLesTravaux();
             // renvoie le site créé
@@ -254,8 +259,14 @@ export class FinanceComponent implements OnInit{
 
   }
 
-  onTransport(travail: Travaux) {
-    this.router.navigate(['finance/transport', travail.id]);
+  onTransport(id: number) {
+    //this.router.navigate(['finance/transport', travail.id]);
+    console.log(id);
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        travaux: id
+      }
+    });
 
   }
 

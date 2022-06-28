@@ -44,13 +44,13 @@ export class CumulParDateComponent implements OnInit {
   detailTransport: DetailAutres[] = [];
   detailAutre: DetailTransport[] = [];
   detailLocation: DetailLocation[] = [];
-  somme: any;
-  somme1: any;
-  somme2: any;
-  somme3: any;
-  somme4: any;
-  somme5: any;
-  somme6: any;
+  somme: number;
+  somme1: number;
+  somme2: number;
+  somme3: number;
+  somme4: number;
+  somme5: number;
+  somme6: number;
   array: number[] = [];
   personne: any;
   manager: Manager;
@@ -64,7 +64,7 @@ export class CumulParDateComponent implements OnInit {
   role1: boolean;
   role2: boolean;
   role3: boolean;
-
+  total: number;
   ROLES: any;
   ROLE_NAME: any;
   @ViewChild(MatSort) sort: MatSort;
@@ -101,9 +101,6 @@ export class CumulParDateComponent implements OnInit {
     console.log( id );
     console.log(dateDebut );
     console.log( dateFin );
-
-
-
     this.autreAchatTravauxService.getDetailAutreAchatTravauxByDateTravaux(dateDebut, dateFin, id)
       .subscribe(result => {
       console.log('detail detail autre par id travaux', result);
@@ -209,6 +206,7 @@ export class CumulParDateComponent implements OnInit {
 
       console.log('lenght6', this.detailTransport.length);
     });
+    this.total = this.somme.valueOf() + this.somme1 + this.somme2 + this.somme3 + this.somme4 + this.somme5 + this.somme6 ;
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
@@ -245,6 +243,7 @@ export class CumulParDateComponent implements OnInit {
       });
 
     }
+
   }
   makePDF(){
     if (this.type === 'MANAGER'){
@@ -287,7 +286,8 @@ export class CumulParDateComponent implements OnInit {
 
 
   }
-getSomme(){
- return   this.somme + this.somme1;
+// tslint:disable-next-line:typedef
+ getSomme(){
+ return this.total = this.somme + this.somme1 + this.somme2 + this.somme3 + this.somme4 + this.somme5 + this.somme6 ;
 }
 }

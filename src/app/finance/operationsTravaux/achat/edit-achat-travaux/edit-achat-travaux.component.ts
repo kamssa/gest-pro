@@ -259,7 +259,7 @@ export class EditAchatTravauxComponent implements OnInit {
         };
       }
 
-      console.log(this.achatTravaux);
+      console.log('Voir detail stock', this.achatTravaux);
       //localStorage.removeItem('materiau');
       this.travauxService.getTravauxById(this.travauxId)
         .subscribe(res => {
@@ -276,7 +276,6 @@ export class EditAchatTravauxComponent implements OnInit {
 
 
         });
-
     }
 
   }
