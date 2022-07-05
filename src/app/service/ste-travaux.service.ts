@@ -55,6 +55,9 @@ export class SteTravauxService {
   getTravauxByIdSite(id: number): Observable<Resultat<Travaux[]>> {
     return this.http.get<Resultat<Travaux[]>>(`${environment.apiUrl}/api/travauxByIdSite/${id}`);
   }
+  getTravauxByIdClient(id: number): Observable<Resultat<Travaux[]>> {
+    return this.http.get<Resultat<Travaux[]>>(`${environment.apiUrl}/api/travauxByIdClient/${id}`);
+  }
 
   rechercheTravauxParMc(mc: string, nom: string): Observable<Array<Travaux>> {
     return this.http.get<Resultat<Array<Travaux>>>(`${environment.apiUrl}/api/rechemc/?mc=${mc}&nom=${nom}`)

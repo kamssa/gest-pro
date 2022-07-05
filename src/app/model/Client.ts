@@ -6,6 +6,7 @@ export class Client extends Personne{
               public version?: number,
               public nom?: string,
               public prenom?: string,
+              public email ?: string,
               public telephone?: string,
               public nomComplet?: string,
               public adresse?: Adresse,

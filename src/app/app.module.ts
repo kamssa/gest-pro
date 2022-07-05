@@ -35,6 +35,14 @@ import { FournisseurComponent } from './comptabilite/fournisseur/fournisseur.com
 import { ClientComponent } from './comptabilite/client/client.component';
 import { MissionComponent } from './comptabilite/mission/mission.component';
 import { PrevisionTresorerieComponent } from './comptabilite/prevision-tresorerie/prevision-tresorerie.component';
+import { DashboardComponent } from './client/dashboard/dashboard.component';
+import { ListClientComponent } from './client/list-client/list-client.component';
+import { AddVersementComponent } from './client/versement/add-versement/add-versement.component';
+import { ListVersementComponent } from './client/versement/list-versement/list-versement.component';
+import { UpdateVersementComponent } from './client/versement/update-versement/update-versement.component';
+import { VersementComponent } from './client/versement/versement.component';
+import { UpdateClientComponent } from './client/update-client/update-client.component';
+import { DashboardClientComponent } from './client/dashboard-client/dashboard-client.component';
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
 FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
@@ -48,6 +56,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     ClientComponent,
     MissionComponent,
     PrevisionTresorerieComponent,
+
 
 
 

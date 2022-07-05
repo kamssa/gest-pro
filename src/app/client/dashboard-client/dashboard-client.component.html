@@ -1,0 +1,48 @@
+<div class="cadre">
+  <div class="container">
+    <div class="row myrow justify-content-center">
+
+      <h1 class="justify-content-center">
+        <span>Tableau de bord client</span>
+      </h1></div>
+    <div class="card login-card ">
+
+      <div>
+        <div class="row">
+          <div class="col-md-7" *ngFor="let tr of travaux" style="padding-left: 0px;padding-right: 0px;">
+
+            <div class="card-body">
+              <h1 style="color: darkred">{{tr.site.entreprise.nom}}</h1>
+            <h1 class="text-description">Information sur le projet</h1>
+            <p>Projet: <span>{{tr.site.nomChantier}}</span></p>
+            <p>Site:<span>{{tr.libelle}}</span></p>
+            <p>Total versement:<span>{{versement.solde|number}}</span></p>
+            <p>Reste à payer:<span>{{versement.reste|number}}</span></p>
+          </div>
+          </div>
+          <div class="col-md-5" style="padding-left: 0px;padding-right: 0px;">
+            <div class="card-body">
+              <h1 class="text-description">Information Personnelle</h1>
+              <p>{{personne.nomComplet}}</p>
+              <p>Email :<span>{{personne.email}}</span></p>
+              <p>Téléphone:<span>{{personne.telephone}}</span></p>
+              <p>info</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container">
+    <mat-card class="example-card">
+      <mat-card-content>
+        <ngx-gallery  [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+  <div>
+  <img src="assets/img/téléchargement (1).png" class="left">
+  </div>
+</div>

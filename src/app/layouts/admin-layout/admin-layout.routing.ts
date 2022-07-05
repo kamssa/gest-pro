@@ -27,6 +27,8 @@ import {ListCaisseComponent} from '../../caisse/list-caisse/list-caisse.componen
 import {AdvanceProjetComponent} from '../../administration/advance-projet/advance-projet.component';
 import {ListProjetComponent} from '../../administration/advance-projet/list-projet/list-projet.component';
 import {EditAutreAchatTravauxComponent} from '../../finance/operationsTravaux/autreAchatTravaux/edit-autre-achat-travaux/edit-autre-achat-travaux.component';
+import {ListClientComponent} from '../../client/list-client/list-client.component';
+import {DashboardClientComponent} from '../../client/dashboard-client/dashboard-client.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -111,6 +113,9 @@ export const AdminLayoutRoutes: Routes = [
     path: 'stock', component: StockComponent
   },
   {
+    path: 'client', component: ListClientComponent
+  },
+  {
     path: 'categorie', component: ListCategorieComponent
   },
   {
@@ -133,6 +138,9 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: 'administration', component: AdministrationComponent
+  },
+  {
+    path: 'dashboardClient', component: DashboardClientComponent
   },
   {
     path: 'etatProjet', component: AdvanceProjetComponent

@@ -117,6 +117,23 @@ export class ConnexionComponent implements OnInit {
                 this.loading = false;
               });
           }
+          else if (data.body.type === 'CLIENT') {
+            let request: Personne = {
+              email: this.managerForm.value.email,
+              password: this.managerForm.value.password,
+              type: 'CLIENT'
+            };
+            this.authService.login(request).subscribe(res => {
+
+                if (res) {
+                  this.router.navigate(['dashboardClient']);
+                }
+              },
+              error => {
+                this.error = 'email ou mot de passe oublié';
+                this.loading = false;
+              });
+          }
         } else {
           this.error = 'Compte non valide !';
         }

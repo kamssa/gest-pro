@@ -1,0 +1,142 @@
+.cadre{
+  margin-top: 50px;
+}
+.fil-actu{
+  color: #fff;
+  font-weight: 600;
+}
+img{
+  height: 80px;
+  width: 80px;
+}
+.une{
+  background-color: #e40421;
+  padding: 5px 10px;
+  margin: 0 10px;
+  width: 46%;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 1px 1px 0 rgba(60, 75, 100, 0.14), 0 2px 1px -1px rgba(60, 75, 100, 0.12), 0 1px 3px 0 rgba(60, 75, 100, 0.2);
+  border-radius: 0px;
+  border: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.board-title{
+  border-color: #e40421;
+}
+.actu-title{
+  color: #211e1e;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 19px;
+  margin-right: 0px;
+  margin-left: 0px;
+  border-bottom: 4px solid #2a303b;
+}
+.carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+.card-left{
+  box-shadow: 0 1px 1px 0 rgba(60, 75, 100, 0.14), 0 2px 1px -1px rgba(60, 75, 100, 0.12), 0 1px 3px 0 rgba(60, 75, 100, 0.2);
+  border-radius: 0px;
+  border: 0px;
+}
+.card-left .card-title{
+  color: #444444;
+  font-size: 1.275rem;
+}
+.card a:hover{
+  text-decoration-color: #444444 !important;
+}
+.source{
+  bottom: .5rem;
+  color: rgba(43,43,43,.7);
+}
+.sourcename{
+  display: inline-block;
+  padding-top: 50px;
+}
+.card-under img:hover{
+  opacity: .9;
+}
+.title:hover{
+  color: #0078ff;
+  //text-decoration-color: #0078ff;
+  text-decoration: underline;
+}
+.title{
+  font-size: 0.975rem;
+  padding-top: 5px;
+  color: #020e65;
+}
+.trait{
+  width: 97%;
+  border: 1px solid #eceaea;
+}
+.subtitle{
+  color: #a39797;
+  margin-top: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+}
+.reserved-content{
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 28px;
+  font-family: ProximaNovaCond;
+  color: #444444 !important;
+}
+.reserved-content:hover{
+  color: #052051 !important;
+  font-weight: 800;
+}
+.description{
+  font-size: 16px;
+  font-weight: 350;
+  letter-spacing: 1px;
+}
+.art-title{
+  margin-top: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 800;
+  font-family: ProximaNovaCond;
+  color: #444444;
+}
+.art-title:hover{
+  color: #052051 !important;
+  text-decoration-color:  #052051 !important;
+}
+.board-lead-art{
+  display: flex;
+  margin-top: 16px;
+  padding-right:16px;
+}
+.cadre-layout{
+  flex: 1;
+}
+.cadre-layout:first-child {
+  max-width: 320px;
+  margin: 0 16px 0 0;
+}
+.board-left{
+  display: flex;
+  padding-right:16px;
+}
+.cadre-left{
+  flex: 1;
+}
+.cadre-left:first-child{
+  max-width: 63px;
+  margin: 12px 15px 0 0;
+}
+@media screen and(max-width:700px){
+  .board-lead-art{
+    flex-direction: column;
+  }
+}

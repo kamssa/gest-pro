@@ -39,6 +39,15 @@ import {EmployePermitionComponent} from '../../employe/employe-permition/employe
 import {UpdateProjetComponent} from '../../finance/siteTravaux/update-projet/update-projet.component';
 import {AdvanceProjetComponent} from '../../administration/advance-projet/advance-projet.component';
 import {ListProjetComponent} from '../../administration/advance-projet/list-projet/list-projet.component';
+import {ListClientComponent} from '../../client/list-client/list-client.component';
+import {AddVersementComponent} from '../../client/versement/add-versement/add-versement.component';
+import {ListVersementComponent} from '../../client/versement/list-versement/list-versement.component';
+import {UpdateVersementComponent} from '../../client/versement/update-versement/update-versement.component';
+import {VersementComponent} from '../../client/versement/versement.component';
+import {UpdateClientComponent} from '../../client/update-client/update-client.component';
+import {DashboardClientComponent} from '../../client/dashboard-client/dashboard-client.component';
+import {NgxGalleryModule} from 'ngx-gallery-9';
+import {HammerGestureConfig} from '@angular/platform-browser';
 
 
 
@@ -73,7 +82,15 @@ import {ListProjetComponent} from '../../administration/advance-projet/list-proj
     ComptabiliteComponent,
     EmployePermitionComponent,
     AdvanceProjetComponent,
-    ListProjetComponent
+    ListProjetComponent,
+    DashboardComponent,
+    ListClientComponent,
+    AddVersementComponent,
+    ListVersementComponent,
+    UpdateVersementComponent,
+    VersementComponent,
+    UpdateClientComponent,
+    DashboardClientComponent
 
   ],
     imports: [
@@ -87,6 +104,8 @@ import {ListProjetComponent} from '../../administration/advance-projet/list-proj
         NgxIntlTelInputModule,
         Ng2TelInputModule,
         FinanceModule,
+         NgxGalleryModule
     ]
+
 })
 export class AdminLayoutModule { }

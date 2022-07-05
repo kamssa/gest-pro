@@ -19,6 +19,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/banque', title: 'Gestion Banque',  icon: 'bubble_chart', class: '' },
   { path: '/user-profile', title: 'Profile',  icon: 'person', class: ''  },
   { path: '/dep', title: 'Departement',  icon: 'domain', class: '' },
+  { path: '/client', title: 'Client',  icon: 'person', class: ''  },
   { path: '/categorie', title: 'Categories',  icon: 'domain', class: '' },
 ];
 @Component({
@@ -41,18 +42,13 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-  /*  if(localStorage.getItem('currentUser')) {
+    if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
       this.managerService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
-        this.roles = res.body.roles;
-        this.roles.forEach(val => {
-         console.log(val.name);
-         this.ROLE_NAME = val.name;
-        });
       });
-    }*/
+    }
   }
   isMobileMenu() {
     if ($(window).width() > 991) {
