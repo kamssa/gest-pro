@@ -1,9 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Client} from '../../model/Client';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import {ClientService} from '../../service/client.service';
-import {Adresse} from '../../model/Adresse';
 
 @Component({
   selector: 'app-update-client',

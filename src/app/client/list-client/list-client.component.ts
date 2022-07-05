@@ -36,7 +36,6 @@ import {ListVersementComponent} from '../versement/list-versement/list-versement
 export class ListClientComponent implements OnInit {
   displayedColumns: string[] = ['projet', 'site', 'client', 'email', 'telephone', 'actions'];
   listData: MatTableDataSource<any>;
-  departements: Departement[];
   departement: Departement;
   receptacle: any = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
