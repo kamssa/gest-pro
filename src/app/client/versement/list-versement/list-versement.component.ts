@@ -109,11 +109,26 @@ export class ListVersementComponent implements OnInit {
   }
 
   onCreate() {
-    this.dialog.open(AddVersementComponent,{
+    const dialogRef = this.dialog.open(AddVersementComponent,{
        data: {
         travaux: this.id
       }
     });
-
+    /*dialogRef.afterClosed().subscribe(resul => {
+      this.versementService.versementCreer$
+        .subscribe(result => {
+          if (result.status === 0){
+            this.array.unshift(result.body);
+            this.listData = new MatTableDataSource(this.array);
+            this.listData.sort = this.sort;
+            this.listData.paginator = this.paginator;
+          }else {
+            this.listData = new MatTableDataSource(this.array);
+            this.listData.sort = this.sort;
+            this.listData.paginator = this.paginator;
+          }
+        });
+    });*/
   }
+
 }

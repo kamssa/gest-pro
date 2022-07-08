@@ -103,6 +103,7 @@ initItemRows() {
       .subscribe(data => {
         console.log(data);
       });
+    this.dialogRef.close();
   }
   onClose() {
     this.dialogRef.close();

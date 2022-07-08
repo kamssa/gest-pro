@@ -10,6 +10,7 @@ import {Client} from '../model/Client';
 import {catchError, tap} from 'rxjs/operators';
 import {Versement} from '../model/Versement';
 import {DetailVersement} from '../model/DetailVersement';
+import {Categorie} from '../model/Categorie';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,16 @@ export class VersementService {
   }
   ajoutVersement(versement: Versement): Observable<Resultat<Versement>> {
     console.log('methode du service qui ajoute un travail', versement);
-    return this.http.post<Resultat<Versement>>(`${environment.apiUrl}/api/versement`, versement);
+    return this.http.post<Resultat<Versement>>
+    (`${environment.apiUrl}/api/versement`, versement)
+      .pipe(
+        tap(res => {
+          this.log(`versement crée =${res.body}`);
+          this.versementtCreer(res);
+        }),
+        catchError(this.handleError<Resultat<Versement>>('ajoutVersement'))
+      );
+
   }
 
 
