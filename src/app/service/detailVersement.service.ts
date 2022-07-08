@@ -14,47 +14,43 @@ import {DetailVersement} from '../model/DetailVersement';
 @Injectable({
   providedIn: 'root'
 })
-export class VersementService {
+export class DetailVersementService {
 // observables sources
-  private versementCreerSource = new Subject<Resultat<Versement>>();
-  private versementModifSource = new Subject<Resultat<Versement>>();
-  private versementFiltreSource = new Subject<string>();
-  private versementSupprimeSource = new Subject<Resultat<boolean>>();
+  private clientCreerSource = new Subject<Resultat<Travaux>>();
+  private clientModifSource = new Subject<Resultat<Travaux>>();
+  private clientFiltreSource = new Subject<string>();
+  private clientSupprimeSource = new Subject<Resultat<boolean>>();
 
 
 // observables streams
-  versementCreer$ = this.versementCreerSource.asObservable();
-  versementModif$ = this.versementModifSource.asObservable();
-  versementFiltre$ = this.versementFiltreSource.asObservable();
-  versementSupprime$ = this.versementSupprimeSource.asObservable();
+  clientCreer$ = this.clientCreerSource.asObservable();
+  clientModif$ = this.clientModifSource.asObservable();
+  clientFiltre$ = this.clientFiltreSource.asObservable();
+  clientSupprime$ = this.clientSupprimeSource.asObservable();
 
   constructor(private  http: HttpClient, private messageService: MessageService) {
   }
 
 
-  getVersementByTravaux(id: number): Observable<Resultat<Versement>> {
-    return this.http.get<Resultat<Versement>>(`${environment.apiUrl}/api/versementByIdTravaux/${id}`);
-  }
-  ajoutVersement(versement: Versement): Observable<Resultat<Versement>> {
-    console.log('methode du service qui ajoute un travail', versement);
-    return this.http.post<Resultat<Versement>>(`${environment.apiUrl}/api/versement`, versement);
+  getDetailVersementByVersement(id: number): Observable<Resultat<DetailVersement[]>> {
+    return this.http.get<Resultat<Versement[]>>(`${environment.apiUrl}/api/detailVersementByIdVersement/${id}`);
   }
 
 
-  versementtCreer(res: Resultat<Travaux>) {
+  clientCreer(res: Resultat<Travaux>) {
     console.log('Travail a ete  creer correctement essaie source');
-    this.versementCreerSource.next(res);
+    this.clientCreerSource.next(res);
   }
 
   clientModif(res: Resultat<Travaux>) {
-    this.versementModifSource.next(res);
+    this.clientModifSource.next(res);
   }
 
-  filtreVersement(text: string) {
-    this.versementFiltreSource.next(text);
+  filtreClient(text: string) {
+    this.clientFiltreSource.next(text);
   }
   clientsupprime(res: Resultat<boolean>){
-    this.versementSupprimeSource.next(res);
+    this.clientSupprimeSource.next(res);
   }
   private log(message: string) {
     this.messageService.add('travauxService: ' + message);

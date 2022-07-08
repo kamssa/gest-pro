@@ -8,8 +8,7 @@ export class DetailVersement {
               public version?: number,
               public  date?: Date,
               public montantVerse?: number,
-              public employe?: Employe,
-              public travaux?: Travaux) {
+              public employe?: Employe) {
   }
 
 }

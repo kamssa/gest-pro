@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {ConnexionComponent} from './connexion/connexion.component';
 import {AuthGuardService} from './helper/auth-guard.service';
+import {DashboardClientComponent} from './client/dashboard-client/dashboard-client.component';
 
 
 
@@ -14,7 +15,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
-  }, {
+  },
+  {path: 'dashboardClient', component: DashboardClientComponent},
+
+  {
     path: '',
     component: AdminLayoutComponent,
     canActivate: [AuthGuardService],

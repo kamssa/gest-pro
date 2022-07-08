@@ -28,14 +28,13 @@ import {AdvanceProjetComponent} from '../../administration/advance-projet/advanc
 import {ListProjetComponent} from '../../administration/advance-projet/list-projet/list-projet.component';
 import {EditAutreAchatTravauxComponent} from '../../finance/operationsTravaux/autreAchatTravaux/edit-autre-achat-travaux/edit-autre-achat-travaux.component';
 import {ListClientComponent} from '../../client/list-client/list-client.component';
-import {DashboardClientComponent} from '../../client/dashboard-client/dashboard-client.component';
 
 
 export const AdminLayoutRoutes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-profile',   component: ListEmployeComponent },
-  {path: 'dep' , component: ListDepComponent},
+  { path: 'dep' , component: ListDepComponent},
   {  path : 'finance',
     canActivate: [AuthGuardService],
     children: [
@@ -139,9 +138,7 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: 'administration', component: AdministrationComponent
   },
-  {
-    path: 'dashboardClient', component: DashboardClientComponent
-  },
+
   {
     path: 'etatProjet', component: AdvanceProjetComponent
   },
