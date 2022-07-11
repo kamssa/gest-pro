@@ -8,21 +8,28 @@
           </div>
           <div class="card-body">
 
-              <div class="example-button-row">
-                <button mat-button color="accent" (click)="retrait()">Rechercher des Operations</button>
-                <button mat-button color="accent" (click)="banque()"> Voir la liste des operations</button>
-                <button mat-button color="accent" (click)="openDialog()">Ajouter une banque</button>
-                <button mat-button color="accent" (click)="openDialog()">Effectué une opération</button>
+            <div class="example-button-row">
+                <button mat-button color="accent" (click)="versement()"> Liste des versements</button>
+
+                <button mat-button color="accent" (click)="retrait()"> Liste des retraits</button>
+
+                <button mat-button color="accent" (click)="virement()"> Liste des virement</button>
+                <mat-divider></mat-divider>
+                <button mat-button color="primary" (click)="openRetrait()">Effectué un retrait</button>
+
+                <button mat-button color="primary" (click)="openVersement()">Effectué un versement</button>
+
+              <button mat-button color="primary" (click)="openVirement()">Effectué un virement</button>
 
               </div>
 
             <mat-divider></mat-divider>
             <br>
-            <div>
+            <!--<div>
               <app-list-operation *ngIf="edit==0"></app-list-operation>
               <app-retrait *ngIf="edit==1"></app-retrait>
               <app-versement *ngIf="edit==2"></app-versement>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>

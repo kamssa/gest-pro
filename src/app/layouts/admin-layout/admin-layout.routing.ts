@@ -28,6 +28,8 @@ import {AdvanceProjetComponent} from '../../administration/advance-projet/advanc
 import {ListProjetComponent} from '../../administration/advance-projet/list-projet/list-projet.component';
 import {EditAutreAchatTravauxComponent} from '../../finance/operationsTravaux/autreAchatTravaux/edit-autre-achat-travaux/edit-autre-achat-travaux.component';
 import {ListClientComponent} from '../../client/list-client/list-client.component';
+import {BanqueComponent} from '../../banque/banque.component';
+import {RetraitComponent} from '../../banque/retrait/retrait.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -149,8 +151,7 @@ export const AdminLayoutRoutes: Routes = [
 
   },
 
-  /*{ path: 'banque',
-    canActivate: [AuthGuardService],
+  { path: 'banque',
     children: [{
       path: '',
       component: BanqueComponent,
@@ -160,7 +161,7 @@ export const AdminLayoutRoutes: Routes = [
     }
     ]
 
-  },*/
+  },
  /* { path: 'salaire',
     //canActivate: [AuthGuardService],
     children: [{

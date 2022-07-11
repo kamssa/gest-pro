@@ -19,7 +19,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/banque', title: 'Gestion Banque',  icon: 'bubble_chart', class: '' },
   { path: '/user-profile', title: 'Profile',  icon: 'person', class: ''  },
   { path: '/dep', title: 'Departement',  icon: 'domain', class: '' },
-  { path: '/client', title: 'Client',  icon: 'person', class: ''  },
+  { path: '/client', title: 'Gérer Client',  icon: 'person', class: ''  },
   { path: '/categorie', title: 'Categories',  icon: 'domain', class: '' },
 ];
 @Component({

@@ -114,21 +114,25 @@ export class ListVersementComponent implements OnInit {
         travaux: this.id
       }
     });
-    /*dialogRef.afterClosed().subscribe(resul => {
+    dialogRef.afterClosed().subscribe(resul => {
       this.versementService.versementCreer$
         .subscribe(result => {
           if (result.status === 0){
-            this.array.unshift(result.body);
-            this.listData = new MatTableDataSource(this.array);
-            this.listData.sort = this.sort;
-            this.listData.paginator = this.paginator;
+            this.detailVersementService.getDetailVersementByVersement(result.body.id)
+              .subscribe(res => {
+                this.array.unshift(res.body);
+                this.listData = new MatTableDataSource(this.array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+              });
+
           }else {
             this.listData = new MatTableDataSource(this.array);
             this.listData.sort = this.sort;
             this.listData.paginator = this.paginator;
           }
         });
-    });*/
+    });
   }
 
 }

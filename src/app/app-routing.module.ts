@@ -11,12 +11,13 @@ import {DashboardClientComponent} from './client/dashboard-client/dashboard-clie
 
 const routes: Routes = [
   { path: 'login', component: ConnexionComponent },
+  {path: 'dashboardClient',
+    component: DashboardClientComponent},
   {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
-  {path: 'dashboardClient', component: DashboardClientComponent},
 
   {
     path: '',

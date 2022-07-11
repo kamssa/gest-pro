@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterEvent, Event} from '@angular/router';
 import {ManagerService} from '../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {SteTravauxService} from '../../service/ste-travaux.service';
@@ -19,6 +19,8 @@ import {MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {AuthService} from '../../service/auth.service';
+import {filter} from 'rxjs/operators';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-dashboard-client',
@@ -59,7 +61,7 @@ export class DashboardClientComponent implements OnInit {
   galleryImages: NgxGalleryImage[];
   pathNullImage = './assets/img/maison.jpg';
   liens: string[] = [];
-  constructor(private router: Router,
+  constructor(private router: Router, private location: Location,
               private travauxService: SteTravauxService,
               private managerService: ManagerService,
               private helper: JwtHelperService,
@@ -70,9 +72,17 @@ export class DashboardClientComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: Travaux,
               private authService: AuthService) {
 
+    this.router.events.pipe(
+      filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
+    ).subscribe((e: RouterEvent) => {
+      console.log('Voir ce qui se passe', e.url);
+      window.history.pushState({}, '', e.url);
+    });
   }
 
   ngOnInit(): void {
+
+
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);

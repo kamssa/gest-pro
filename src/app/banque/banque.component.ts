@@ -57,15 +57,36 @@ export class BanqueComponent implements OnInit {
   }
 
   retrait() {
-    this.edit = 1;
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
 
   }
   versement() {
-this.edit = 2;
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
   }
 
   banque() {
-    this.edit = 0;
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(AddBanqueComponent, {
@@ -78,5 +99,48 @@ this.edit = 2;
     });
   }
 
+  virement() {
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
+
+  openRetrait() {
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
+
+  openVersement() {
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
+
+  openVirement() {
+    const dialogRef = this.dialog.open(AddBanqueComponent, {
+      width: '450px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
 }
 
