@@ -69,8 +69,8 @@ export class ListClientComponent implements OnInit {
           this.managerService.getManagerById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             console.log('Entreprise', this.personne.entreprise.id);
-            this.travauxService.getTravauxByIdSite(this.personne.entreprise.id).subscribe(list => {
-              console.log('Voir list retournée pour les projets', list);
+            this.travauxService.getTravauxByIdSite(this.personne.entreprise.id)
+              .subscribe(list => {
               this.array = list.body.map(item => {
                 return {
                   id: item.id,
@@ -88,7 +88,31 @@ export class ListClientComponent implements OnInit {
 
             });
           });
-        }else {
+        }else if (this.personne.type === 'EMPLOYE'){
+          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+            this.personne = res.body;
+            console.log('Entreprise', this.personne.departement.entreprise.id);
+            this.travauxService.getTravauxByIdSite(this.personne.departement.entreprise.id)
+              .subscribe(list => {
+                this.array = list.body.map(item => {
+                  return {
+                    id: item.id,
+                    ...item
+                  };
+                });
+                this.listData = new MatTableDataSource(this.array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+                this.listData.filterPredicate = (data, filter) => {
+                  return this.displayedColumns.some(ele => {
+                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                  });
+                };
+
+              });
+          });
+
+        }else{
           this.error ='Vous n\'etes pas autorisé';
         }
       });
@@ -114,7 +138,7 @@ export class ListClientComponent implements OnInit {
   }
 
   onSearchClear() {
-    this.searchKey = "";
+    this.searchKey = '';
     this.applyFilter();
   }
 

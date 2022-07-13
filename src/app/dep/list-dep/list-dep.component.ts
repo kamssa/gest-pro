@@ -77,7 +77,8 @@ export class ListDepComponent implements OnInit {
             console.log(result.body.entreprise.id);
             this.personne = result.body;
             this.nav = true;
-            this.departementService.getDepByIdEntreprise(this.personne.entreprise.id).subscribe(list => {
+            this.departementService.getDepByIdEntreprise(this.personne.entreprise.id)
+              .subscribe(list => {
               this.array = list.body.map(item => {
                 return {
                   id: item.id,
@@ -95,8 +96,33 @@ export class ListDepComponent implements OnInit {
 
             });
           });
+        }else if(this.personne.type === 'EMPLOYE') {
+          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+            console.log(result.body.departement.entreprise.id);
+            this.personne = result.body;
+            this.nav = true;
+            this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id)
+              .subscribe(list => {
+                this.array = list.body.map(item => {
+                  return {
+                    id: item.id,
+                    ...item
+                  };
+                });
+                this.listData = new MatTableDataSource(this.array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+                this.listData.filterPredicate = (data, filter) => {
+                  return this.displayedColumns.some(ele => {
+                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                  });
+                };
+
+              });
+          });
         }else {
           this.error ='Vous n\'etes pas autorisé';
+
         }
         /*else if (this.personne.type === 'EMPLOYE'){
           this.employeService.getEmployeById(this.personne.id).subscribe(
