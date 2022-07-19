@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions} from 'ngx-gallery-9';
 import {Subscription} from "rxjs";
-import {SteTravauxService} from "../../service/ste-travaux.service";
 import {Photo} from "../../model/Photo";
+import {ProjetService} from '../../service/projet.service';
 
 @Component({
   selector: 'app-detail-tech',
@@ -23,12 +23,12 @@ export class DetailTechComponent implements OnInit {
   galleryImages: NgxGalleryImage[];
   pathNullImage = './assets/img/maison.jpg';
   liens: string[] = [];
-  @Input() travauxId: number;
-  constructor(private  travauxService: SteTravauxService) {
-    console.log(this.travauxId);
+  @Input() projetId: number;
+  constructor(private  projetService: ProjetService) {
+    console.log(this.projetId);
   }
   ngOnInit(): void {
-    this.travauxService.getPhotoByIdTravaux(this.travauxId).subscribe(data => {
+    this.projetService.getPhotoByIdProjet(this.projetId).subscribe(data => {
       this.photos = data.body;
       console.log(this.photos);
       this.photos.forEach(value => {

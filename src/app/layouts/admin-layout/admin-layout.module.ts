@@ -36,7 +36,6 @@ import {FinanceModule} from '../../finance/finance.module';
 import {DetailHistoryComponent} from '../../stock/detail-history/detail-history.component';
 import {ComptabiliteComponent} from '../../comptabilite/comptabilite/comptabilite.component';
 import {EmployePermitionComponent} from '../../employe/employe-permition/employe-permition.component';
-import {UpdateProjetComponent} from '../../finance/siteTravaux/update-projet/update-projet.component';
 import {AdvanceProjetComponent} from '../../administration/advance-projet/advance-projet.component';
 import {ListProjetComponent} from '../../administration/advance-projet/list-projet/list-projet.component';
 import {ListClientComponent} from '../../client/list-client/list-client.component';
@@ -47,7 +46,6 @@ import {VersementComponent} from '../../client/versement/versement.component';
 import {UpdateClientComponent} from '../../client/update-client/update-client.component';
 import {DashboardClientComponent} from '../../client/dashboard-client/dashboard-client.component';
 import {NgxGalleryModule} from 'ngx-gallery-9';
-import {HammerGestureConfig} from '@angular/platform-browser';
 
 
 

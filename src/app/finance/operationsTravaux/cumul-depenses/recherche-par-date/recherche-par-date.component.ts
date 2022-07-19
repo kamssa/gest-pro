@@ -1,12 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {Travaux} from '../../../../model/travaux';
-import {AchatTravauxService} from '../../../../service/achat-travaux.service';
-import {AutreAchatTravauxService} from '../../../../service/autre-achat-travaux.service';
 import {DatePipe} from '@angular/common';
-import {EditAutreAchatTravauxComponent} from '../../autreAchatTravaux/edit-autre-achat-travaux/edit-autre-achat-travaux.component';
 import {CumulParDateComponent} from '../../cumul-par-date/cumul-par-date.component';
-import {AutreAchatTravaux} from '../../../../model/AutreAchatTravaux';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-recherche-par-date',
@@ -17,7 +13,7 @@ export class RechercheParDateComponent implements OnInit {
   roomsFilter: any;
   roomsFilter1: any;
   model: any;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Travaux,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Projet,
               public datepipe: DatePipe,
               public dialog: MatDialog) { }
 

@@ -1,15 +1,24 @@
+import {Adresse} from './Adresse';
+import {Personne} from './Personne';
+import {Departement} from './Departement';
 
-export class Entreprise {
-  constructor(public id?: number,
+export class Entreprise extends Personne{
+  constructor(public id ?: number,
               public version?: number,
-              public nom?: string,
-              public description?: string,
-              public suspendu?: boolean,
-              public  lienFacebook?: string,
-              public  lienLinkedIn?: string,
-              public  lienTwitter?: string,
-              public  lientInstagram?: string,
-              public  logo?: string,
-              public  siteWeb?: string) {
+              public description ?: string,
+              public logo ?: string,
+              public nom ?: string,
+              public email ?: string,
+              public telephone?: string,
+              public password ?: string,
+              public nomComplet ?: string,
+              public suspendu ?: boolean,
+              public actevated ?: boolean,
+              public adresse ?: Adresse,
+              public  type?: string,
+              public roles?: []) {
+    // @ts-ignore
+    super(id, version, nom, email, telephone, password, nomComplet, suspendu, actevated, adresse, type, roles);
   }
+
 }

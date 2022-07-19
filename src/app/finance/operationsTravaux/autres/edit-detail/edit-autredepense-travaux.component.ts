@@ -1,11 +1,9 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {Autres} from "../../../../model/Autres";
-import {AutresService} from "../../../../service/autres.service";
+import {Autres} from '../../../../model/Autres';
+import {AutresService} from '../../../../service/autres.service';
 import {AchatTravaux} from '../../../../model/AchatTravaux';
-
-import {Manager} from '../../../../model/Manager';
 import {Employe} from '../../../../model/Employe';
 import {Observable} from 'rxjs';
 import {Materiaux} from '../../../../model/Materiaux';
@@ -13,14 +11,13 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {DialogConfirmService} from '../../../../helper/dialog-confirm.service';
 import {NotificationService} from '../../../../helper/notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ManagerService} from '../../../../service/manager.service';
 import {EmployeService} from '../../../../service/employe.service';
 import {DetailAutres} from '../../../../model/DetailAutres';
 import {map, switchMap} from 'rxjs/operators';
-import {SteTravauxService} from '../../../../service/ste-travaux.service';
-import {Travaux} from '../../../../model/travaux';
 import {StepperOrientation} from '@angular/material/stepper';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {ProjetService} from '../../../../service/projet.service';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-edit-autredepense-travaux',
@@ -39,7 +36,6 @@ export class EditAutredepenseTravauxComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   employes: Employe[];
   res: any;
@@ -60,8 +56,8 @@ export class EditAutredepenseTravauxComponent implements OnInit {
   @Output() change = new EventEmitter<number>();
   selected: any;
   filteredOptions: Observable<Materiaux[]>;
-  travaux: Travaux;
-  travauxId: number;
+  projet: Projet;
+  @Input() projetId: number;
   myControl = new FormControl();
   constructor(private  fb: FormBuilder,
               private  autresService: AutresService,
@@ -71,9 +67,8 @@ export class EditAutredepenseTravauxComponent implements OnInit {
               private notificationService: NotificationService,
               private helper: JwtHelperService,
               @Inject(MAT_DIALOG_DATA) public data: AchatTravaux,
-              private managerService: ManagerService,
               private employeService: EmployeService,
-              private travauxService: SteTravauxService,
+              private projetService: ProjetService,
               private route: ActivatedRoute,
               breakpointObserver: BreakpointObserver
   ) {
@@ -93,7 +88,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -105,17 +100,17 @@ export class EditAutredepenseTravauxComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             this.nav = true;
             this.route.paramMap.pipe(
               switchMap((params: ParamMap) =>
-                this.travauxService.getTravauxById(+params.get('id')))
+                this.projetService.getProjetById(+params.get('id')))
             ).subscribe(result => {
-              this.travaux = result.body;
-              this.travauxId = result.body.id;
-              console.log(this.travauxId);
+              this.projet = result.body;
+              this.projetId = result.body.id;
+              console.log(this.projetId);
             });
             if (this.data['detailAutres']){
               this.editMode = true;
@@ -136,7 +131,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
                           quantite: detailAutreTravaux.quantite,
                           montant: detailAutreTravaux.montant,
                           nomPrenom: detailAutreTravaux.nomPrenom,
-                          travauxId: detailAutreTravaux.travauxId
+                          projetId: detailAutreTravaux.projetId
                         })
                       );
                     }
@@ -147,7 +142,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
                     libelle: this.autre.libelle ,
                     montant: this.autre.montant,
                     date: this.autre.date,
-                    travauxId: this.autre.travauxId,
+                    projetId: this.autre.projetId,
                     detailAutres: this.detailAutresInit,
                   });
                 });
@@ -187,7 +182,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
       quantite: [''],
       montant: [''],
       nomPrenom: [''],
-      travauxId: ['']
+      projetId: ['']
 
     });
   }
@@ -198,7 +193,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
       libelle: '',
       montant: '',
       date: '',
-      travauxId: '',
+      projetId: '',
       detailAutres: this.fb.array([this.initItemRows()])
     });
 
@@ -209,7 +204,6 @@ export class EditAutredepenseTravauxComponent implements OnInit {
   onSubmit() {
 
     if (!this.editMode) {
-      if (this.personne.type === 'MANAGER') {
         let formValue = this.autreDepenseForm.value;
         let autre = new  Autres(
           null,
@@ -217,7 +211,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
           this.designationInput.nativeElement.value,
           null,
           new Date,
-          this.travauxId,
+          this.projetId,
           formValue['detailAutres']
 
         );
@@ -246,12 +240,6 @@ export class EditAutredepenseTravauxComponent implements OnInit {
               this.autreDepenseForm.reset();
             }
           });
-      } else if (this.personne.type === 'EMPLOYE') {
-        this.autre = {
-
-
-        };
-      }
 
     }
     localStorage.removeItem('materiau');

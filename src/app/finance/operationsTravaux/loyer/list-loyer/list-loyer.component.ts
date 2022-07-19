@@ -3,17 +3,15 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {DetailLoyer} from "../../../../model/DetailLoyer";
 import {Loyer} from "../../../../model/Loyer";
 import {LoyService} from "../../../../service/loy.service";
 import {DialogLoyerComponent} from "../dialog-loyer/dialog-loyer.component";
-import {EditPaieLoyerComponent} from "../edit-paie-loyer/edit-paie-loyer.component";
 import {DetailLoyerComponent} from "../detail-loyer/detail-loyer.component";
-import {Travaux} from '../../../../model/travaux';
-import {ManagerService} from '../../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../../../helper/notification.service';
 import {Router} from '@angular/router';
+import {EmployeService} from '../../../../service/employe.service';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-list-loyer',
@@ -35,12 +33,12 @@ export class ListLoyerComponent implements OnInit, AfterViewInit {
   personne: any;
   @ViewChild(MatSort) sort: MatSort;
 
-  @Input() travauxId: number;
+  @Input() projetId: number;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private loyerService: LoyService,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialog: MatDialog,
-              private managerService: ManagerService,
+              private employeService: EmployeService,
               private helper: JwtHelperService,
               private notificationService: NotificationService,
               private router: Router) {
@@ -49,7 +47,7 @@ export class ListLoyerComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit() {
-    this.loyerService.getLoyerByTravaux(this.travauxId)
+    this.loyerService.getLoyerByTravaux(this.projetId)
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {
@@ -95,7 +93,7 @@ export class ListLoyerComponent implements OnInit, AfterViewInit {
 
           }
           this.notificationService.warn("Suppression avec succès") ;
-          this.router.navigate(['finance/loyer', this.travauxId]);
+          this.router.navigate(['finance/loyer', this.projetId]);
         }else {
           this.notificationService.warn("Le déboursé sec n\'est pas renseigné") ;
         }

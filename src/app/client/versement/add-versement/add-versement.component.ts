@@ -1,14 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Client} from '../../../model/Client';
-import {Travaux} from '../../../model/travaux';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Versement} from '../../../model/Versement';
 import {DetailVersement} from '../../../model/DetailVersement';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
 import {VersementService} from '../../../service/versement.service';
-import {DetailVersementService} from '../../../service/detailVersement.service';
-import {Transport} from '../../../model/Transport';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
 
 @Component({
   selector: 'app-add-versement',
@@ -19,26 +16,26 @@ export class AddVersementComponent implements OnInit {
   versementForm: FormGroup;
   detailVersementInit: any;
   versement: Versement;
-  travaux: Travaux;
+  projet: Projet;
   detailVersement: DetailVersement;
   id: number;
   editMode = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Travaux,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Projet,
               private  fb: FormBuilder,
               public dialogRef: MatDialogRef<AddVersementComponent>,
-              private steTravauxService: SteTravauxService,
+              private projetService: ProjetService,
               private versementService: VersementService) {
   }
 
   ngOnInit(): void {
 
-    if(this.data['travaux']){
-      this.steTravauxService.getTravauxById(this.data['travaux'])
+    if(this.data['projet']){
+      this.projetService.getProjetById(this.data['projet'])
         .subscribe(res => {
-          this.travaux = res.body;
+          this.projet = res.body;
         });
-          this.versementService.getVersementByTravaux(this.data['travaux'])
+          this.versementService.getVersementByTravaux(this.data['projet'])
             .subscribe(result => {
               console.log('Voir la modif', result);
               if (result.status === 0) {
@@ -49,7 +46,7 @@ export class AddVersementComponent implements OnInit {
                   date: '',
                   solde: '',
                   reste: '',
-                  trauvaux: this.travaux,
+                  projet: this.projet,
                   detailVersement: this.fb.array([this.initItemRows()])
                 });
 
@@ -68,7 +65,7 @@ initForm() {
     date: '',
     solde: '',
     reste: '',
-    trauvaux: '',
+    projet: '',
     detailVersement: this.fb.array([this.initItemRows()])
   });
 
@@ -97,7 +94,7 @@ initItemRows() {
       null,
       null,
       formValue['detailVersement'],
-      this.travaux);
+      this.projet);
     console.log(versement);
     this.versementService.ajoutVersement(versement)
       .subscribe(data => {

@@ -1,12 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Travaux} from '../../../model/travaux';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
-import {ManagerService} from '../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {EmployeService} from '../../../service/employe.service';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
+import {Entreprise} from '../../../model/Entreprise';
 
 @Component({
   selector: 'app-update-projet',
@@ -14,17 +15,19 @@ import {JwtHelperService} from '@auth0/angular-jwt';
   styleUrls: ['./update-projet.component.scss']
 })
 export class UpdateProjetComponent implements OnInit {
-  travau: Travaux;
-  travaux: Travaux[];
+  projet: Projet;
+  projets: Projet[];
   tForm: FormGroup;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   personne: any;
   nav: boolean;
-  constructor( private managerService: ManagerService,
-    private travauxService: SteTravauxService,
+  entreprise: Entreprise;
+  constructor(
+    private projetService: ProjetService,
     private  fb: FormBuilder, private  router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: Travaux,
+    private employeService: EmployeService,
+    @Inject(MAT_DIALOG_DATA) public data: Projet,
     private snackBar: MatSnackBar,  private helper: JwtHelperService,
     public dialogRef: MatDialogRef<UpdateProjetComponent>) { }
 
@@ -32,46 +35,37 @@ export class UpdateProjetComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
 
         if (this.personne.type === 'EMPLOYE'){
-          this.managerService.getPersonneById(this.personne.id).subscribe( result => {
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
+            this.entreprise = result.body.departement.entreprise;
             this.nav = true;
         // insert code
-            this.travauxService.getTravauxById(this.data['travaux'])
+            this.projetService.getProjetById(this.data['projet'])
               .subscribe(res => {
                 console.log(res.body);
-                this.travau = res.body;
+                this.projet = res.body;
                 this.tForm = this.fb.group({
-                  id: this.travau.id,
-                  version: this.travau.version ,
-                  libelle: this.travau.libelle,
-                  numeroBon: this.travau.numeroBon,
-                  budget: this.travau.budget,
-                  accompte: this.travau.accompte,
-                  reste: this.travau.reste,
-                  total: this.travau.total,
-                  percent: this.travau.percent,
-                  debousserSec: this.travau.debousserSec,
-                  date: this.travau.date,
-                  dateLivraison: this.travau.dateLivraison,
-                  site: this.fb.group({
-                    id: this.travau.site.id,
-                    version: this.travau.site.version ,
-                    nomChantier: this.travau.site.nomChantier,
-                    entreprise: this.travau.site.entreprise
-                  }),
-                  ville: this.fb.group({
-                     id: this.travau.ville.id,
-                     version: this.travau.ville.version,
-                     nom: this.travau.ville.nom,
-                  }),
+                  id: this.projet.id,
+                  version: this.projet.version ,
+                  libelle: this.projet.libelle,
+                  numeroBon: this.projet.numeroBon,
+                  budget: this.projet.budget,
+                  accompte: this.projet.accompte,
+                  reste: this.projet.reste,
+                  total: this.projet.total,
+                  percent: this.projet.percent,
+                  debousserSec: this.projet.debousserSec,
+                  date: this.projet.date,
+                  dateLivraison: this.projet.dateLivraison,
+                  entreprise: this.entreprise,
                   client: this.fb.group({
-                   id: this.travau.client.id,
-                    version: this.travau.client.version,
-                    nom: this.travau.client.nom,
+                   id: this.projet.client.id,
+                    version: this.projet.client.version,
+                    nom: this.projet.client.nom,
                     type: 'CLIENT'
                   }),
                 });
@@ -88,13 +82,13 @@ export class UpdateProjetComponent implements OnInit {
   }
 
   onSubmit() {
-     this.travau = this.tForm.value;
-     console.log(this.travau);
-    this.travauxService.modifierTravaux(this.travau).subscribe(data => {
+     this.projet = this.tForm.value;
+     console.log(this.projet);
+    this.projetService.modifierProjet(this.projet).subscribe(data => {
       if (data){
         console.log(data.body);
-        this.travau = data.body;
-        this.dialogRef.close(this.travau);
+        this.projet = data.body;
+        this.dialogRef.close(this.projet);
         this.snackBar.open(' succès de la modification!', '', {
           duration: 3000,
           horizontalPosition: this.horizontalPosition,

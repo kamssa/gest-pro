@@ -1,18 +1,18 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Travaux} from '../../../model/travaux';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
 import {Location} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {SuccessDialogComponent} from '../../../service/shared/dialogs/success-dialog/success-dialog.component';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import {APP_DATE_FORMATS, AppDateAdapter} from '../../../helper/format-datepicker';
 import {EmployeService} from '../../../service/employe.service';
-import {ManagerService} from '../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {SiteService} from '../../../service/site.service';
 import {NotificationService} from '../../../helper/notification.service';
+import {Entreprise} from '../../../model/Entreprise';
+import {ProjetService} from '../../../service/projet.service';
+import {Projet} from '../../../model/projet';
+import {EntrepriseService} from '../../../service/entreprise.service';
 
 @Component({
   selector: 'app-edit-site-travaux',
@@ -27,105 +27,122 @@ export class EditSiteTravauxComponent implements OnInit {
   createSiteForm: FormGroup;
   editMode: any;
   name: any;
-  travail: Travaux;
+  projet: Projet;
   @HostBinding('class.is-open')
   isOpen = false;
   title = 'la liste des sites';
-  travaux: Travaux[] = [];
+  projets: Projet[] = [];
   edit: number;
-  travauxId: number;
+  projetId: number;
   private dialogConfig;
   personne: any;
   nav: boolean;
+  entreprise: Entreprise;
+  ROLE_MANAGER: any;
+  userRoles: string [] = [];
+  roles: any;
+  ROLE_ADMIN: any;
+  ROLE_NAME: any;
   constructor(
     private  router: Router, private  fb: FormBuilder,
-    private  siteTravauxService: SteTravauxService,
-    private siteService: SiteService,
+    private  projetService: ProjetService,
+    private entrepriseService: EntrepriseService,
     private location: Location,   private notificationService: NotificationService,
     private dialog: MatDialog,
     private  employeService: EmployeService,
-    private managerService: ManagerService,
     private helper: JwtHelperService) { }
 
   ngOnInit(): void {
 
     this.dialogConfig = {
       height: '200px',
-      width: '400px',
+       width: '400px',
       disableClose: true,
       data: { }
     };
-    if(localStorage.getItem('currentUser')) {
-      const token = localStorage.getItem('currentUser');
+    const token = localStorage.getItem('currentUser');
+    if(token){
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
-        this.personne = resultat.body;
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+        this.personne = res.body;
+        this.roles = res.body.roles;
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+        });
+        if ( this.userRoles.includes('ROLE_EMPLOYE') ||  this.userRoles.includes('ROLE_ACHAT') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+         this.entrepriseService.getEntrepriseById(this.personne.departement.entreprise.id)
+           .subscribe(data => {
+             this.entreprise = data.body;
+             console.log(this.entreprise);
+             if (res.status === 0){
+               this.createSiteForm = this.fb.group({
+                 libelle: new FormControl('', [Validators.required]),
+                 numeroBon: new FormControl('', [Validators.required]),
+                 accompte: new FormControl(''),
+                 budget: new FormControl('', [Validators.required]),
+                 date: new FormControl('' ),
+                 dateLivraison: new FormControl('' ),
+                 entreprise: this.entreprise,
+                 client: this.fb.group({
+                   nom: [''],
+                   type:'CLIENT'
+                 }),
+                 ville:  this.fb.array([]) ,
+                 situationGeographique:  this.fb.array([]) ,
 
-        if (this.personne.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
-            this.personne = result.body;
-            this.nav = true;
+               });
 
-          });
-          this.initForm();
-        }else if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.id).subscribe(
-            rest => {
-              this.personne = rest.body;
-              this.nav = false;
-            }
-          );
-          this.initForm();
+             }
+           });
+
+
+
         }
-
       });
-
+    }else {
+      console.log("pas de token");
     }
+
   }
   initForm(): void {
-    if(this.personne.type === 'MANAGER'){
-      this.createSiteForm = this.fb.group({
-        libelle: new FormControl('', [Validators.required]),
-        numeroBon: new FormControl('', [Validators.required]),
-        accompte: new FormControl(''),
-        budget: new FormControl('', [Validators.required]),
-        date: new FormControl('' ),
-        dateLivraison: new FormControl('' ),
-        site: this.fb.group({
-          nomChantier: ['', Validators.required],
-          entreprise: this.personne.entreprise
-        }),
-        ville: this.fb.group({
-          nom: ['', Validators.required],
-        }),
-        client: this.fb.group({
-          nom: [''],
-           type:'CLIENT'
-        }),
-      });
-    }else if (this.personne.type === 'EMPLOYE'){
-      this.createSiteForm = this.fb.group({
-        libelle: new FormControl('', [Validators.required]),
-        numeroBon: new FormControl('', [Validators.required]),
-        accompte: new FormControl(''),
-        budget: new FormControl('', [Validators.required]),
-        date: new FormControl('' ),
-        dateLivraison: new FormControl('' ),
-        site: this.fb.group({
-          nomChantier: ['', Validators.required],
-          entreprise: this.personne.departement.entreprise
-        }),
-        ville: this.fb.group({
-          nom: ['', Validators.required],
 
-        }),
-        client: this.fb.group({
-          nom: [''],
-          type:'CLIENT'
-        }),
-      });
     }
+  get ville(): FormArray {
+    return this.createSiteForm.get('ville') as FormArray;
+  }
+  get formArr() {
+    return this.createSiteForm.get('ville') as FormArray;
+  }
+  newVille(): FormGroup {
+    return this.fb.group({
+      nom: '',
+      description: '',
+    });
+  }
 
+  addVille() {
+    this.ville.push(this.newVille());
+  }
+
+  removeVille(i: number) {
+    this.ville.removeAt(i);
+  }
+  get situationGeographique(): FormArray {
+    return this.createSiteForm.get("situationGeographique") as FormArray;
+  }
+  newSituationGeographique(): FormGroup {
+    return this.fb.group({
+      libelle: '',
+    });
+  }
+
+  addSituationGeographique() {
+    this.situationGeographique.push(this.newSituationGeographique());
+  }
+
+  removeSituationGeographique(i:number) {
+    this.situationGeographique.removeAt(i);
   }
   public hasError = (controlName: string, errorName: string) => {
     //return this.createSiteForm.controls[controlName].hasError(errorName);
@@ -137,25 +154,11 @@ export class EditSiteTravauxComponent implements OnInit {
   }
   onSubmit(createSiteFormValue): void {
 
-
-     this.siteService.ajoutSite(this.createSiteForm.value.site)
-       .subscribe(res => {
-
-         let  travail : Travaux = {
-           libelle: createSiteFormValue.libelle,
-           numeroBon: createSiteFormValue.numeroBon,
-           accompte: createSiteFormValue.accompte,
-           budget: createSiteFormValue.budget,
-           date: createSiteFormValue.date,
-           dateLivraison: createSiteFormValue.dateLivraison,
-           site: res.body,
-           ville: createSiteFormValue.ville,
-           client: createSiteFormValue.client
-         };
-         this.siteTravauxService.ajoutTravaux(travail).subscribe(data => {
+     console.log(this.createSiteForm.value);
+     this.projetService.ajoutProjet(this.createSiteForm.value).subscribe(data => {
            if(data.status === 0){
-             this.travail = data.body;
-             this.travauxId = data.body.id;
+             this.projet = data.body;
+             this.projetId = data.body.id;
              let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
              dialogRef.afterClosed()
                .subscribe(result => {
@@ -170,8 +173,6 @@ export class EditSiteTravauxComponent implements OnInit {
            this.location.back();
          });
 
-
-       });
 
   }
   achat() {

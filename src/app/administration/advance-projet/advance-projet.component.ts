@@ -1,21 +1,18 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Travaux} from '../../model/travaux';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {SteTravauxService} from '../../service/ste-travaux.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {AchatTravauxService} from '../../service/achat-travaux.service';
 import {AuthService} from '../../service/auth.service';
 import {AdminService} from '../../service/admin.service';
-import {ManagerService} from '../../service/manager.service';
 import {EmployeService} from '../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
-import {SiteService} from '../../service/site.service';
 import {Site} from '../../model/site';
+import {Projet} from '../../model/projet';
+import {ProjetService} from '../../service/projet.service';
 
 @Component({
   selector: 'app-advance-projet',
@@ -26,38 +23,40 @@ export class AdvanceProjetComponent implements OnInit {
   createSiteForm: FormGroup;
   editMode: any;
   name: any;
-  travail: Travaux;
+  projet: Projet;
   @HostBinding('class.is-open')
   isOpen = false;
   title = 'la liste des sites';
-  travaux: Travaux[] = [];
-  site: Site[] = [];
-  travauxId: number;
-  selectedTravaux: Travaux;
-  travau: Travaux;
+  projets: Projet[] = [];
+  projetId: number;
+  selectedProjet: Projet;
   messageSucces: string;
   messageServiceErreur: string;
   statut: number ;
-  resultat: Travaux[] = [];
-  oTravaux: Observable<Travaux[]>;
-  searchTravauxSource = new BehaviorSubject<string>('');
+  resultat: Projet[] = [];
+  oTravaux: Observable<Projet[]>;
+  searchProjetSource = new BehaviorSubject<string>('');
   value = '';
   edit: number;
   personne: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
   type: string;
   currentUser: any;
+  ROLE_ADMIN: any;
+  ROLE_NAME: any;
+  error = '';
+  ROLE_MANAGER: any;
+  userRoles: string [] = [];
+  roles: any;
+
   constructor(
     private  router: Router, private  fb: FormBuilder,
-    private siteService: SiteService,
-    private  siteTravauxService: SteTravauxService,
-    private snackBar: MatSnackBar,  private travauxService: SteTravauxService,
+    private  projetService: ProjetService,
+    private snackBar: MatSnackBar,
     private achatTravauxService: AchatTravauxService,
     private authService: AuthService,  private adminService: AdminService,
-    private managerService: ManagerService,
     private employeService: EmployeService,  private helper: JwtHelperService) { }
 
   ngOnInit(): void {
@@ -65,55 +64,61 @@ export class AdvanceProjetComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
-        this.type = this.personne.type;
-        if (this.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        console.log(this.personne);
+        this.roles = resultat.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+        });
+        if (this.userRoles.includes('ROLE_ADMINSTRATION')){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
-            this.oTravaux = this.searchTravauxSource
+            this.oTravaux = this.searchProjetSource
               .pipe(
                 debounceTime(100),
                 distinctUntilChanged(),
-                switchMap(mc => mc ?  this.siteTravauxService.rechercheTravauxParMc(mc, this.personne.entreprise.nom)
-                  : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',''))
+                switchMap(mc => mc ?  this.projetService.rechercheProjetParMc(mc, this.personne.departement.entreprise.nom)
+                  : this.projetService.rechercheProjetParMc('Aucun projet trouvé !',''))
               );
-            this.siteService.getSiteEntreprise(this.personne.entreprise.nom)
+            /*this.siteService.getSiteEntreprise(this.personne.entreprise.nom)
               .subscribe(data =>
               {
                 this.site = data.body;
-              });
+              });*/
             this.toutsLesTravaux();
             // renvoie le site créé
-            this.siteTravauxService.travauxCreer$.subscribe(res => {
-                this.travaux.push(res.body);
+            this.projetService.projetCreer$.subscribe(res => {
+                this.projets.push(res.body);
                 this.messageSucces = res.messages.toString();
                 this.snackBar.open(this.messageSucces, '', {
                   duration: 3000
                 });
               }
             );
-            this.siteTravauxService.travauxModif$.subscribe(res => {
-                this.travaux[this.findSelectedTravauxIndex()] = res.body;
+            this.projetService.projetModif$.subscribe(res => {
+                this.projets[this.findSelectedTravauxIndex()] = res.body;
                 this.messageSucces = res.messages.toString();
                 this.snackBar.open(this.messageSucces, '', {
                   duration: 3000
                 });
               }
             );
-            this.siteTravauxService.travauxSupprime$.subscribe(
+            this.projetService.projetSupprime$.subscribe(
               res => {
                 let index: number;
                 index = this.findSelectedTravauxIndex();
-                this.travaux = this.travaux.filter((val, i) => i !== index);
+                this.projets = this.projets.filter((val, i) => i !== index);
                 this.messageSucces = res.messages.toString();
                 this.snackBar.open(this.messageSucces, '', {
                   duration: 3000
                 });
               });
-            this.siteTravauxService.travauxFiltre$
+            this.projetService.projetFiltre$
               .subscribe(lib => {
                   this.search(lib);
                 }
@@ -130,47 +135,47 @@ export class AdvanceProjetComponent implements OnInit {
             rest => {
               this.personne = rest.body;
               this.nav = false;
-              this.oTravaux = this.searchTravauxSource
+              this.oTravaux = this.searchProjetSource
                 .pipe(
                   debounceTime(100),
                   distinctUntilChanged(),
-                  switchMap(mc => mc ?  this.siteTravauxService.rechercheTravauxParMc(mc, this.personne.departement.entreprise.nom)
-                    : this.siteTravauxService.rechercheTravauxParMc('Aucun projet trouvé !',''))
+                  switchMap(mc => mc ?  this.projetService.rechercheProjetParMc(mc, this.personne.departement.entreprise.nom)
+                    : this.projetService.rechercheProjetParMc('Aucun projet trouvé !',''))
                 );
               this.toutsLesTravaux();
-              this.siteService.getSiteEntreprise(this.personne.departement.entreprise.nom)
+             /* this.projetService.getSiteEntreprise(this.personne.departement.entreprise.nom)
                 .subscribe(data =>
                 {
                   this.site = data.body;
-                });
+                });*/
               // renvoie le site créé
-              this.siteTravauxService.travauxCreer$.subscribe(res => {
-                  this.travaux.push(res.body);
+              this.projetService.projetCreer$.subscribe(res => {
+                  this.projets.push(res.body);
                   this.messageSucces = res.messages.toString();
                   this.snackBar.open(this.messageSucces, '', {
                     duration: 3000
                   });
                 }
               );
-              this.siteTravauxService.travauxModif$.subscribe(res => {
-                  this.travaux[this.findSelectedTravauxIndex()] = res.body;
+              this.projetService.projetModif$.subscribe(res => {
+                  this.projets[this.findSelectedTravauxIndex()] = res.body;
                   this.messageSucces = res.messages.toString();
                   this.snackBar.open(this.messageSucces, '', {
                     duration: 3000
                   });
                 }
               );
-              this.siteTravauxService.travauxSupprime$.subscribe(
+              this.projetService.projetSupprime$.subscribe(
                 res => {
                   let index: number;
                   index = this.findSelectedTravauxIndex();
-                  this.travaux = this.travaux.filter((val, i) => i !== index);
+                  this.projets = this.projets.filter((val, i) => i !== index);
                   this.messageSucces = res.messages.toString();
                   this.snackBar.open(this.messageSucces, '', {
                     duration: 3000
                   });
                 });
-              this.siteTravauxService.travauxFiltre$
+              this.projetService.projetFiltre$
                 .subscribe(lib => {
                     this.search(lib);
                   }
@@ -202,26 +207,26 @@ export class AdvanceProjetComponent implements OnInit {
     });
   }
   toutsLesTravaux() {
-    this.siteTravauxService.getAllTravaux()
+    this.projetService.getAllProjet()
       .subscribe(data => {
-        this.travaux = data.body;
+        this.projets = data.body;
         this.statut = data.status;
       });
 
   }
   findSelectedTravauxIndex(): number {
-    return this.travaux.indexOf(this.selectedTravaux);
+    return this.projets.indexOf(this.selectedProjet);
   }
 
   search(mc: string) {
-    this.searchTravauxSource.next(mc);
+    this.searchProjetSource.next(mc);
   }
 
   onSelect(travail) {
-    this.selectedTravaux = travail;
-    console.log(this.selectedTravaux.id);
-    this.travauxId = this.selectedTravaux.id;
-    this.router.navigate(['etat', this.selectedTravaux.id]);
+    this.selectedProjet = travail;
+    console.log(this.selectedProjet.id);
+    this.projetId = this.selectedProjet.id;
+    this.router.navigate(['etat', this.selectedProjet.id]);
     this.edit = 0;
     console.log(this.edit);
   }
@@ -232,32 +237,32 @@ export class AdvanceProjetComponent implements OnInit {
     }, 5000);
   }
 
-  onAchat(travail: Travaux) {
-    this.router.navigate(['finance/achat', travail.id]);
+  onAchat(projet: Projet) {
+    this.router.navigate(['finance/achat', projet.id]);
   }
 
-  onLocation(travail: Travaux) {
+  onLocation(travail: Projet) {
     this.router.navigate(['finance/location', travail.id]);
 
   }
 
 
-  onLoyer(travail: Travaux) {
+  onLoyer(travail: Projet) {
     this.router.navigate(['finance/loyer', travail.id]);
 
   }
 
-  onOeuvre(travail: Travaux) {
+  onOeuvre(travail: Projet) {
     this.router.navigate(['finance/oeuvre', travail.id]);
 
   }
 
-  onTransport(travail: Travaux) {
+  onTransport(travail: Projet) {
     this.router.navigate(['finance/transport', travail.id]);
 
   }
 
-  onAutres(travail: Travaux) {
+  onAutres(travail: Projet) {
     this.router.navigate(['finance/autre', travail.id]);
   }
 

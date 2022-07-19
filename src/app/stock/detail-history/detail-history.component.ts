@@ -5,13 +5,11 @@ import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snac
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {DetailStock} from '../../model/DetailStock';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
 import {DetailStockHistory} from '../../model/DetailStockHistory';
 import {DetailStockService} from '../../service/detail-stock.service';
 import {StockService} from '../../service/stock.service';
 import {DetailHistoryService} from '../../service/detail-history.service';
-import {ManagerService} from '../../service/manager.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
@@ -38,7 +36,6 @@ export class DetailHistoryComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -51,7 +48,6 @@ export class DetailHistoryComponent implements OnInit {
   constructor(private detailStockService: DetailStockService,
               private stockService: StockService,
               private detailHistoryService: DetailHistoryService,
-              private managerService: ManagerService,
               public dialog: MatDialog,
               private router: Router,
               private  dialogService: DialogConfirmService,
@@ -67,7 +63,7 @@ export class DetailHistoryComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -79,8 +75,8 @@ export class DetailHistoryComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.personne.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
             this.route.params.subscribe(params => {
@@ -155,7 +151,7 @@ export class DetailHistoryComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
 
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {

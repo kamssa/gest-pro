@@ -5,7 +5,7 @@ export  class LocationTravaux {
               public version?: number,
               public libelle?: string,
               public date?: Date,
-              public travauxId?: number,
+              public projetId?: number,
               public detailLocation?: DetailLocation[]) {
   }
 }

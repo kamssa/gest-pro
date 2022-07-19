@@ -18,7 +18,7 @@ export class DetailLoyerComponent implements OnInit {
   detailLoyerTravauxInit: any;
   montant: number;
   montantdetail: number;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   now = Date.now();
   public errorMessage: string = '';
   @ViewChild("montant", {static: false}) montantInput: ElementRef;
@@ -47,7 +47,7 @@ export class DetailLoyerComponent implements OnInit {
                   libelle: detailLoyer.libelle,
                   montant: detailLoyer.montant,
                   date: detailLoyer.date,
-                  travauxId: detailLoyer.travauxId
+                  projetId: detailLoyer.projetId
                 })
               );
             }
@@ -70,7 +70,7 @@ export class DetailLoyerComponent implements OnInit {
       version: '',
       montant: '',
       date: '',
-      travauxId: '',
+      projetId: '',
       detailLoyer: this.fb.array([this.initItemRows()])
     });
 
@@ -87,7 +87,7 @@ export class DetailLoyerComponent implements OnInit {
       libelle: ['', Validators.required],
       montant: ['', Validators.required],
       date: ['', Validators.required],
-      travauxId: ['']
+      projetId: ['']
     });
   }
   onSubmit() {
@@ -98,7 +98,7 @@ export class DetailLoyerComponent implements OnInit {
       'Loyer',
       null,
       new Date(),
-      this.travauxId,
+      this.projetId,
       formValue['detailLoyer']);
     this.loyerService.ajoutLoyer(loyer).subscribe(data => {
       console.log('Loyer enregistrer', data);

@@ -8,7 +8,7 @@ export class DetailLocation {
     public date?: number,
     public materiaux?: Materiaux,
     public  fournisseur?: Fournisseur,
-    public travauxId?: number
+    public projetId?: number
   ) {
   }
 }

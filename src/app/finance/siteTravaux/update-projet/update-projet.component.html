@@ -4,11 +4,9 @@
     <br>
     <div class="container">
       <form [formGroup]="tForm" (ngSubmit)="onSubmit()" *ngIf="tForm">
-        <mat-form-field formGroupName="site">
-          <input matInput type="text" placeholder="Nom du projet" formControlName="nomChantier"/>
-        </mat-form-field>
+
          <mat-form-field>
-        <input matInput type="text" placeholder="Nom du site" formControlName="libelle"/>
+        <input matInput type="text" placeholder="Nom du projet" formControlName="libelle"/>
       </mat-form-field>
         <mat-form-field >
           <input matInput type="text" placeholder="Numero de Bon" formControlName="numeroBon"/>
@@ -27,10 +25,6 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput type="text" placeholder="reste" formControlName="reste"/>
-        </mat-form-field>
-
-        <mat-form-field formGroupName="ville">
-          <input matInput type="text" placeholder="Ville" formControlName="nom"/>
         </mat-form-field>
         <mat-form-field formGroupName="client">
           <input matInput type="text" placeholder="Client" formControlName="nom"/>

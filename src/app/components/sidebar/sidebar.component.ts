@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../service/auth.service';
 import {Router} from '@angular/router';
-import {ManagerService} from '../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {EmployeService} from '../../service/employe.service';
 declare const $: any;
 declare interface RouteInfo {
   path: string;
@@ -37,7 +37,7 @@ export class SidebarComponent implements OnInit {
   ROLE_NAME: any;
   constructor(private authService: AuthService,
               private router: Router,
-              private managerService: ManagerService,
+              private employeService: EmployeService,
               private helper: JwtHelperService) { }
 
   ngOnInit() {
@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
       });
     }

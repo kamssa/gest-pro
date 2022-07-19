@@ -8,7 +8,6 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../helper/notification.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {ManagerService} from '../../service/manager.service';
 import {MaterielService} from '../../service/materiel.service';
 import {Materiaux} from '../../model/Materiaux';
 
@@ -40,7 +39,7 @@ export class AddMaterielComponent implements OnInit {
               public dialogRef: MatDialogRef<AddMaterielComponent>,
               private  router: Router, private _snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: Categorie,
-              public managerService: ManagerService) {
+              ) {
 
   }
 

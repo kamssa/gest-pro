@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../service/auth.service';
-import {ManagerService} from '../service/manager.service';
 import {EmployeService} from '../service/employe.service';
 import {Personne} from '../model/Personne';
 
@@ -37,7 +36,6 @@ export class ConnexionComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private managerService: ManagerService,
     private employeService: EmployeService
   ) {
     // redirect to home if already logged in
@@ -79,14 +77,14 @@ export class ConnexionComponent implements OnInit {
       this.submitted = true;
       const mail = this.managerForm.value.email;
 
-      this.managerService.getPersonneByEmail(mail).subscribe(data => {
+      this.employeService.getPersonneByEmail(mail).subscribe(data => {
         if (data.status === 0) {
           this.loading = true;
-          if (data.body.type === 'MANAGER') {
+          if (data.body.type === 'ENTREPRISE') {
             let request: Personne = {
               email: this.managerForm.value.email,
               password: this.managerForm.value.password,
-              type: 'MANAGER'
+              type: 'ENTREPRISE'
             };
             this.authService.login(request).subscribe(res => {
                 console.log(res);

@@ -8,7 +8,7 @@ export class DetailAutres {
               public  quantite?: number,
               public montant?: number,
               public nomPrenom?: string,
-              public travauxId?: number,
+              public projetId?: number,
               ) {
   }
 }

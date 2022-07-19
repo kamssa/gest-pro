@@ -9,7 +9,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {DetailMainOeuvre} from '../../../model/DetailMainDoeuvre';
 import {MainoeuvreService} from '../../../service/mainoeuvre.service';
 import {DialogMainouvreComponent} from '../mainouvre/dialog-mainouvre/dialog-mainouvre.component';
-import {Travaux} from '../../../model/travaux';
 import {AutreAchatTravauxService} from '../../../service/autre-achat-travaux.service';
 import {DetailAutreAchatTravaux} from '../../../model/DetailAutreAchatTravaux';
 import {LocationService} from '../../../service/location.service';
@@ -22,15 +21,14 @@ import {AutresService} from '../../../service/autres.service';
 import {DetailAutres} from '../../../model/DetailAutres';
 import {jsPDF} from 'jspdf';
 import {AchatTravauxService} from '../../../service/achat-travaux.service';
-import {Manager} from '../../../model/Manager';
 import {Employe} from '../../../model/Employe';
 import {AuthService} from '../../../service/auth.service';
 import {AdminService} from '../../../service/admin.service';
-import {ManagerService} from '../../../service/manager.service';
 import {EmployeService} from '../../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
 import html2canvas from 'html2canvas';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
 
 @Component({
   selector: 'app-cumul-depenses',
@@ -57,13 +55,12 @@ export class CumulDepensesComponent implements OnInit {
   somme6: any;
   array: any;
   personne: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
   type: string;
   currentUser: any;
-  travaux: Travaux;
+  projet: Projet;
   role: boolean;
   role1: boolean;
   role2: boolean;
@@ -76,7 +73,7 @@ export class CumulDepensesComponent implements OnInit {
   @ViewChild('content', {static: false}) el: ElementRef;
   @ViewChild('invoice') invoiceElement!: ElementRef;
   constructor(private mainoeuvreService: MainoeuvreService,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialogRef: MatDialogRef<DialogMainouvreComponent>,
               private snackBar: MatSnackBar,
               private router: Router,
@@ -87,22 +84,21 @@ export class CumulDepensesComponent implements OnInit {
               private  transportService: TransportService,
               private  autresService: AutresService,
               private authService: AuthService,  private adminService: AdminService,
-              private managerService: ManagerService,
               private employeService: EmployeService,
-              private helper: JwtHelperService, private siteTravauxService: SteTravauxService) {
+              private helper: JwtHelperService, private projetService: ProjetService) {
 
-this.siteTravauxService.getTravauxById(this.data['travaux'])
+this.projetService.getProjetById(this.data['projet'])
   .subscribe(res => {
-  this.travaux = res.body;
+  this.projet = res.body;
   });
 
   }
 
   ngOnInit(): void {
-    this.autreAchatTravauxService.getDetailAutreAchatByTravaux(this.data['travaux']).subscribe(result => {
+    this.autreAchatTravauxService.getDetailAutreAchatByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail autre achat travaux par id travaux', result);
       this.detailAutreAchatTravaux = result;
-      this.autreAchatTravauxService.getAutreDetailAchatTravauxMontantByTravaux(this.data['travaux'])
+      this.autreAchatTravauxService.getAutreDetailAchatTravauxMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           console.log(res);
           this.somme = res;
@@ -110,52 +106,52 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
         });
 
     });
-    this.locationService.getDetailLocationByTravaux(this.data['travaux']).subscribe(result => {
+    this.locationService.getDetailLocationByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail detail location par id travaux', result);
       this.detailLocation = result;
-      this.locationService.getDetailLocationMontantByTravaux(this.data['travaux'])
+      this.locationService.getDetailLocationMontantByTravaux(this.data['projet'])
         .subscribe( res => {
           this.somme1 = res;
         });
 
     });
-    this.loyeService.getDetailLoyeByTravaux(this.data['travaux']).subscribe(result => {
+    this.loyeService.getDetailLoyeByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail detail loyer par id travaux', result);
       this.detailLoyeTravaux = result;
-      this.loyeService.getDetailLoyerMontantByTravaux(this.data['travaux'])
+      this.loyeService.getDetailLoyerMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           this.somme2 = res;
         });
     });
-    this.mainoeuvreService.getDetailMainOeuvreByTravaux(this.data['travaux']).subscribe(result => {
+    this.mainoeuvreService.getDetailMainOeuvreByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail detail main oeuvre par id travaux', result);
       this.detailMainOeuvre = result;
-      this.mainoeuvreService.getDetailMainDoeuvreMontantByTravaux(this.data['travaux'])
+      this.mainoeuvreService.getDetailMainDoeuvreMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           this.somme3 = res;
         });
     });
-    this.transportService.getDetailTransportByTravaux(this.data['travaux']).subscribe(result => {
+    this.transportService.getDetailTransportByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail detail transport par id travaux', result);
       this.detailTransport = result;
-      this.transportService.getDetailTransportMontantByTravaux(this.data['travaux'])
+      this.transportService.getDetailTransportMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           this.somme4 = res;
         });
     });
-    this.autresService.getDetailAutreByTravaux(this.data['travaux']).subscribe(result => {
+    this.autresService.getDetailAutreByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail detail autre par id travaux', result);
       this.detailAutre = result;
-      this.autresService.getAutresMontantByTravaux(this.data['travaux'])
+      this.autresService.getAutresMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           this.somme5 = res;
           console.log('somme 5', this.somme5);
         });
     });
-    this.achatTravauxService.getDetailAchatTravauxByTravaux(this.data['travaux']).subscribe(result => {
+    this.achatTravauxService.getDetailAchatTravauxByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail detail autre par id travaux', result);
       this.detailAchatTravaux = result;
-      this.achatTravauxService.getDetailAchatTravauxMontantByTravaux(this.data['travaux'])
+      this.achatTravauxService.getDetailAchatTravauxMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           this.somme6 = res;
         });
@@ -163,12 +159,12 @@ this.siteTravauxService.getTravauxById(this.data['travaux'])
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         this.type = this.personne.type;
-        if (this.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
 

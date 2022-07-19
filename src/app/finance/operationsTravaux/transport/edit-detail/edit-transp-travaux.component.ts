@@ -1,7 +1,6 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
-import {SteTravauxService} from "../../../../service/ste-travaux.service";
 import {Transport} from "../../../../model/Transport";
 import {TransportService} from "../../../../service/transport.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -18,7 +17,7 @@ export class EditTranspTravauxComponent implements OnInit {
   montantdetail: number;
   transport: Transport;
   detailTransportInit: any;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   now = Date.now();
   public errorMessage: string = '';
   @ViewChild("value", {static: false}) valueInput: ElementRef;
@@ -29,7 +28,6 @@ export class EditTranspTravauxComponent implements OnInit {
 
   constructor(private  fb: FormBuilder, private  router: Router,
               private transportService: TransportService,
-              private travauxServices: SteTravauxService,
               private notificationService: NotificationService,
               @Inject(MAT_DIALOG_DATA) public data: Transport) {
   }
@@ -75,7 +73,7 @@ export class EditTranspTravauxComponent implements OnInit {
       version: '',
       montant: '',
       date: '',
-      travauxId: '',
+      projetId: '',
       detailTransport: this.fb.array([this.initItemRows()])
     });
 
@@ -103,7 +101,7 @@ export class EditTranspTravauxComponent implements OnInit {
       'Transport',
       null,
       null,
-      this.travauxId,
+      this.projetId,
       formValue['detailTransport']);
     this.transportService.ajoutTransport(transport).subscribe(data => {
       this.notificationService.warn('Enregistrement effectué avec succès');

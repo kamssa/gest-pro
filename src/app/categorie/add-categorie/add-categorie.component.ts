@@ -6,9 +6,9 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../helper/notification.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {ManagerService} from '../../service/manager.service';
 import {CategorieService} from '../../service/categorie.service';
 import {Categorie} from '../../model/Categorie';
+import {EmployeService} from '../../service/employe.service';
 
 @Component({
   selector: 'app-add-categorie',
@@ -37,11 +37,11 @@ export class AddCategorieComponent implements OnInit {
               public dialogRef: MatDialogRef<AddCategorieComponent>,
               private  router: Router, private _snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: Document,
-              public managerService: ManagerService) {
+              public employeService: EmployeService) {
     const token = localStorage.getItem('currentUser');
     if(token){
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getManagerById(decoded.sub).subscribe(res => {
+      this.employeService.getEmployeById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         console.log(this.personne);
         this.roles = res.body.roles;

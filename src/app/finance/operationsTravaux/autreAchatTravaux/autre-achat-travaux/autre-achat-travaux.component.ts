@@ -1,9 +1,6 @@
 import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AchatTravaux} from '../../../../model/AchatTravaux';
-import {DetailAchatTravaux} from '../../../../model/DtailAchat';
-import {DetailAticleStockGeneral} from '../../../../model/DetailAticleStockGeneral';
-import {Manager} from '../../../../model/Manager';
 import {Employe} from '../../../../model/Employe';
 import {Observable} from 'rxjs';
 import {Materiaux} from '../../../../model/Materiaux';
@@ -13,14 +10,13 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {DialogConfirmService} from '../../../../helper/dialog-confirm.service';
 import {NotificationService} from '../../../../helper/notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ManagerService} from '../../../../service/manager.service';
 import {EmployeService} from '../../../../service/employe.service';
 import {map, startWith, switchMap} from 'rxjs/operators';
 import {AutreAchatTravauxService} from '../../../../service/autre-achat-travaux.service';
 import {AutreAchatTravaux} from '../../../../model/AutreAchatTravaux';
 import {CategorieService} from '../../../../service/categorie.service';
-import {Travaux} from '../../../../model/travaux';
-import {SteTravauxService} from '../../../../service/ste-travaux.service';
+import {Projet} from '../../../../model/projet';
+import {ProjetService} from '../../../../service/projet.service';
 
 @Component({
   selector: 'app-autre-achat-travaux',
@@ -38,7 +34,6 @@ export class AutreAchatTravauxComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -60,8 +55,8 @@ export class AutreAchatTravauxComponent implements OnInit {
   materiaux: Materiaux [];
   materiau: Materiaux;
   myControl = new FormControl();
-  travaux: Travaux;
-  travauxId: number;
+  projet: Projet;
+  projetId: number;
   startDate: Date;
 
   constructor(private  fb: FormBuilder,
@@ -70,13 +65,12 @@ export class AutreAchatTravauxComponent implements OnInit {
               private detailAticleStockGeneralService: DetailAticleStockGeneralService,
               public dialog: MatDialog,
               private router: Router,
-              private travauxService: SteTravauxService,
+              private projetService: ProjetService,
               private route: ActivatedRoute,
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
               private helper: JwtHelperService,
               @Inject(MAT_DIALOG_DATA) public data: AchatTravaux,
-              private managerService: ManagerService,
               private employeService: EmployeService,
   ) {
 
@@ -88,7 +82,7 @@ export class AutreAchatTravauxComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -100,19 +94,19 @@ export class AutreAchatTravauxComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             this.nav = true;
             this.route.paramMap.pipe(
               switchMap((params: ParamMap) =>
-                this.travauxService.getTravauxById(+params.get('id')))
+                this.projetService.getProjetById(+params.get('id')))
             ).subscribe(result => {
-              this.travaux = result.body;
-              this.travauxId = result.body.id;
-              console.log(this.travauxId);
+              this.projet = result.body;
+              this.projetId = result.body.id;
+              console.log(this.projetId);
             });
-            this.categorieService.getMatByIdEntreprise(this.personne.entreprise.id).subscribe(data => {
+            this.categorieService.getMatByIdEntreprise(this.personne.departement.entreprise.id).subscribe(data => {
               console.log('materiel par entreprise: ', data.body);
               this.materiaux = data.body;
               /*this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -142,7 +136,7 @@ export class AutreAchatTravauxComponent implements OnInit {
                           fournisseur: detailAutreAchatTravaux.fournisseur,
                           montant: detailAutreAchatTravaux.montant,
                           date: detailAutreAchatTravaux.date,
-                          travauxId: detailAutreAchatTravaux.travauxId
+                          projetId: detailAutreAchatTravaux.projetId
                         })
                       );
                     }
@@ -153,7 +147,7 @@ export class AutreAchatTravauxComponent implements OnInit {
                     libelle: this.autreAchatTravaux.libelle ,
                     date: this.autreAchatTravaux.date,
                     montant: this.autreAchatTravaux.montant,
-                    travauxId: this.autreAchatTravaux.travauxId,
+                    projetId: this.autreAchatTravaux.projetId,
                     autreDetailAchatTravaux: this.detailAutreAchatTravauxInit,
                   });
                 });
@@ -206,7 +200,7 @@ export class AutreAchatTravauxComponent implements OnInit {
       fournisseur: [''],
       quantite: ['', Validators.required],
       montant: [''],
-      travauxId: ['']
+      projetId: ['']
     });
   }
   initForm() {
@@ -216,7 +210,7 @@ export class AutreAchatTravauxComponent implements OnInit {
       libelle: '',
       date: '',
       montant: '',
-      travauxId: '',
+      projetId: '',
       detailAutreAchatTravaux: this.fb.array([this.initItemRows()])
     });
 
@@ -230,7 +224,6 @@ export class AutreAchatTravauxComponent implements OnInit {
   onSubmit() {
 
     if (!this.editMode) {
-      if (this.personne.type === 'MANAGER') {
         this.materiau = JSON.parse(localStorage.getItem('materiau'));
         let formValue = this.autreAchatTravauxForm.value;
 
@@ -240,7 +233,7 @@ export class AutreAchatTravauxComponent implements OnInit {
          this.libelleMateriauxInput.nativeElement.value,
          null,
          null,
-         this.travauxId,
+         this.projetId,
          formValue['detailAutreAchatTravaux']
 
        );
@@ -269,7 +262,7 @@ export class AutreAchatTravauxComponent implements OnInit {
             }
           });
         this.autreAchatTravauxForm.reset();
-      }
+
 
     }
     localStorage.removeItem('materiau');

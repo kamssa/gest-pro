@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {DetailTransport} from '../../../../model/DetailTransport';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
@@ -7,11 +6,11 @@ import {TransportService} from '../../../../service/transport.service';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {EditTranspTravauxComponent} from '../edit-detail/edit-transp-travaux.component';
 import {Transport} from '../../../../model/Transport';
-import {DialogTransportComponent} from "../dialog-transport/dialog-transport.component";
-import {Travaux} from '../../../../model/travaux';
+import {DialogTransportComponent} from '../dialog-transport/dialog-transport.component';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../../../helper/notification.service';
 import {Router} from '@angular/router';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-list-transport',
@@ -33,10 +32,10 @@ export class ListTransportComponent implements OnInit, AfterViewInit {
   personne: any;
   @ViewChild(MatSort) sort: MatSort;
 
-  @Input() travauxId: number;
+  @Input() projetId: number;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private serviceTransport: TransportService,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialog: MatDialog,
               private helper: JwtHelperService,
               private notificationService: NotificationService,
@@ -46,8 +45,8 @@ export class ListTransportComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit() {
-    console.log(this.travauxId);
-    this.serviceTransport.getTransportByTravaux(this.data['travaux'])
+    console.log(this.projetId);
+    this.serviceTransport.getTransportByTravaux(this.data['projet'])
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {
@@ -92,7 +91,7 @@ export class ListTransportComponent implements OnInit, AfterViewInit {
 
           }
           this.notificationService.warn("Suppression avec succès") ;
-          this.router.navigate(['finance/transport', this.travauxId]);
+          this.router.navigate(['finance/transport', this.projetId]);
         }else {
           this.notificationService.warn("Le déboursé sec n\'est pas renseigné") ;
         }

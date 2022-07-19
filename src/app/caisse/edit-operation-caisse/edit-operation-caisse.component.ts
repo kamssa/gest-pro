@@ -2,21 +2,15 @@ import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} 
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {NotificationService} from '../../helper/notification.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {Caisse} from '../../model/Caisse';
 import {CaisseService} from '../../service/caisse.service';
-import {Autres} from '../../model/Autres';
-import {DetailAutres} from '../../model/DetailAutres';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
 import {Observable} from 'rxjs';
 import {Materiaux} from '../../model/Materiaux';
-import {AutresService} from '../../service/autres.service';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AchatTravaux} from '../../model/AchatTravaux';
-import {ManagerService} from '../../service/manager.service';
 import {EmployeService} from '../../service/employe.service';
 import {CaisseDetail} from '../../model/CaisseDetail';
 
@@ -37,7 +31,6 @@ export class EditOperationCaisseComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   employes: Employe[];
   res: any;
@@ -68,7 +61,6 @@ export class EditOperationCaisseComponent implements OnInit {
               private notificationService: NotificationService,
               private helper: JwtHelperService,
               @Inject(MAT_DIALOG_DATA) public data: AchatTravaux,
-              private managerService: ManagerService,
               private employeService: EmployeService,
   ) {
 
@@ -76,16 +68,16 @@ export class EditOperationCaisseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.employeService.getAllEmploye().subscribe(res => {
+    /*this.employeService.getAllEmploye().subscribe(res => {
       console.log(res);
       this.employes = res.body;
     }, error => {
       console.log(error.message);
-    });
+    });*/
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -97,8 +89,8 @@ export class EditOperationCaisseComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             this.nav = true;
 
@@ -190,7 +182,7 @@ export class EditOperationCaisseComponent implements OnInit {
   onSubmit() {
 
     if (!this.editMode) {
-      if (this.personne.type === 'MANAGER') {
+
         this.caisse = {
           date: null,
           entreprise: this.personne.entreprise,
@@ -200,7 +192,7 @@ export class EditOperationCaisseComponent implements OnInit {
               designation: this.designationInput.nativeElement.value,
               prixUnitaire:  this.prixUnitaireInput.nativeElement.value,
               quantite:  this.quantiteInput.nativeElement.value,
-              entrepriseId: this.personne.entreprise.id,
+              entrepriseId: this.personne.departement.entreprise.id,
               employe: this.employeInput.nativeElement.value,
 
             }
@@ -208,12 +200,6 @@ export class EditOperationCaisseComponent implements OnInit {
         };
         console.log('Voir autre retourne', this.caisse);
 
-      } else if (this.personne.type === 'EMPLOYE') {
-        this.caisse = {
-
-
-        };
-      }
 
 
 

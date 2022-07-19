@@ -10,7 +10,6 @@ import {NotificationService} from '../../helper/notification.service';
 import {AdminService} from '../../service/admin.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {EditOperationCaisseComponent} from '../edit-operation-caisse/edit-operation-caisse.component';
-import {ManagerService} from '../../service/manager.service';
 import {CaisseDetail} from '../../model/CaisseDetail';
 import {EmployeService} from '../../service/employe.service';
 import {CaisseDetailService} from '../../service/caisse-detail.service';
@@ -41,7 +40,6 @@ export class ListCaisseComponent implements OnInit {
   caisseDetail: CaisseDetail[];
   searchKey: any;
   constructor(
-              private managerService: ManagerService,
               private  caisseDetailService: CaisseDetailService,
               private caisseService: CaisseService,
               public dialog: MatDialog,
@@ -57,18 +55,18 @@ export class ListCaisseComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
 
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.personne.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
-            console.log(this.personne.entreprise.id);
-            this.caisseDetailService.getCaisseDetailByEntrepriseId(this.personne.entreprise.id).subscribe(list => {
+            console.log(this.personne.departement.entreprise.id);
+            this.caisseDetailService.getCaisseDetailByEntrepriseId(this.personne.departement.entreprise.id).subscribe(list => {
              if(list.status === 0){
                console.log(list.body);
                this.array =  list.body.map(item => {
@@ -126,7 +124,7 @@ export class ListCaisseComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
 
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
 

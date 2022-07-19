@@ -1,4 +1,4 @@
- import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Departement} from '../../model/Departement';
 import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
@@ -11,10 +11,10 @@ import {NotificationService} from '../../helper/notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AddDepComponent} from '../add-dep/add-dep.component';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
-import {ManagerService} from '../../service/manager.service';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
 import {EmployeService} from '../../service/employe.service';
+import {RoleService} from '../../service/role.service';
+import {EntrepriseService} from '../../service/entreprise.service';
 
 @Component({
   selector: 'app-list-dep',
@@ -35,7 +35,6 @@ export class ListDepComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -43,15 +42,17 @@ export class ListDepComponent implements OnInit {
   ROLE_NAME: any;
   error = '';
   ROLE_MANAGER: any;
+  userRoles: string [] = [];
   constructor(private departementService: DepService,
-              private managerService: ManagerService,
+              private entrepriseService: EntrepriseService,
               public dialog: MatDialog,
               private router: Router,
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
               private _snackBar: MatSnackBar,
               private helper: JwtHelperService,
-              private employeService: EmployeService)
+              private employeService: EmployeService,
+              private roleService: RoleService)
   {
 
   }
@@ -59,25 +60,19 @@ export class ListDepComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
-        console.log(resultat.body);
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
+        console.log(this.personne);
         this.roles = resultat.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
         this.roles.forEach(val => {
-
           this.ROLE_NAME = val.name;
-          if (this.ROLE_NAME === 'ROLE_MANAGER'){
-            this.ROLE_MANAGER = this.ROLE_NAME;
-          }
+          this.userRoles.push(this.ROLE_NAME);
         });
-        this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
-            console.log(result.body.entreprise.id);
-            this.personne = result.body;
+        if (this.userRoles.includes('ROLE_ENTREPRISE')){
             this.nav = true;
-            this.departementService.getDepByIdEntreprise(this.personne.entreprise.id)
+            this.departementService.getDepByIdEntreprise(this.personne.id)
               .subscribe(list => {
               this.array = list.body.map(item => {
                 return {
@@ -95,9 +90,9 @@ export class ListDepComponent implements OnInit {
               };
 
             });
-          });
-        }else if(this.personne.type === 'EMPLOYE') {
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+
+        }else if(this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             console.log(result.body.departement.entreprise.id);
             this.personne = result.body;
             this.nav = true;
@@ -124,54 +119,10 @@ export class ListDepComponent implements OnInit {
           this.error ='Vous n\'etes pas autorisé';
 
         }
-        /*else if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.id).subscribe(
-            rest => {
-              this.personne = rest.body;
-              this.nav = false;
-              this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id).subscribe(list => {
-                this.array = list.body.map(item => {
-                  return {
-                    id: item.id,
-                    ...item
-                  };
-                });
-                this.listData = new MatTableDataSource(this.array);
-                this.listData.sort = this.sort;
-                this.listData.paginator = this.paginator;
-                this.listData.filterPredicate = (data, filter) => {
-                  return this.displayedColumns.some(ele => {
-                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                  });
-                };
 
-              });
-            });
-
-        }
-*/
       });
 
     }
-   /* if (localStorage.getItem('currentUser')) {
-      const token = localStorage.getItem('currentUser');
-      const decoded = this.helper.decodeToken(token);
-
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
-        this.personne = res.body;
-        this.roles = res.body.roles;
-        this.roles.forEach(val => {
-          console.log(val.name);
-          this.ROLE_NAME = val.name;
-          if (this.ROLE_NAME === 'ROLE_MANAGER'){
-            this.ROLE_MANAGER = this.ROLE_NAME;
-          }
-        });
-      });
-
-    }*/
-
-
   }
 
   onSearchClear() {
@@ -183,7 +134,7 @@ export class ListDepComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
   onCreate() {
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+      if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.departementService.initializeFormGroup();
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -204,14 +155,14 @@ export class ListDepComponent implements OnInit {
 
           });
       });
-    }else if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
+    }else if (!this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;
     }
 
   }
 
   onEdit(row){
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+    if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.departementService.populateForm(row);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -232,14 +183,14 @@ export class ListDepComponent implements OnInit {
             }
           });
       });
-    }else if (this.ROLE_NAME === 'ROLE_EMPLOYE') {
+    }/*else if (this.ROLE_NAME === 'ROLE_EMPLOYE') {
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
+    }*/
 
   }
 
   onDelete(row){
-    if (this.ROLE_NAME === 'ROLE_MANAGER') {
+    if (this.roles.includes('ROLE_ENTREPRISE') || this.roles.includes('ROLE_EMPLOYE') || this.roles.includes('ROLE_ADMINISTRATION')){
       if (confirm('Voulez-vous vraiment supprimer le departement ?')){
         this.departementService.supprimerDepartement(row.id).subscribe(result => {
           console.log(result);

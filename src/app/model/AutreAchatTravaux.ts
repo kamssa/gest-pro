@@ -7,7 +7,7 @@ export class AutreAchatTravaux {
               public libelle?: string,
               public date?: Date,
               public montant?: number,
-              public travauxId?: number,
+              public projetId?: number,
               public detailAutreAchatTravaux?: DetailAutreAchatTravaux[]) {
   }
 }

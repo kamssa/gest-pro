@@ -15,19 +15,17 @@ import {AchatTravauxService} from '../../../../service/achat-travaux.service';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 import {Materiaux} from '../../../../model/Materiaux';
-import {Manager} from '../../../../model/Manager';
 import {Employe} from '../../../../model/Employe';
 import {DialogConfirmService} from '../../../../helper/dialog-confirm.service';
 import {NotificationService} from '../../../../helper/notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ManagerService} from '../../../../service/manager.service';
 import {EmployeService} from '../../../../service/employe.service';
 import {map, startWith, switchMap} from 'rxjs/operators';
 import {DetailAticleStockGeneralService} from '../../../../service/detail-aticle-stock-general.service';
 import {DetailAticleStockGeneral} from '../../../../model/DetailAticleStockGeneral';
 import {DetailAchatTravaux} from '../../../../model/DtailAchat';
-import {SteTravauxService} from '../../../../service/ste-travaux.service';
-import {Travaux} from '../../../../model/travaux';
+import {Projet} from '../../../../model/projet';
+import {ProjetService} from '../../../../service/projet.service';
 
 
 @Component({
@@ -48,7 +46,6 @@ export class EditAchatTravauxComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -66,8 +63,8 @@ export class EditAchatTravauxComponent implements OnInit {
   @Output() change = new EventEmitter<number>();
   selected: any;
   filteredOptions: Observable<Materiaux[]>;
-  travaux: Travaux;
-  travauxId: number;
+  projet: Projet;
+  projetId: number;
   myControl = new FormControl();
   constructor(private  fb: FormBuilder,
               private  achatTravauxService: AchatTravauxService,
@@ -77,9 +74,8 @@ export class EditAchatTravauxComponent implements OnInit {
               private router: Router,
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
-              private helper: JwtHelperService, private travauxService: SteTravauxService,
+              private helper: JwtHelperService, private projetService: ProjetService,
               @Inject(MAT_DIALOG_DATA) public data: AchatTravaux,
-              private managerService: ManagerService,
               private employeService: EmployeService, private route: ActivatedRoute,
              ) {
 
@@ -91,7 +87,7 @@ export class EditAchatTravauxComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -103,19 +99,19 @@ export class EditAchatTravauxComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             this.nav = true;
             this.route.paramMap.pipe(
               switchMap((params: ParamMap) =>
-                this.travauxService.getTravauxById(+params.get('id')))
+                this.projetService.getProjetById(+params.get('id')))
             ).subscribe(result => {
-              this.travaux = result.body;
-              this.travauxId = result.body.id;
-              console.log(this.travauxId);
+              this.projet = result.body;
+              this.projetId = result.body.id;
+              console.log(this.projetId);
             });
-            this.detailAticleStockGeneralService.getDetailAticleStockGeneralByIdEntreprise(this.personne.entreprise.id)
+            this.detailAticleStockGeneralService.getDetailAticleStockGeneralByIdEntreprise(this.personne.departement.entreprise.id)
               .subscribe(data => {
                 console.log('Voir les données retournées', data.body);
                 this.detailAticleStockGeneral = data.body;
@@ -143,7 +139,7 @@ export class EditAchatTravauxComponent implements OnInit {
                           prixUnitaire: detailAchatTravaux.prixUnitaire,
                           quantite: detailAchatTravaux.quantite,
                           montant: detailAchatTravaux.montant,
-                          travauxId: detailAchatTravaux.travauxId,
+                          projetId: detailAchatTravaux.projetId,
                           date: detailAchatTravaux.date
                         })
                       );
@@ -155,7 +151,7 @@ export class EditAchatTravauxComponent implements OnInit {
                     libelle: this.achatTravaux.libelle ,
                     date: this.achatTravaux.date,
                     montant: this.achatTravaux.montant,
-                    travauxId: this.achatTravaux.travauxId,
+                    projetId: this.achatTravaux.projetId,
                     detailAchatTravaux: this.detailAchatTravauxInit,
                   });
                 });
@@ -210,7 +206,7 @@ export class EditAchatTravauxComponent implements OnInit {
       prixUnitaire: [''],
       quantite: ['', Validators.required],
       montant: [''],
-      travauxId: [''],
+      projetId: [''],
       date: [''],
     });
   }
@@ -221,7 +217,7 @@ export class EditAchatTravauxComponent implements OnInit {
       libelle: '',
       date: '',
       montant: '',
-      travauxId: '',
+      projetId: '',
       detailAchatTravaux: this.fb.array([this.initItemRows()])
     });
 
@@ -240,13 +236,13 @@ export class EditAchatTravauxComponent implements OnInit {
         this.achatTravaux = {
           libelle: this.detailAticleStockGenerale.libelleMateriaux,
           date: new  Date(),
-          travauxId: this.travauxId,
+          projetId: this.projetId,
           detailAchatTravaux: [
             {
               libelleMateriaux: this.detailAticleStockGenerale.libelleMateriaux,
               prixUnitaire: this.detailAticleStockGenerale.prixUnitaire,
               quantite: parseInt(this.quantiteInput.nativeElement.value),
-              travauxId: this.travauxId
+              projetId: this.projetId
             }
           ]
         };
@@ -261,7 +257,7 @@ export class EditAchatTravauxComponent implements OnInit {
 
       console.log('Voir detail stock', this.achatTravaux);
       //localStorage.removeItem('materiau');
-      this.travauxService.getTravauxById(this.travauxId)
+      this.projetService.getProjetById(this.projetId)
         .subscribe(res => {
 
             this.achatTravauxService.ajoutAchatTravaux(this.achatTravaux)

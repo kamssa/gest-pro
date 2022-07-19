@@ -5,10 +5,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from 'jquery';
 import {Location, PopStateEvent} from '@angular/common';
 import {filter} from 'rxjs/operators';
-import {ManagerService} from '../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../helper/notification.service';
 import {UpdateEvolutionService} from '../../service/update-evolution.service';
+import {EmployeService} from '../../service/employe.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -27,30 +27,14 @@ export class AdminLayoutComponent implements OnInit {
   ROLE_MANAGER: any;
   personne: any;
   constructor(public location: Location, private router: Router,
-              private managerService: ManagerService,
               private notificationService: NotificationService,
               private helper: JwtHelperService,
+              private employeService: EmployeService,
               private updateEvolutionService: UpdateEvolutionService) {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('currentUser')) {
-      const token = localStorage.getItem('currentUser');
-      const decoded = this.helper.decodeToken(token);
 
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
-        this.personne = res.body;
-        this.roles = res.body.roles;
-        this.roles.forEach(val => {
-          console.log(val.name);
-          this.ROLE_NAME = val.name;
-          if (this.ROLE_NAME === 'ROLE_MANAGER'){
-            this.ROLE_MANAGER = this.ROLE_NAME;
-          }
-        });
-      });
-
-    }
     const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
     if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {

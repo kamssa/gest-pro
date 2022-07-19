@@ -9,7 +9,6 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {AddEmployeComponent} from '../add-employe/add-employe.component';
-import {ManagerService} from '../../service/manager.service';
 import {AuthService} from '../../service/auth.service';
 import {Departement} from '../../model/Departement';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -40,9 +39,10 @@ export class ListEmployeComponent implements OnInit {
   ROLE_NAME: any;
   error = '';
   ROLE_MANAGER: any;
+  userRoles: string [] = [];
+
   constructor(private employeService: EmployeService,
               public dialog: MatDialog, private authService: AuthService,
-              private managerService: ManagerService,
               private  dialogService: DialogConfirmService,
               private _snackBar: MatSnackBar, private router: Router,
               private helper: JwtHelperService,
@@ -52,52 +52,64 @@ export class ListEmployeComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
-        this.personne = resultat.body;
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
-            this.personne = res.body;
-            this.employeService.getEmployeByIdEntreprise(this.personne.entreprise.id).subscribe(list => {
-              console.log(list);
-              this.array = list.body.map(item => {
-                return {
-                  id: item.id,
-                  ...item
-                };
-              });
-              this.listData = new MatTableDataSource(this.array);
-              this.listData.sort = this.sort;
-              this.listData.paginator = this.paginator;
-              this.listData.filterPredicate = (data, filter) => {
-                return this.displayedColumns.some(ele => {
-                  return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                });
-              };
-
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+            this.personne = resultat.body;
+            this.roles = resultat.body.roles;
+            // Vérifie si le tableau contient le droit de la personne retournnée
+            this.roles.forEach(val => {
+              this.ROLE_NAME = val.name;
+              this.userRoles.push(this.ROLE_NAME);
             });
-          });
-        }else {
-          this.error ='Vous n\'etes pas autorisé';
-        }
+            if  (this.userRoles.includes('ROLE_ENTREPRISE') ){
+              this.employeService.getEmployeByIdEntreprise(this.personne.id).subscribe(list => {
+                console.log(list.body);
+                console.log(list);
+                this.array = list.body.map(item => {
+                  return {
+                    id: item.id,
+                    ...item
+                  };
+                });
+                this.listData = new MatTableDataSource(this.array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+                this.listData.filterPredicate = (data, filter) => {
+                  return this.displayedColumns.some(ele => {
+                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                  });
+                };
+
+              });
+            }else if (this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+
+              this.employeService.getEmployeByIdEntreprise(this.personne.departement.entreprise.id).subscribe(list => {
+
+                this.array = list.body.map(item => {
+                  return {
+                    id: item.id,
+                    ...item
+                  };
+                });
+                this.listData = new MatTableDataSource(this.array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+                this.listData.filterPredicate = (data, filter) => {
+                  return this.displayedColumns.some(ele => {
+                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                  });
+                };
+
+              });
+            }else {
+              this.error ='Vous n\'etes pas autorisé';
+
+            }
+
+
+
+
         });
     }
-
-     if(localStorage.getItem('currentUser')) {
-       const token = localStorage.getItem('currentUser');
-       const decoded = this.helper.decodeToken(token);
-       this.managerService.getPersonneById(decoded.sub).subscribe(res => {
-         this.personne = res.body;
-         this.roles = res.body.roles;
-         this.roles.forEach(val => {
-           console.log(val.name);
-           this.ROLE_NAME = val.name;
-           if (this.ROLE_NAME === 'ROLE_MANAGER'){
-             this.ROLE_MANAGER = this.ROLE_NAME;
-           }
-         });
-       });
-
-     }
 
   }
 
@@ -110,8 +122,8 @@ export class ListEmployeComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
   onCreate() {
-    if (this.ROLE_NAME === "ROLE_MANAGER"){
-      this.employeService.initializeFormGroup();
+     if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+       this.employeService.initializeFormGroup();
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
@@ -137,7 +149,7 @@ export class ListEmployeComponent implements OnInit {
   }
 
   onEdit(row){
-    if(this.ROLE_NAME === "ROLE_MANAGER"){
+    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.employeService.populateForm(row);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -165,7 +177,7 @@ export class ListEmployeComponent implements OnInit {
   }
 
   onDelete(row){
-    if(this.ROLE_NAME === "ROLE_MANAGER"){
+    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       if(confirm('Voulez-vous vraiment supprimer l\'employé ?')){
         this.employeService.deleteEmployeById(row.id).subscribe(result => {
 

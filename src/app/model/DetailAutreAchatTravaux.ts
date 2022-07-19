@@ -9,7 +9,7 @@ export class DetailAutreAchatTravaux {
               public montant?: number,
               public fournisseur?: number,
               public  date?: Date,
-              public  travauxId?: number
+              public  projetId?: number
 
 
 ) {

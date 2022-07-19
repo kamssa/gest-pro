@@ -21,16 +21,16 @@
 <body id="page-top">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-  <a class="navbar-brand js-scroll-trigger" href="#page-top">
-    <span class="d-block d-lg-none">{{tr?.site?.entreprise.nom}}</span>
-  </a>
+ <!-- <a class="navbar-brand js-scroll-trigger" href="#page-top">
+    <span class="d-block d-lg-none">{{projet?.libelle}}</span>
+  </a>-->
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-  <div class="collapse navbar-collapse" id="navbarResponsive">
+ <!-- <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav">
       <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">{{personne?.nomComplet}}</a></li>
 
     </ul>
-  </div>
+  </div>-->
 </nav>
 <!-- Page Content-->
 <div class="container-fluid p-0">
@@ -44,21 +44,20 @@
     </ul>
   <section class="resume-section" id="about">
     <div class="resume-section-content">
-      <h1 class="mb-0">
+     <!-- <h1 class="mb-0">
 
-        <span class="text-primary"> {{tr?.site?.entreprise.nom}}</span>
-      </h1>
+        <span class="text-primary"> {{projet?.libelle}}</span>
+      </h1>-->
       <div class="subheading mb-5">
-        {{tr?.site?.entreprise.lientInstagram}}
-        <a href="{{tr?.site?.entreprise.siteWeb}}">{{tr?.site?.entreprise.siteWeb}}</a>
+        <a href="{{projet?.entreprise?.adresse?.siteWeb}}">{{projet?.entreprise?.adresse?.siteWeb}}</a>
       </div>
-      <p class="lead mb-5">{{tr?.site?.entreprise.description}}</p>
+      <p class="lead mb-5">{{projet?.entreprise.description}}</p>
 
       <div class="social-icons">
-        <a class="social-icon" href="{{tr?.site?.entreprise?.lienLinkedIn}}"><i class="fab fa-linkedin-in"></i></a>
-        <a class="social-icon" href="{{tr?.site.entreprise?.lientInstagram}}"><i class="fab fa-instagram"></i></a>
-        <a class="social-icon" href="{{tr?.site.entreprise?.lienTwitter}}"><i class="fab fa-twitter"></i></a>
-        <a class="social-icon" href="{{tr?.site.entreprise?.lienFacebook}}"><i class="fab fa-facebook-f"></i></a>
+        <a class="social-icon" href="{{projet?.entreprise?.adresse?.lienFacebook}}"><i class="fab fa-linkedin-in"></i></a>
+        <a class="social-icon" href="{{projet?.entreprise?.adresse?.lientInstagram}}"><i class="fab fa-instagram"></i></a>
+        <a class="social-icon" href="{{projet?.entreprise?.adresse?.lienTwitter}}"><i class="fab fa-twitter"></i></a>
+        <a class="social-icon" href="{{projet?.entreprise?.adresse?.lienFacebook}}"><i class="fab fa-facebook-f"></i></a>
       </div>
     </div>
   </section>
@@ -67,13 +66,13 @@
   <section class="resume-section" id="experience">
     <div class="resume-section-content">
       <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-        <div class="flex-grow-1">
-          <h3 class="mb-0">{{tr?.site.nomChantier}}</h3>
-        </div>
+        <!--<div class="flex-grow-1">
+          <h3 class="mb-0">{{projet?.libelle}}</h3>
+        </div>-->
       </div>
       <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
         <div class="flex-grow-1">
-          <h3 class="mb-0">{{tr?.libelle}}</h3>
+          <h3 class="mb-0">{{projet?.libelle}}</h3>
           <div class="subheading mb-3">Solde des versements</div>
           <p>{{versement?.solde | number}} CFA</p>
         </div>

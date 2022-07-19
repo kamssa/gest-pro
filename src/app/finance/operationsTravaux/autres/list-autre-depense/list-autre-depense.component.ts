@@ -1,18 +1,16 @@
 import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {AchatTravaux} from '../../../../model/AchatTravaux';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {AutresService} from '../../../../service/autres.service';
 import {Autres} from '../../../../model/Autres';
-import {DetailAutres} from '../../../../model/DetailAutres';
 import {DialogAutresComponent} from '../dialog-autres/dialog-autres.component';
-import {Travaux} from '../../../../model/travaux';
-import {ManagerService} from '../../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../../../helper/notification.service';
 import {Router} from '@angular/router';
+import {EmployeService} from '../../../../service/employe.service';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-list-autre-depense',
@@ -32,12 +30,12 @@ export class ListAutreDepenseComponent implements OnInit , AfterViewInit {
   ROLE_MANAGER: any;
   personne: any;
   listData: MatTableDataSource<any>;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private serviceAutre: AutresService,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialog: MatDialog,
-              private managerService: ManagerService,
+              private employeService: EmployeService,
               private helper: JwtHelperService,
               private router: Router,
               private notificationService: NotificationService) {
@@ -46,8 +44,8 @@ export class ListAutreDepenseComponent implements OnInit , AfterViewInit {
 
   }
   ngOnInit() {
-    console.log(this.travauxId);
-    this.serviceAutre.getautresByTravaux(this.travauxId)
+    console.log(this.projetId);
+    this.serviceAutre.getautresByTravaux(this.projetId)
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {
@@ -70,7 +68,7 @@ export class ListAutreDepenseComponent implements OnInit , AfterViewInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {
@@ -117,7 +115,7 @@ export class ListAutreDepenseComponent implements OnInit , AfterViewInit {
 
             }
             this.notificationService.warn("Suppression avec succès") ;
-            this.router.navigate(['finance/autre', this.travauxId]);
+            this.router.navigate(['finance/autre', this.projetId]);
           }else {
             this.notificationService.warn("Le déboursé sec n\'est pas renseigné") ;
           }

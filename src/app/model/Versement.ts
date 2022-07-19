@@ -1,5 +1,5 @@
-import {Travaux} from './travaux';
 import {DetailVersement} from './DetailVersement';
+import {Projet} from './projet';
 
 export class Versement {
   constructor(public id?: number,
@@ -8,7 +8,7 @@ export class Versement {
               public solde?: number,
               public reste?: number,
               public  detailVersement?: DetailVersement[],
-              public travaux?: Travaux) {
+              public projet?: Projet) {
   }
 
 

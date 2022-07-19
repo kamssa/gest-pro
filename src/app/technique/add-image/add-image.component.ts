@@ -1,11 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {catchError, map, switchMap} from "rxjs/operators";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {SteTravauxService} from "../../service/ste-travaux.service";
-import {Travaux} from "../../model/travaux";
-import {Site} from "../../model/site";
 import {HttpErrorResponse, HttpEventType} from "@angular/common/http";
 import {of} from 'rxjs';
+import {Projet} from '../../model/projet';
+import {ProjetService} from '../../service/projet.service';
 
 @Component({
   selector: 'app-add-image',
@@ -14,16 +13,14 @@ import {of} from 'rxjs';
 })
 export class AddImageComponent implements OnInit {
   selectedFile = null;
-  travaux: Travaux;
-  travauxId: number;
-  site: Site;
+  projet: Projet;
+  projetId: number;
   urls = [];
   panelOpenState = false;
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
   files = [];
 
-  constructor(private uploadService: SteTravauxService,
-              private travauxService: SteTravauxService,
+  constructor(private uploadService: ProjetService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -31,12 +28,11 @@ export class AddImageComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.travauxService.getTravauxById(+params.get('id')))
+        this.uploadService.getProjetById(+params.get('id')))
     ).subscribe(result => {
-      this.travaux = result.body;
-      this.site = result.body.site;
-      this.travauxId = result.body.id;
-      console.log(this.travauxId);
+      this.projet = result.body;
+      this.projetId = result.body.id;
+      console.log(this.projetId);
       // console.log(this.site);
     });
   }
@@ -47,7 +43,7 @@ export class AddImageComponent implements OnInit {
     const formData = new FormData();
     formData.append('multipartFile', file.data);
     file.inProgress = true;
-    this.uploadService.upload(formData, this.travauxId).pipe(
+    this.uploadService.upload(formData, this.projetId).pipe(
       map(event => {
         switch (event.type) {
           case HttpEventType.UploadProgress:

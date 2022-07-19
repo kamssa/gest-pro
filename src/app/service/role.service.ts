@@ -5,7 +5,6 @@ import {Observable} from 'rxjs';
 import {Resultat} from '../model/resultat';
 import {Departement} from '../model/Departement';
 import {environment} from '../../environments/environment';
-import {Stock} from '../model/Stock';
 import {Role} from '../model/Role';
 
 @Injectable({

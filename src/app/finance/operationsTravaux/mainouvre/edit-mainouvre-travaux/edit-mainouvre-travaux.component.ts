@@ -1,7 +1,6 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
-import {SteTravauxService} from "../../../../service/ste-travaux.service";
 import {MainOeuvre} from "../../../../model/MainOeuvre";
 import {MainoeuvreService} from "../../../../service/mainoeuvre.service";
 import {Loyer} from "../../../../model/Loyer";
@@ -19,7 +18,7 @@ export class EditMainouvreTravauxComponent implements OnInit {
   mainOeuvre: MainOeuvre;
   detailMainOeuvreTravauxInit: any;
   montantdetail: number;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   now = Date.now();
   public errorMessage: string = '';
   @ViewChild("value", {static: false}) valueInput: ElementRef;
@@ -30,9 +29,8 @@ export class EditMainouvreTravauxComponent implements OnInit {
 
   constructor(private  fb: FormBuilder, private  router: Router,
               private mainOeuvreService: MainoeuvreService,
-              private travauxServices: SteTravauxService,
               private notificationService: NotificationService,
-              @Inject(MAT_DIALOG_DATA) public data: Loyer) {
+              @Inject(MAT_DIALOG_DATA) public data: MainOeuvre) {
   }
 
   ngOnInit(): void {
@@ -88,7 +86,7 @@ export class EditMainouvreTravauxComponent implements OnInit {
       libelle: '',
       montant: '',
       date: '',
-      travauxId: '',
+      projetId: '',
       detailMainOeuvre: this.fb.array([this.initItemRows()])
     });
 
@@ -126,7 +124,7 @@ export class EditMainouvreTravauxComponent implements OnInit {
       'MainOeuvre',
       null,
       null,
-      this.travauxId,
+      this.projetId,
       formValue['detailMainOeuvre']);
     this.mainOeuvreService.ajoutMainDoeuvre(mainoeuvre).subscribe(data => {
       this.notificationService.warn('Enregistrement effectué avec succès');

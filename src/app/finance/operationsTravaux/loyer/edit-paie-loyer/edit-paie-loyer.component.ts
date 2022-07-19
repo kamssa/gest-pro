@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
-import {Travaux} from "../../../../model/travaux";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {SteTravauxService} from "../../../../service/ste-travaux.service";
 import {MediaChange, MediaObserver} from "@angular/flex-layout";
 import {switchMap} from "rxjs/operators";
 import {CumulDepensesComponent} from '../../cumul-depenses/cumul-depenses.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Projet} from '../../../../model/projet';
+import {ProjetService} from '../../../../service/projet.service';
 
 @Component({
   selector: 'app-edit-paie-loyer',
@@ -19,13 +19,14 @@ export class EditPaieLoyerComponent implements OnInit {
   edit: number;
   devicesXs: boolean;
   mediaSub: Subscription;
-  travaux: Travaux;
-  travauxId: number;
+  projet: Projet;
+  projetId: number;
   solde: number;
   total: number;
   panelOpenState = false;
   constructor(private route: ActivatedRoute,
-              private travauxService: SteTravauxService, private  router: Router,
+              private projetService: ProjetService,
+              private  router: Router,
               private mediaObserver: MediaObserver,
               public dialog: MatDialog) {
 
@@ -46,10 +47,10 @@ export class EditPaieLoyerComponent implements OnInit {
       });
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.travauxService.getTravauxById(+params.get('id')))
+        this.projetService.getProjetById(+params.get('id')))
     ).subscribe(result => {
-      this.travaux = result.body;
-      this.travauxId = result.body.id;
+      this.projet = result.body;
+      this.projetId = result.body.id;
       console.log(result.body);
     });
   }

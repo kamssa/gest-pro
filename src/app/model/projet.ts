@@ -1,12 +1,14 @@
-import {Site} from './site';
 import {Ville} from './Ville';
 import {Client} from './Client';
+import {Entreprise} from './Entreprise';
+import {SituationGeographique} from './SituationGeographique';
 
-export class Travaux {
+export class Projet {
   constructor(public  id?: number,
               public  version?: number,
-              public  numeroBon?: string,
               public  libelle?: string,
+              public  numeroBon?: string,
+              public  numeroPojet?: string,
               public  accompte?: number,
               public  budget?: number,
               public  reste?: number,
@@ -15,9 +17,9 @@ export class Travaux {
               public percent?: number,
               public  date?: Date,
               public  dateLivraison?: Date,
-
-              public site?: Site,
-              public ville?: Ville,
-              public client?: Client) {
+              public entreprise?: Entreprise,
+              public client?: Client,
+              public ville?: Ville[],
+              public situationGeographique?: SituationGeographique[]) {
   }
 }

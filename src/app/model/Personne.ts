@@ -11,6 +11,8 @@ export class Personne {
               public password?: string,
               public fonction?: string,
               public nomComplet?: string,
+              public suspendu ?: boolean,
+              public actevated ?: boolean,
               public departement?: Departement,
               public adresse?: Adresse,
               public type?: string,

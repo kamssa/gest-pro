@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AutreAchatTravaux} from '../../../model/AutreAchatTravaux';
 import {AutreAchatTravauxService} from '../../../service/autre-achat-travaux.service';
 import {jsPDF} from "jspdf";
 import {AchatTravauxService} from '../../../service/achat-travaux.service';
@@ -10,11 +9,8 @@ import {TransportService} from '../../../service/transport.service';
 import {AutresService} from '../../../service/autres.service';
 import {AuthService} from '../../../service/auth.service';
 import {AdminService} from '../../../service/admin.service';
-import {ManagerService} from '../../../service/manager.service';
 import {EmployeService} from '../../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
-import {MatTableDataSource} from '@angular/material/table';
 import {DetailMainOeuvre} from '../../../model/DetailMainDoeuvre';
 import {DetailAutreAchatTravaux} from '../../../model/DetailAutreAchatTravaux';
 import {DetailAchatTravaux} from '../../../model/DtailAchat';
@@ -22,13 +18,13 @@ import {DetailLoyer} from '../../../model/DetailLoyer';
 import {DetailAutres} from '../../../model/DetailAutres';
 import {DetailTransport} from '../../../model/DetailTransport';
 import {DetailLocation} from '../../../model/DetailLocation';
-import {Manager} from '../../../model/Manager';
 import {Employe} from '../../../model/Employe';
-import {Travaux} from '../../../model/travaux';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {MainoeuvreService} from '../../../service/mainoeuvre.service';
 import html2canvas from 'html2canvas';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
 
 @Component({
   selector: 'app-cumul-par-date',
@@ -53,13 +49,12 @@ export class CumulParDateComponent implements OnInit {
   somme6: number;
   array: number[] = [];
   personne: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
   type: string;
   currentUser: any;
-  travaux: Travaux;
+  projet: Projet;
   role: boolean;
   role1: boolean;
   role2: boolean;
@@ -83,17 +78,16 @@ export class CumulParDateComponent implements OnInit {
               private  transportService: TransportService,
               private  autresService: AutresService,
               private authService: AuthService,  private adminService: AdminService,
-              private managerService: ManagerService,
               private employeService: EmployeService,
-              private helper: JwtHelperService, private siteTravauxService: SteTravauxService) {
+              private helper: JwtHelperService, private projetService: ProjetService) {
 
   }
 
   ngOnInit(): void {
-    this.siteTravauxService.getTravauxById(this.data.id)
+    this.projetService.getProjetById(this.data.id)
       .subscribe(res => {
-        this.travaux = res.body;
-        console.log("Voir travaux", this.travaux);
+        this.projet = res.body;
+        console.log("Voir travaux", this.projet);
       });
     const id = this.data.id;
     const dateDebut = this.data.dateDebut;
@@ -210,12 +204,12 @@ export class CumulParDateComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         this.type = this.personne.type;
-        if (this.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
 

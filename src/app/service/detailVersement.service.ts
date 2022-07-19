@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 import {Observable, of, Subject} from 'rxjs';
 import {Resultat} from '../model/resultat';
-import {Travaux} from '../model/travaux';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
-import {Employe} from '../model/Employe';
-import {Client} from '../model/Client';
-import {catchError, tap} from 'rxjs/operators';
+
 import {Versement} from '../model/Versement';
 import {DetailVersement} from '../model/DetailVersement';
+import {Projet} from '../model/projet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DetailVersementService {
 // observables sources
-  private clientCreerSource = new Subject<Resultat<Travaux>>();
-  private clientModifSource = new Subject<Resultat<Travaux>>();
+  private clientCreerSource = new Subject<Resultat<Projet>>();
+  private clientModifSource = new Subject<Resultat<Projet>>();
   private clientFiltreSource = new Subject<string>();
   private clientSupprimeSource = new Subject<Resultat<boolean>>();
 
@@ -37,12 +35,12 @@ export class DetailVersementService {
   }
 
 
-  clientCreer(res: Resultat<Travaux>) {
+  clientCreer(res: Resultat<Projet>) {
     console.log('Travail a ete  creer correctement essaie source');
     this.clientCreerSource.next(res);
   }
 
-  clientModif(res: Resultat<Travaux>) {
+  clientModif(res: Resultat<Projet>) {
     this.clientModifSource.next(res);
   }
 

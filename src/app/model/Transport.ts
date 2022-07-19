@@ -6,7 +6,7 @@ export class Transport {
               public libelle?: string,
               public montant?: number,
               public date?: Date,
-              public travauxId?: number,
+              public projetId?: number,
               public detailTransport?: DetailTransport[]) {
   }
 }

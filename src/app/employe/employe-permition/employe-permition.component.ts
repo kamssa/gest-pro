@@ -5,7 +5,6 @@ import {Employe} from '../../model/Employe';
 import {Departement} from '../../model/Departement';
 import {EmployeService} from '../../service/employe.service';
 import {AuthService} from '../../service/auth.service';
-import {ManagerService} from '../../service/manager.service';
 import {NotificationService} from '../../helper/notification.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
@@ -41,7 +40,6 @@ export class EmployePermitionComponent implements OnInit {
   constructor(public fb: FormBuilder,
               public  employeService: EmployeService,
               public authService: AuthService,
-              private managerService: ManagerService,
               private roleService: RoleService,
               private notificationService: NotificationService,
               public dialogRef: MatDialogRef<EmployePermitionComponent>,
@@ -56,7 +54,7 @@ export class EmployePermitionComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
       console.log(decoded.sub);
-      this.managerService.getPersonneById(decoded.sub).subscribe(result => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(result => {
         this.personne = result.body;
         console.log(this.personne);
         this.roleService.getAllRole().subscribe(res => {

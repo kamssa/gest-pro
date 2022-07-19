@@ -8,10 +8,10 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {DatailAchatDialogComponent} from "../dialogue/datail-achat-dialog/datail-achat-dialog.component";
 import {EditAchatTravauxComponent} from "../edit-achat-travaux/edit-achat-travaux.component";
 import {Router} from '@angular/router';
-import {ManagerService} from '../../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../../../helper/notification.service';
-import {Travaux} from '../../../../model/travaux';
+import {EmployeService} from '../../../../service/employe.service';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-list-achat',
@@ -31,13 +31,13 @@ export class ListAchatComponent implements OnInit, AfterViewInit{
   error = '';
   ROLE_MANAGER: any;
   personne: any;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
    constructor(private serviceAchat: AchatTravauxService,
                public dialog: MatDialog,
                private router: Router,
-               @Inject(MAT_DIALOG_DATA) public data: Travaux,
-               private managerService: ManagerService,
+               @Inject(MAT_DIALOG_DATA) public data: Projet,
+               private employeService: EmployeService,
                private helper: JwtHelperService,
                private notificationService: NotificationService) {
    }
@@ -45,7 +45,7 @@ export class ListAchatComponent implements OnInit, AfterViewInit{
 
   }
   ngOnInit() {
-    this.serviceAchat.getAchatTravauxByTravaux(this.travauxId).subscribe(list => {
+    this.serviceAchat.getAchatTravauxByTravaux(this.projetId).subscribe(list => {
       if(list.length !== 0){
         this.array = list.map(item => {
           return {
@@ -67,7 +67,7 @@ export class ListAchatComponent implements OnInit, AfterViewInit{
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {
@@ -113,7 +113,7 @@ export class ListAchatComponent implements OnInit, AfterViewInit{
 
             }
             this.notificationService.warn("Suppression avec succès") ;
-            this.router.navigate(['finance/achat', this.travauxId]);
+            this.router.navigate(['finance/achat', this.projetId]);
           }else {
             this.notificationService.warn("Le déboursé sec n\'est pas renseigné") ;
           }

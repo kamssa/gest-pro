@@ -13,13 +13,15 @@ export class Employe extends Personne{
               public password ?: string,
               public fonction ?: string,
               public nomComplet ?: string,
+              public suspendu ?: boolean,
+              public actevated ?: boolean,
               public departement?: Departement,
               public adresse ?: Adresse,
               public  type?: string,
               public roles?: [],
               public activated?: boolean,
               public  salaire?: Salaire) {
-    super(id, version, nom, prenom, email, telephone, password, fonction, nomComplet, departement, adresse, type, roles);
+    super(id, version, nom, prenom, email, telephone, password, fonction, nomComplet, suspendu, actevated,  departement, adresse, type, roles);
   }
 
 

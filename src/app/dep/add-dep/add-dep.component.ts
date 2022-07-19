@@ -7,8 +7,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../helper/notification.service';
 import {Location} from '@angular/common';
-import {ManagerService} from '../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {EmployeService} from '../../service/employe.service';
+import {Entreprise} from '../../model/Entreprise';
 
 @Component({
   selector: 'app-add-dep',
@@ -21,10 +22,11 @@ export class AddDepComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   submitted = false;
   private dialogConfig;
-
+  entreprise: Entreprise;
   error = '';
   personne: any;
   array: any;
+  userRoles: string [] = [];
 
   roles: any;
   ROLE_ADMIN: any;
@@ -37,18 +39,29 @@ export class AddDepComponent implements OnInit {
               public dialogRef: MatDialogRef<AddDepComponent>,
               private  router: Router, private _snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: Document,
-              public managerService: ManagerService) {
+              public employeService: EmployeService) {
     const token = localStorage.getItem('currentUser');
     if(token){
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getManagerById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
-
         this.roles = res.body.roles;
         this.roles.forEach(val => {
           this.ROLE_ADMIN = val;
           this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
         });
+        if (this.userRoles.includes('ROLE_ENTREPRISE')){
+          this.entreprise = res.body;
+
+        }else if ( this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+
+          this.personne = res.body;
+          this.entreprise = res.body.departement.entreprise;
+
+        }else {
+        console.log('Nothing');
+        }
       });
     }else {
       console.log("pas de token");
@@ -67,9 +80,9 @@ export class AddDepComponent implements OnInit {
       this.departement = {
         libelle: this.departementService.form.value.libelle,
         description: this.departementService.form.value.description,
-        entreprise: this.personne.entreprise
+        entreprise: this.entreprise
       };
-
+      console.log(this.departement);
       this.departementService.ajoutDepartement(this.departement).subscribe(res =>{
         if(res.status === 0){
           this.notificationService.success('Departement ajouté avec succès');
@@ -78,7 +91,15 @@ export class AddDepComponent implements OnInit {
 
     }
     else{
-      this.departementService.modifDepartement(this.departementService.form.value).subscribe(result => {
+      this.departement = {
+        id: this.departementService.form.value.id,
+        version: this.departementService.form.value.version,
+        libelle: this.departementService.form.value.libelle,
+        description: this.departementService.form.value.description,
+        entreprise: this.entreprise
+      };
+      console.log(this.departement);
+      this.departementService.modifDepartement(this.departement).subscribe(result => {
         console.log(result.status);
         if(result.status === 0){
           this.notificationService.success('Departement modifié avec succès');

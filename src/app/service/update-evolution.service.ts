@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Resultat} from '../model/resultat';
-import {Travaux} from '../model/travaux';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
+import {Projet} from '../model/projet';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class UpdateEvolutionService {
 
   }
 
-  getEvolution(id: number): Observable<Resultat<Travaux>> {
-    return this.http.get<Resultat<Travaux>>(`${environment.apiUrl}/api/evolution/${id}`);
+  getEvolution(id: number): Observable<Resultat<Projet>> {
+    return this.http.get<Resultat<Projet>>(`${environment.apiUrl}/api/evolution/${id}`);
   }
 }

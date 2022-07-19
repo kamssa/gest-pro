@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {ManagerService} from '../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {EmployeService} from '../service/employe.service';
 
 @Component({
   selector: 'app-administration',
@@ -15,37 +15,35 @@ export class AdministrationComponent implements OnInit {
   role1: boolean;
   role2: boolean;
   role3: boolean;
+  roles: any;
 
-  ROLES: any;
+  ROLE_ADMIN: any;
   ROLE_NAME: any;
   error = '';
+  ROLE_MANAGER: any;
+  userRoles: string [] = [];
+  edit = false;
   constructor(private router: Router,
-              private managerService: ManagerService,
+              private employeService: EmployeService,
               private  helper: JwtHelperService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
-        //console.log(this.personne.id);
-        if (this.personne.type === 'EMPLOYE') {
-          this.managerService.getPersonneById(this.personne.id).subscribe(res => {
+        this.roles = resultat.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+        });
+        if (this.ROLE_NAME === "ROLE_ADMINISTRATION") {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
-            console.log(this.personne);
-            this.ROLES = this.personne.roles;
-            const names = this.ROLES.map(el => el.name);
-            this.role = names.includes("ROLE_ADMINISTRATION");
-            this.role1 = names.includes("ROLE_EMPLOYE");
-            this.role2 = names.includes("ROLE_TECHNICIEN");
-            this.role3 = names.includes("ROLE_COMPTABILITE");
-            console.log( this.role);
-            console.log( this.role1);
-            console.log( this.role2);
-            console.log( this.role3);
-
+            this.edit= true;
           });
         }else {
           this.error ='Vous n\'etes pas autorisé';

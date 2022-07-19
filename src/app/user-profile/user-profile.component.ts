@@ -50,7 +50,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  onSubmit(createEmployeFormValue): void{
+  onSubmit(createEmployeFormValue): void {
     let  employe : Employe = {
       nom: createEmployeFormValue.nom,
       prenom: createEmployeFormValue.prenom,
@@ -74,6 +74,4 @@ export class UserProfileComponent implements OnInit {
 
 
   }
-
-
 }

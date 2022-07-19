@@ -12,11 +12,8 @@
         </div>
         <div class="mat-elevation-z8">
           <mat-table [dataSource]="listData"  matSort>
+
             <ng-container matColumnDef="projet">
-              <mat-header-cell *matHeaderCellDef  mat-sort-header>Projet</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element?.site.nomChantier}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="site">
               <mat-header-cell *matHeaderCellDef  mat-sort-header>Site</mat-header-cell>
               <mat-cell *matCellDef="let element">{{element?.libelle}}</mat-cell>
             </ng-container>

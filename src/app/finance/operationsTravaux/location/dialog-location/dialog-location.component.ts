@@ -6,7 +6,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AchatTravaux} from "../../../../model/AchatTravaux";
 import {DetailLocation} from "../../../../model/DetailLocation";
 import {LocationService} from "../../../../service/location.service";
-import {LocationTravaux} from "../../../../model/LocationTravaux";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 

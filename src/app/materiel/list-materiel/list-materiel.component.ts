@@ -4,9 +4,7 @@ import {Departement} from '../../model/Departement';
 import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
-import {ManagerService} from '../../service/manager.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ActivatedRoute,  Router} from '@angular/router';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
@@ -35,7 +33,6 @@ export class ListMaterielComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -45,7 +42,6 @@ export class ListMaterielComponent implements OnInit {
   id: number;
   ROLE_MANAGER: any;
   constructor(private materielService: MaterielService,
-              private managerService: ManagerService,
               public dialog: MatDialog,
               private router: Router,
               private  dialogService: DialogConfirmService,

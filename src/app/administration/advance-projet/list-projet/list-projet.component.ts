@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {Travaux} from '../../../model/travaux';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {switchMap} from 'rxjs/operators';
 import {UpdateProjetComponent} from '../../../finance/siteTravaux/update-projet/update-projet.component';
-import {ManagerService} from '../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AutresService} from '../../../service/autres.service';
 import {UpdateEvolutionService} from '../../../service/update-evolution.service';
 import {CumulDepensesComponent} from '../../../finance/operationsTravaux/cumul-depenses/cumul-depenses.component';
 import {RechercheParDateComponent} from '../../../finance/operationsTravaux/cumul-depenses/recherche-par-date/recherche-par-date.component';
+import {EmployeService} from '../../../service/employe.service';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
 
 @Component({
   selector: 'app-list-projet',
@@ -25,11 +25,11 @@ export class ListProjetComponent implements OnInit {
   edit: number;
   devicesXs: boolean;
   mediaSub: Subscription;
-  travaux: Travaux;
-  travauxId: number;
+  projet: Projet;
+  projetId: number;
   solde: number;
   panelOpenState = false;
-  travaux$: Observable<Travaux>;
+  projet$: Observable<Projet>;
   montant: number;
   personne: any;
   array: any;
@@ -40,9 +40,9 @@ export class ListProjetComponent implements OnInit {
   ROLE_MANAGER: any;
   isActive = false;
   constructor(private route: ActivatedRoute,
-              private managerService: ManagerService,
+              private employeService: EmployeService,
               private autresService: AutresService,
-              private travauxService: SteTravauxService,
+              private projetService: ProjetService,
               private  router: Router,
               private mediaObserver: MediaObserver,
               private helper: JwtHelperService,
@@ -60,10 +60,10 @@ export class ListProjetComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
           });
         }
@@ -77,10 +77,10 @@ export class ListProjetComponent implements OnInit {
       });
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.travauxService.getTravauxById(+params.get('id')))
+        this.projetService.getProjetById(+params.get('id')))
     ).subscribe(result => {
-      this.travaux = result.body;
-      this.travauxId = result.body.id;
+      this.projet = result.body;
+      this.projetId = result.body.id;
     });
   }
   update(id) {
@@ -93,15 +93,15 @@ export class ListProjetComponent implements OnInit {
 
         data: {
           dialogConfig,
-          travaux: id
+          projet: id
         }
       });
   }
-  onAchat(travail: Travaux) {
+  onAchat(travail: Projet) {
     this.router.navigate(['finance/achat', travail.id]);
   }
 
-  onLocation(travail: Travaux) {
+  onLocation(travail: Projet) {
     this.router.navigate(['finance/location', travail.id]);
 
   }
@@ -109,36 +109,36 @@ export class ListProjetComponent implements OnInit {
   updateEvolution(id) {
     this.updateEvolutionService.getEvolution(id)
       .subscribe(result => {
-        this.travaux = result.body;
-        this.travauxId = result.body.id;
+        this.projet = result.body;
+        this.projetId = result.body.id;
       });
 
   }
 
 
-  onLoyer(travail: Travaux) {
+  onLoyer(travail: Projet) {
     this.router.navigate(['finance/loyer', travail.id]);
 
   }
 
-  onOeuvre(travail: Travaux) {
+  onOeuvre(travail: Projet) {
     this.router.navigate(['finance/oeuvre', travail.id]);
 
   }
 
-  onTransport(travail: Travaux) {
+  onTransport(travail: Projet) {
     this.router.navigate(['finance/transport', travail.id]);
 
   }
 
-  onAutres(travail: Travaux) {
+  onAutres(travail: Projet) {
     this.router.navigate(['finance/autre', travail.id]);
   }
 
   cumulDepense(id: number) {
     this.dialog.open(CumulDepensesComponent,{
       data: {
-        travaux: id
+        projet: id
       }
     });
 
@@ -147,7 +147,7 @@ export class ListProjetComponent implements OnInit {
   cumulDepenseDate(id: number) {
     this.dialog.open(RechercheParDateComponent,{
       data: {
-        travaux: id
+        projet: id
       }
     });
   }

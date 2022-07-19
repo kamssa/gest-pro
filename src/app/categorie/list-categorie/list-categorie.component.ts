@@ -4,9 +4,7 @@ import {Departement} from '../../model/Departement';
 import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
-import {ManagerService} from '../../service/manager.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
@@ -30,7 +28,6 @@ export class ListCategorieComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -42,7 +39,6 @@ export class ListCategorieComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   searchKey: any;
   constructor(private categorieService: CategorieService,
-              private managerService: ManagerService,
               public dialog: MatDialog,
               private router: Router,
               private  dialogService: DialogConfirmService,
@@ -57,7 +53,7 @@ export class ListCategorieComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -69,8 +65,8 @@ export class ListCategorieComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.personne.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
             this.categorieService.getCatByIdEntreprise(this.personne.entreprise.id).subscribe(list => {
@@ -125,7 +121,7 @@ export class ListCategorieComponent implements OnInit {
        const token = localStorage.getItem('currentUser');
        const decoded = this.helper.decodeToken(token);
 
-       this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+       this.employeService.getPersonneById(decoded.sub).subscribe(res => {
          this.personne = res.body;
          this.roles = res.body.roles;
          this.roles.forEach(val => {

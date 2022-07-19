@@ -1,10 +1,10 @@
 
-<div *ngIf="travaux">
+<div *ngIf="projet">
 <div class="main-div" fxLayoutAlign="space-evenly" *ngIf="!devicesXs">
    <h2 class="site">Site
-     <h3 class="travaux">{{travaux.site.nomChantier}}</h3></h2>
-  <h2 class="site">Numero du bon<h3 class="travaux">{{travaux.budget |number}}</h3></h2>
-  <h2 class="site">Reste<h3 class="travaux">{{travaux.budget | number}}</h3></h2>
+     <h3 class="travaux">{{projet.libelle}}</h3></h2>
+  <h2 class="site">Numero du bon<h3 class="travaux">{{projet.budget |number}}</h3></h2>
+  <h2 class="site">Reste<h3 class="travaux">{{projet.budget | number}}</h3></h2>
 </div>
  <br>
   <mat-divider></mat-divider>
@@ -31,7 +31,7 @@
 
   </div>
   <div>
-    <app-edit-achat-travaux travauxId="{{travauxId}}" *ngIf="edit==0"></app-edit-achat-travaux>
+    <app-edit-achat-travaux travauxId="{{projetId}}" *ngIf="edit==0"></app-edit-achat-travaux>
     <app-edit-paiement-salaire-travaux *ngIf="edit==1"></app-edit-paiement-salaire-travaux>
     <app-edit-location-travaux *ngIf="edit==2"></app-edit-location-travaux>
     <app-edit-mainouvre-travaux *ngIf="edit==3"></app-edit-mainouvre-travaux>

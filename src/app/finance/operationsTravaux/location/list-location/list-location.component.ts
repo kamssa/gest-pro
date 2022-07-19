@@ -4,15 +4,14 @@ import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {LocationService} from "../../../../service/location.service";
-import {DetailLocation} from "../../../../model/DetailLocation";
 import {LocationTravaux} from "../../../../model/LocationTravaux";
 import {DialogLocationComponent} from "../dialog-location/dialog-location.component";
 import {EditLocationTravauxComponent} from "../edit-detail/edit-location-travaux.component";
-import {Travaux} from '../../../../model/travaux';
-import {ManagerService} from '../../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../../../helper/notification.service';
 import {Router} from '@angular/router';
+import {EmployeService} from '../../../../service/employe.service';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-list-location',
@@ -32,12 +31,12 @@ export class ListLocationComponent implements OnInit, AfterViewInit {
   error = '';
   ROLE_MANAGER: any;
   personne: any;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private locationService: LocationService,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialog: MatDialog,
-              private managerService: ManagerService,
+              private employeService: EmployeService,
               private helper: JwtHelperService,
               private notificationService: NotificationService,
               private router: Router) {
@@ -46,8 +45,8 @@ export class ListLocationComponent implements OnInit, AfterViewInit {
     // this.dataSource.sort = this.sort;
   }
   ngOnInit() {
-    console.log(this.travauxId);
-    this.locationService.getLocationByTravaux(this.travauxId)
+    console.log(this.projetId);
+    this.locationService.getLocationByTravaux(this.projetId)
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {
@@ -93,7 +92,7 @@ export class ListLocationComponent implements OnInit, AfterViewInit {
 
           }
           this.notificationService.warn("Suppression avec succès") ;
-          this.router.navigate(['finance/location', this.travauxId]);
+          this.router.navigate(['finance/location', this.projetId]);
         }else {
           this.notificationService.warn("Le déboursé sec n\'est pas renseigné") ;
         }

@@ -1,12 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {CategorieService} from '../service/categorie.service';
-import {Categorie} from '../model/Categorie';
 import {StockService} from '../service/stock.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {Manager} from '../model/Manager';
 import {Employe} from '../model/Employe';
-import {ManagerService} from '../service/manager.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DialogConfirmService} from '../helper/dialog-confirm.service';
 import {NotificationService} from '../helper/notification.service';
@@ -16,8 +13,6 @@ import {MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {EmployeService} from '../service/employe.service';
-import {AddStockComponent} from './add-stock/add-stock.component';
-import {EditStockComponent} from './edit-stock/edit-stock.component';
 import {Stock} from '../model/Stock';
 import {MontantStock} from '../model/MontantStock';
 import {MontantStockService} from '../service/montant-stock.service';
@@ -37,7 +32,6 @@ export class StockComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -54,7 +48,6 @@ export class StockComponent implements OnInit {
               private categorieService: CategorieService,
               private montantStockService: MontantStockService,
               private stockService: StockService,
-              private managerService: ManagerService,
               public dialog: MatDialog,
               private helper: JwtHelperService,
               private  dialogService: DialogConfirmService,
@@ -66,7 +59,7 @@ export class StockComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -78,14 +71,14 @@ export class StockComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.personne.type === 'EMPLOYE'){
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
-            this.stockService.getStockByIdEntreprise(this.personne.entreprise.id)
+            this.stockService.getStockByIdEntreprise(this.personne.departement.entreprise.id)
               .subscribe(res => {
                 if (res.status === 0){
-                  this.montantStockService.getMontantStockByIdEntreprise(this.personne.entreprise.id).subscribe(list => {
+                  this.montantStockService.getMontantStockByIdEntreprise(this.personne.departement.entreprise.id).subscribe(list => {
                     if (list.status === 0){
 
                       this.montantStock = list.body;

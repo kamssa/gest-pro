@@ -21,6 +21,7 @@
             <label for="accompte" class="lelabel">L'accompte</label>
             <input type="text" id="accompte" placeholder="Enter l'accompte" formControlName="accompte">
           </li>
+
           <li>
             <button type="submit">Enregistrer</button>
           </li>
@@ -36,24 +37,25 @@
       <div class="container">
         <form class="example-form" [formGroup]="createSiteForm" autocomplete="off" novalidate (ngSubmit)="createSiteChantier(createSiteForm.value)" fxLayout="column wrap"
               fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="createSiteForm">
-          <mat-card-title>NOUVEAU PROJET</mat-card-title>
+
+          <mat-card-subtitle>	NOUVEAU PROJET</mat-card-subtitle>
           <mat-card-content>
             <div>
-              <mat-form-field class="example-full-width" formGroupName="site">
+             <!-- <mat-form-field class="example-full-width" formGroupName="site">
                 <input matInput type="text" placeholder="Nom du projet" formControlName="nomChantier" id="nomChantier">
                 <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
                 <mat-error *ngIf="hasError('nomChantier', 'required')">Champ obligatoire</mat-error>
-              </mat-form-field>
+              </mat-form-field>-->
               <mat-form-field class="example-full-width">
-                <input matInput type="text" placeholder="Nom du site" formControlName="libelle" id="libelle">
+                <input matInput type="text" placeholder="Nom du projet" formControlName="libelle" id="libelle">
                 <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
                 <mat-error *ngIf="hasError('libelle', 'required')">Champ obligatoire</mat-error>
               </mat-form-field>
-         <mat-form-field class="example-full-width" formGroupName="ville">
+        <!-- <mat-form-field class="example-full-width" formGroupName="ville">
               <input matInput type="text" placeholder="Nom de la ville" formControlName="nom" id="nom">
               <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
               <mat-error *ngIf="hasError('nom', 'required')">Champ obligatoire</mat-error>
-            </mat-form-field>
+            </mat-form-field>-->
             </div>
 
 
@@ -90,6 +92,59 @@
                 <input matInput type="text" placeholder="Client" formControlName="nom" id="nom">
 
               </mat-form-field>
+            </div>
+            <br>
+            <mat-card-subtitle>	Informations complémentaires</mat-card-subtitle>
+            <div>
+              <div formArrayName="ville">
+                <div *ngFor="let v of createSiteForm.controls.ville['controls']; let i=index">
+                  <div [formGroupName]="i">
+                    <mat-form-field class="example-full-width">
+                      <input matInput type="text" placeholder="Ville" formControlName="nom" id="ville">
+
+                    </mat-form-field>
+                    <button mat-fab color="accent" aria-label="Example icon button with a delete icon"
+                            (click)="removeVille(i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <mat-action-row>
+                  <button type="button" mat-raised-button color="warn" (click)="addVille()">
+                    <span class="material-icons">add</span>
+                  </button>
+                </mat-action-row>
+              </div>
+
+              <br>
+
+              <div formArrayName="situationGeographique">
+                <div *ngFor="let s of createSiteForm.controls.situationGeographique['controls']; let i=index" [formGroupName]="i">
+                  <div>
+
+                  <mat-form-field class="example-full-width">
+                      <input matInput type="text" placeholder="Site" formControlName="libelle">
+
+                    </mat-form-field>
+                    <button mat-fab color="accent" aria-label="Example icon button with a delete icon"
+                            (click)="removeSituationGeographique(i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <mat-action-row>
+                  <button type="button" mat-raised-button color="warn" (click)="addSituationGeographique()">
+                    <span class="material-icons">add</span>
+                  </button>
+                </mat-action-row>
+              </div>
+
+
+            </div>
+            <div>
+
+              <br>
+
             </div>
           </mat-card-content>
           <mat-card-actions>

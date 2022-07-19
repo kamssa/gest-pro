@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div>
     <span *ngIf="nav">
-        <p *ngIf="personne">{{personne?.entreprise?.nom}}. {{personne?.fonction}}. Bienvenue {{personne?.nomComplet}}.</p>
+        <p *ngIf="personne">{{personne?.nom}}. Bienvenue {{personne?.email}}.</p>
       </span>
       <span *ngIf="!nav">
         <p *ngIf="personne">{{personne?.departement?.entreprise?.nom}}, {{personne?.departement?.libelle}}. Bienvenue {{personne?.nomComplet}}.</p>
@@ -40,7 +40,14 @@
         <li class="nav-item dropdown">
           <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">notifications</i>
-            <span class="notification">{{personne?.entreprise?.nom}}{{personne?.departement?.entreprise?.nom}}</span>
+            <div>
+    <div *ngIf="nav">
+      <span class="notification">{{personne?.nom}}</span>
+      </div>
+              <div *ngIf="!nav">
+                <span class="notification">{{personne?.departement?.entreprise?.nom}}</span>
+      </div>
+            </div>
             <p>
               <span class="d-lg-none d-md-block">Actions</span>
             </p>

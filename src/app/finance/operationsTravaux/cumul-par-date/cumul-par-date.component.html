@@ -5,10 +5,10 @@
         <div class="col-md-12" id="invoice" #invoice>
           <div>
             <div style="">
-              <h3  style="color: #d50000; font-size: 12px; text-align: center">{{travaux?.libelle}}</h3>
+              <h3  style="color: #d50000; font-size: 12px; text-align: center">{{projet?.libelle}}</h3>
             </div>
             <div class="box">
-              <button mat-raised-button	 *ngIf="travaux">Dépense totale</button>
+              <button mat-raised-button	 *ngIf="projet">Dépense totale</button>
               <button mat-raised-button	>{{total || "0"}}</button>
             </div>
             <div  *ngIf="detailAutreAchatTravaux?.length > 0">

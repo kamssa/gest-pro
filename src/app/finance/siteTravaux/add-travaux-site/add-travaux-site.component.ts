@@ -1,17 +1,13 @@
 import {Component, HostBinding, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Travaux} from '../../../model/travaux';
 import {Router} from '@angular/router';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
-import {Location} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {EmployeService} from '../../../service/employe.service';
-import {ManagerService} from '../../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {SuccessDialogComponent} from '../../../service/shared/dialogs/success-dialog/success-dialog.component';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 import {Site} from '../../../model/site';
-import {SiteService} from '../../../service/site.service';
+import {EmployeService} from '../../../service/employe.service';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
 
 @Component({
   selector: 'app-add-travaux-site',
@@ -19,8 +15,8 @@ import {SiteService} from '../../../service/site.service';
   styleUrls: ['./add-travaux-site.component.scss']
 })
 export class AddTravauxSiteComponent implements OnInit {
-  travau: Travaux;
-  travaux: Travaux[];
+  projet: Projet;
+  projets: Projet[];
   tForm: FormGroup;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -28,9 +24,8 @@ export class AddTravauxSiteComponent implements OnInit {
   nav: boolean;
   site: Site;
 
-  constructor(private managerService: ManagerService,
-              private siteService: SiteService,
-              private travauxService: SteTravauxService,
+  constructor(private projetService: ProjetService,
+              private employeService: EmployeService,
               private  fb: FormBuilder, private  router: Router,
               @Inject(MAT_DIALOG_DATA) public data: Site,
               private snackBar: MatSnackBar, private helper: JwtHelperService,
@@ -41,15 +36,15 @@ export class AddTravauxSiteComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(result => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(result => {
             this.personne = result.body;
             this.nav = true;
             // insert code
-            this.siteService.getSiteById(this.data['site'])
+            this.projetService.getProjetById(this.data['site'])
               .subscribe(res => {
                 console.log(res.body);
                 this.site = res.body;
@@ -63,7 +58,6 @@ export class AddTravauxSiteComponent implements OnInit {
                   site: this.fb.group({
                     id: res.body.id,
                     version: res.body.version,
-                    nomChantier: res.body.nomChantier,
                     entreprise: this.personne.entreprise
                   }),
                   ville: this.fb.group({
@@ -87,13 +81,13 @@ export class AddTravauxSiteComponent implements OnInit {
   }
 
   onSubmit() {
-    this.travau = this.tForm.value;
-    console.log(this.travau);
-    this.travauxService.ajoutTravaux(this.travau).subscribe(data => {
+    this.projet = this.tForm.value;
+    console.log(this.projet);
+    this.projetService.ajoutProjet(this.projet).subscribe(data => {
       if (data) {
-        console.log('voir travaux', this.travau);
-        this.travau = data.body;
-        this.dialogRef.close(this.travau);
+        console.log('voir travaux', this.projet);
+        this.projet = data.body;
+        this.dialogRef.close(this.projet);
         this.snackBar.open(' succès de la modification!', '', {
           duration: 3000,
           horizontalPosition: this.horizontalPosition,

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable, Subscription} from "rxjs";
-import {Travaux} from "../../../model/travaux";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {SteTravauxService} from "../../../service/ste-travaux.service";
 import {MediaChange, MediaObserver} from "@angular/flex-layout";
 import {switchMap} from "rxjs/operators";
+import {ProjetService} from '../../../service/projet.service';
+import {Projet} from '../../../model/projet';
 
 @Component({
   selector: 'app-detail-site-travaux',
@@ -17,11 +17,11 @@ export class DetailSiteTravauxComponent implements OnInit {
     edit: number;
     devicesXs: boolean;
     mediaSub: Subscription;
-    travaux: Travaux;
-    travauxId: number;
-    travaux$: Observable<Travaux>;
+    projet: Projet;
+    projetId: number;
+    projet$: Observable<Projet>;
     constructor(private route: ActivatedRoute,
-                private travauxService: SteTravauxService, private  router: Router,
+                private projetService: ProjetService, private  router: Router,
                 private mediaObserver: MediaObserver) {
 
     }
@@ -34,15 +34,15 @@ export class DetailSiteTravauxComponent implements OnInit {
         });
       this.route.paramMap.pipe(
         switchMap((params: ParamMap) =>
-          this.travauxService.getTravauxById(+params.get('id')))
+          this.projetService.getProjetById(+params.get('id')))
       ).subscribe(result => {
-        this.travaux = result.body;
-        this.travauxId = result.body.id;
+        this.projet = result.body;
+        this.projetId = result.body.id;
       });
     }
    getTravauxById(){
-  this.travauxService.getTravauxById(this.id).subscribe( res => {
-  this.travaux = res.body;
+  this.projetService.getProjetById(this.id).subscribe( res => {
+  this.projet = res.body;
     });
     }
 

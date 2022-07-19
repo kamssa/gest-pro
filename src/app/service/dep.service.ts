@@ -37,13 +37,14 @@ export class DepService {
     version: new FormControl(null),
     libelle: new FormControl('',[Validators.required] ),
     description: new FormControl(''),
+
   });
   initializeFormGroup() {
     this.form.setValue({
       id: null,
       version: null,
       libelle: '',
-      description: ''
+      description: '',
     });
   }
   ajoutDepartement(departement: Departement): Observable<Resultat<Departement>> {

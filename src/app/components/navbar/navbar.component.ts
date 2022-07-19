@@ -4,11 +4,11 @@ import {ROUTES} from '../sidebar/sidebar.component';
 import {Location} from '@angular/common';
 import {AuthService} from '../../service/auth.service';
 import {Employe} from '../../model/Employe';
-import {Manager} from '../../model/Manager';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AdminService} from '../../service/admin.service';
-import {ManagerService} from '../../service/manager.service';
 import {EmployeService} from '../../service/employe.service';
+import {Entreprise} from '../../model/Entreprise';
+import {EntrepriseService} from '../../service/entreprise.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +22,6 @@ export class NavbarComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
   personne: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -30,8 +29,9 @@ export class NavbarComponent implements OnInit {
    currentUser: any;
   constructor(location: Location,  private element: ElementRef, private router: Router,
               private authService: AuthService,  private adminService: AdminService,
-              private managerService: ManagerService,
-              private employeService: EmployeService,  private helper: JwtHelperService) {
+              private employeService: EmployeService,
+              private entrepriseService: EntrepriseService,
+              private helper: JwtHelperService) {
     this.location = location;
     this.sidebarVisible = false;
 
@@ -53,12 +53,12 @@ export class NavbarComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         this.type = this.personne.type;
-        if (this.type === 'MANAGER'){
-          this.managerService.getManagerById(this.personne.id).subscribe( result => {
+        if (this.type === 'ENTREPRISE'){
+          this.employeService.getPersonneById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
 
@@ -68,6 +68,7 @@ export class NavbarComponent implements OnInit {
             rest => {
               this.personne = rest.body;
               this.nav = false;
+              console.log(this.personne);
             }
           );
 

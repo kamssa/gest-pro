@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger ">
-            <h4 class="card-title" routerLink="active">Etat financier </h4>
+            <h4 class="card-title" routerLink="active">Etat Projet </h4>
           </div>
 
           <div class="card-body">
@@ -14,7 +14,7 @@
                 <div class="listes">
 
                   <div class="item">
-                    <span>{{site?.length}} projet(s)</span>
+                   <!-- <span>{{projet?.length}} projet(s)</span>-->
                       <div>
 
                         <mat-card class="mat-card" matTooltip="Selectioner un projet pour les details">
@@ -51,7 +51,7 @@
                 </div>
               </div>
             </div>
-         <app-list-projet travauxid="{{travauxId}}" *ngIf="edit==0"></app-list-projet>
+         <app-list-projet travauxid="{{projetId}}" *ngIf="edit==0"></app-list-projet>
           </div>
 
         </div>

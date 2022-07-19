@@ -1,9 +1,13 @@
 export class Adresse {
   constructor(
-    public  boitePostal: string,
-    public pays: string,
-    public ville: string,
-    public siteWeb: string,
-    public telephone: string) {
+    public  boitePostal?: string,
+    public  pays?: string,
+    public  ville?: string,
+    public  lienFacebook?: string,
+    public  lienLinkedIn?: string,
+    public  lienTwitter?: string,
+    public  lientInstagram?: string,
+    public  siteWeb?: string
+    ) {
   }
 }

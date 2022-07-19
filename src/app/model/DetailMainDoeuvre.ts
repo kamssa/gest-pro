@@ -9,7 +9,7 @@ export class DetailMainOeuvre {
               public reste?: number,
               public nbreJours?: number,
               public date?: Date,
-              public travauxId?: number,
+              public projetId?: number,
               public libelle?: string,
               public  journalier?: Journalier) {
   }

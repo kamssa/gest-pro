@@ -1,4 +1,3 @@
-import {Travaux} from './travaux';
 import {Client} from './Client';
 import {Employe} from './Employe';
 import {Versement} from './Versement';

@@ -1,20 +1,17 @@
 import {Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {SteTravauxService} from '../../../service/ste-travaux.service';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Observable, Subscription} from 'rxjs';
-import {Travaux} from '../../../model/travaux';
 import {switchMap} from 'rxjs/operators';
 import {AchatTravauxService} from '../../../service/achat-travaux.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {AddCategorieComponent} from '../../../categorie/add-categorie/add-categorie.component';
-import {MatTableDataSource} from '@angular/material/table';
 import {UpdateProjetComponent} from '../update-projet/update-projet.component';
 import {AddTravauxSiteComponent} from '../add-travaux-site/add-travaux-site.component';
 import {AutresService} from '../../../service/autres.service';
-import {EditAchatTravauxComponent} from '../../operationsTravaux/achat/edit-achat-travaux/edit-achat-travaux.component';
 import {CumulDepensesComponent} from '../../operationsTravaux/cumul-depenses/cumul-depenses.component';
 import {RechercheParDateComponent} from '../../operationsTravaux/cumul-depenses/recherche-par-date/recherche-par-date.component';
+import {Projet} from '../../../model/projet';
+import {ProjetService} from '../../../service/projet.service';
 
 @Component({
   selector: 'app-liste-site-travaux-operation',
@@ -27,15 +24,15 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
   edit: number;
   devicesXs: boolean;
   mediaSub: Subscription;
-  travaux: Travaux;
-  travauxId: number;
+  projet: Projet;
+  projetId: number;
   solde: number;
   panelOpenState = false;
-  travaux$: Observable<Travaux>;
+  projet$: Observable<Projet>;
   montant: number;
 
   constructor(private route: ActivatedRoute,
-              private travauxService: SteTravauxService,
+              private projetService: ProjetService,
               private  router: Router,
               private mediaObserver: MediaObserver,
               private achatTravauxService: AchatTravauxService,
@@ -58,10 +55,10 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
       });
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.travauxService.getTravauxById(+params.get('id')))
+        this.projetService.getProjetById(+params.get('id')))
     ).subscribe(result => {
-      this.travaux = result.body;
-      this.travauxId = result.body.id;
+      this.projet = result.body;
+      this.projetId = result.body.id;
       console.log(result.body);
     });
   }
@@ -95,32 +92,32 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
       this.achatTravauxService.travauxCreer$.subscribe(
         result => {
 
-          this.travauxService.getTravauxById(this.travauxId).subscribe(res => {
-          this.travaux = res.body;
+          this.projetService.getProjetById(this.projetId).subscribe(res => {
+          this.projet = res.body;
           console.log('Voir le reste ', res.body);
           });
         }
       );
     this.achatTravauxService.travauxSupprime$
       .subscribe(data => {
-        this.travauxService.getTravauxById(this.travauxId).subscribe(res => {
-          this.travaux = res.body;
+        this.projetService.getProjetById(this.projetId).subscribe(res => {
+          this.projet = res.body;
           console.log('Voir le reste ', res.body);
         });
       });
       this.achatTravauxService.travauxCreer$.subscribe(
         result => {
 
-          this.travauxService.getTravauxById(this.travauxId).subscribe(res => {
-            this.travaux = res.body;
+          this.projetService.getProjetById(this.projetId).subscribe(res => {
+            this.projet = res.body;
             console.log('Voir le reste ', res.body);
           });
         }
       );
       this.autresService.autrCreer$.subscribe(
         data => {
-          this.travauxService.getTravauxById(this.travauxId).subscribe(res => {
-            this.travaux = res.body;
+          this.projetService.getProjetById(this.projetId).subscribe(res => {
+            this.projet = res.body;
             console.log('Voir le reste ', res.body);
           });
         });
@@ -143,10 +140,10 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
         travaux: id
       }
     });
-    this.travauxService.travauxModif$
+    this.projetService.projetModif$
       .subscribe(result => {
         if (result.status === 0){
-          this.travaux = result.body;
+          this.projet = result.body;
         }
 
       });
@@ -176,7 +173,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
     console.log(id);
         this.dialog.open(CumulDepensesComponent,{
           data: {
-            travaux: id
+            projet: id
           }
         });
 
@@ -185,7 +182,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
   onDate(id: number) {
     this.dialog.open(RechercheParDateComponent,{
       data: {
-        travaux: id
+        projet: id
       }
     });
   }

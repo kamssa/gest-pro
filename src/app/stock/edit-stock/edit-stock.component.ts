@@ -6,10 +6,7 @@ import {StockService} from '../../service/stock.service';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {MaterielService} from '../../service/materiel.service';
 import {Materiaux} from '../../model/Materiaux';
-import {DetailStock} from '../../model/DetailStock';
-import {Manager} from '../../model/Manager';
 import {Employe} from '../../model/Employe';
-import {ManagerService} from '../../service/manager.service';
 import {EmployeService} from '../../service/employe.service';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {NotificationService} from '../../helper/notification.service';
@@ -41,7 +38,6 @@ export class EditStockComponent implements OnInit {
   personne: any;
   array: any;
   roles: any;
-  manager: Manager;
   employe: Employe;
   res: any;
   nav: boolean;
@@ -70,7 +66,6 @@ export class EditStockComponent implements OnInit {
               private notificationService: NotificationService,
               private helper: JwtHelperService,
               @Inject(MAT_DIALOG_DATA) public data: Stock,
-              private managerService: ManagerService,
               private employeService: EmployeService,
               private detailStockService: DetailStockService,
               private route: ActivatedRoute) {
@@ -83,7 +78,7 @@ export class EditStockComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -95,8 +90,8 @@ export class EditStockComponent implements OnInit {
         });
         this.personne = resultat.body;
 
-        if (this.personne.type === 'MANAGER') {
-          this.managerService.getManagerById(this.personne.id).subscribe(res => {
+        if (this.personne.type === 'EMPLOYE') {
+          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             this.nav = true;
             this.route.params.subscribe(params => {

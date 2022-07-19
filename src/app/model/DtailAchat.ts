@@ -8,7 +8,7 @@ export class DetailAchatTravaux {
               public quantite?: number,
               public prixUnitaire?: number,
               public montant?: number,
-              public  travauxId?: number,
+              public  projetId?: number,
               public  date?: Date
 
   ) {

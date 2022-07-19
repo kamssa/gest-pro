@@ -16,7 +16,7 @@ export class EditLocationTravauxComponent implements OnInit {
   editMode = false;
   locationTravaux: LocationTravaux;
   detailLocationTravauxInit: any;
-  @Input() travauxId: number;
+  @Input() projetId: number;
   constructor(private  fb: FormBuilder,
               private  router: Router,
               private notificationService: NotificationService,
@@ -56,6 +56,7 @@ export class EditLocationTravauxComponent implements OnInit {
           this.locationForm = this.fb.group({
             id: this.locationTravaux.id,
             version: this.locationTravaux.version,
+            projetId: this.locationTravaux.projetId,
             detailLocation: this.detailLocationTravauxInit,
           });
         });
@@ -68,7 +69,7 @@ export class EditLocationTravauxComponent implements OnInit {
   initForm(){
     this.locationForm =  this.fb.group({
       montant: '',
-      travauxId: '',
+      projetId: '',
       detailLocation : this.fb.array([this.initItemRows()])
     });
   }
@@ -100,7 +101,7 @@ export class EditLocationTravauxComponent implements OnInit {
       null,
       'location',
       new Date(),
-      this.travauxId,
+      this.projetId,
       formValue['detailLocation']);
       this.locationService.ajoutLocationTravaux(locationTravaux).subscribe(data => {
       console.log('location enregistrer', data.body);

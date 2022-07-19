@@ -4,14 +4,13 @@ import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {MainOeuvre} from "../../../../model/MainOeuvre";
-import {DetailMainOeuvre} from "../../../../model/DetailMainDoeuvre";
 import {MainoeuvreService} from "../../../../service/mainoeuvre.service";
 import {EditMainouvreTravauxComponent} from "../edit-mainouvre-travaux/edit-mainouvre-travaux.component";
 import {DialogMainouvreComponent} from "../dialog-mainouvre/dialog-mainouvre.component";
-import {Travaux} from '../../../../model/travaux';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../../../helper/notification.service';
 import {Router} from '@angular/router';
+import {Projet} from '../../../../model/projet';
 
 @Component({
   selector: 'app-list-main-doeuvre',
@@ -32,10 +31,10 @@ export class ListMainDoeuvreComponent implements OnInit, AfterViewInit {
   personne: any;
   @ViewChild(MatSort) sort: MatSort;
 
-  @Input() travauxId: number;
+  @Input() projetId: number;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private mainoeuvreService: MainoeuvreService,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialog: MatDialog,
               private helper: JwtHelperService,
               private notificationService: NotificationService,
@@ -45,8 +44,8 @@ export class ListMainDoeuvreComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit() {
-    console.log(this.travauxId);
-    this.mainoeuvreService.getMainOeuvreByTravaux(this.travauxId)
+    console.log(this.projetId);
+    this.mainoeuvreService.getMainOeuvreByTravaux(this.projetId)
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {
@@ -91,7 +90,7 @@ export class ListMainDoeuvreComponent implements OnInit, AfterViewInit {
 
           }
           this.notificationService.warn("Suppression avec succès") ;
-          this.router.navigate(['finance/oeuvre', this.travauxId]);
+          this.router.navigate(['finance/oeuvre', this.projetId]);
         }else {
           this.notificationService.warn("Le déboursé sec n\'est pas renseigné") ;
         }

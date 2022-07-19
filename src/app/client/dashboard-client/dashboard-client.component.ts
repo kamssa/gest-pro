@@ -1,9 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Router, RouterEvent, Event} from '@angular/router';
-import {ManagerService} from '../../service/manager.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {SteTravauxService} from '../../service/ste-travaux.service';
-import {Travaux} from '../../model/travaux';
 import {VersementService} from '../../service/versement.service';
 import {Versement} from '../../model/Versement';
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions} from 'ngx-gallery-9';
@@ -21,6 +18,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {AuthService} from '../../service/auth.service';
 import {filter} from 'rxjs/operators';
 import { Location } from '@angular/common'
+import {EmployeService} from '../../service/employe.service';
+import {Projet} from '../../model/projet';
+import {ProjetService} from '../../service/projet.service';
 
 @Component({
   selector: 'app-dashboard-client',
@@ -37,7 +37,7 @@ export class DashboardClientComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   searchKey: any;
-  travaux: Travaux[];
+  projets: Projet[];
   personne: any;
   array: any;
   roles: any;
@@ -55,21 +55,21 @@ export class DashboardClientComponent implements OnInit {
   edit: number;
   devicesXs: boolean;
   mediaSub: Subscription;
-  tr: Travaux;
+  projet: Projet;
   panelOpenState = false;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   pathNullImage = './assets/img/maison.jpg';
   liens: string[] = [];
   constructor(private router: Router, private location: Location,
-              private travauxService: SteTravauxService,
-              private managerService: ManagerService,
+              private projetService: ProjetService,
+              private employeService: EmployeService,
               private helper: JwtHelperService,
               private  versementService: VersementService,
               private  clientService: ClientService,
               private  detailVersementService: DetailVersementService,
               private fb: FormBuilder,   public dialog: MatDialog,
-              @Inject(MAT_DIALOG_DATA) public data: Travaux,
+              @Inject(MAT_DIALOG_DATA) public data: Projet,
               private authService: AuthService) {
 
     this.router.events.pipe(
@@ -86,14 +86,14 @@ export class DashboardClientComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.managerService.getPersonneById(decoded.sub).subscribe(res => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         console.log(this.personne);
-        this.travauxService.getTravauxByIdClient(this.personne.id)
-          .subscribe(res => {
-            this.travaux = res.body;
-            this.travaux.forEach(v => {
-              this.tr = v;
+        this.projetService.getProjetByIdClient(this.personne.id)
+          .subscribe(resultat => {
+            this.projets = resultat.body;
+            this.projets.forEach(v => {
+              this.projet = v;
               this.versementService.getVersementByTravaux(v.id)
                 .subscribe(data => {
                   this.versement = data.body;
@@ -116,7 +116,7 @@ export class DashboardClientComponent implements OnInit {
                       };
                     });
                 });
-              this.travauxService.getPhotoByIdTravaux(v.id).subscribe(data => {
+              this.projetService.getPhotoByIdProjet(v.id).subscribe(data => {
                 this.photos = data.body;
                 console.log(this.photos);
                 this.photos.forEach(value => {
@@ -167,7 +167,7 @@ export class DashboardClientComponent implements OnInit {
           });
       });
     }
-    this.versementService.getVersementByTravaux(this.tr.id)
+    this.versementService.getVersementByTravaux(this.projet.id)
       .subscribe(list => {
         console.log(list);
         if (list.status === 0){

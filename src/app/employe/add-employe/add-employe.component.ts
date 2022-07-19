@@ -8,7 +8,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AuthService} from '../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ManagerService} from '../../service/manager.service';
 import {DepService} from '../../service/dep.service';
 import {Departement} from '../../model/Departement';
 
@@ -37,10 +36,11 @@ export class AddEmployeComponent implements OnInit {
   ROLE_NAME: any;
   departements: Departement[];
   departement: Departement;
+  userRoles: string [] = [];
+
   constructor(public fb: FormBuilder,
               public  employeService: EmployeService,
               public authService: AuthService,
-              private managerService: ManagerService,
               private departementService: DepService,
               private notificationService: NotificationService,
               public dialogRef: MatDialogRef<AddEmployeComponent>,
@@ -55,17 +55,37 @@ export class AddEmployeComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
       console.log(decoded.sub);
-      this.managerService.getPersonneById(decoded.sub).subscribe(result => {
+      this.employeService.getPersonneById(decoded.sub).subscribe(result => {
         this.personne = result.body;
         console.log(this.personne);
-        this.departementService.getDepByIdEntreprise(this.personne.entreprise.id).subscribe(res => {
-          console.log(res);
-          this.departements = res.body;
-          console.log(this.departements);
-        }, error => {
-          console.log(error.message);
+        this.roles = result.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+
         });
-      }, error => {
+        if (this.userRoles.includes('ROLE_ENTREPRISE')){
+          this.departementService.getDepByIdEntreprise(this.personne.id).subscribe(res => {
+            console.log(res);
+            this.departements = res.body;
+            console.log(this.departements);
+          }, error => {
+            console.log(error.message);
+          });
+        }else if(this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
+          this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id).subscribe(res => {
+            console.log(res);
+            this.departements = res.body;
+            console.log(this.departements);
+          }, error => {
+            console.log(error.message);
+          });
+        }else {
+          this.error ='Vous n\'etes pas autorisé';
+
+        }
+        }, error => {
         console.log(error.message);
       } );
 
@@ -88,7 +108,7 @@ export class AddEmployeComponent implements OnInit {
       };
       this.employeService.ajoutEmploye(this.employe).subscribe(res => {
         if(res.status === 0){
-          this.notificationService.success('Employe ajouté avec succès');
+          this.notificationService.success('Employé ajouté avec succès');
         }
       });
     } else {
@@ -120,12 +140,10 @@ export class AddEmployeComponent implements OnInit {
         };
 
       }
-
-
       this.employeService.modifEmploye(this.employe).subscribe(result => {
         console.log(result.status);
         if(result.status === 0){
-          this.notificationService.success('Client modifié avec succès');
+          this.notificationService.success('Employé modifié avec succès');
         }
       });
       this.employeService.form.reset();

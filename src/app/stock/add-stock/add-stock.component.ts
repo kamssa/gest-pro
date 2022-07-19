@@ -8,7 +8,6 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../helper/notification.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {ManagerService} from '../../service/manager.service';
 import {Stock} from '../../model/Stock';
 import {StockService} from '../../service/stock.service';
 import {MaterielService} from '../../service/materiel.service';

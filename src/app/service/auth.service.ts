@@ -7,7 +7,6 @@ import {Resultat} from '../model/resultat';
 import * as jwt_decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Employe} from '../model/Employe';
-import {Manager} from '../model/Manager';
 import {Personne} from '../model/Personne';
 
 
@@ -34,22 +33,6 @@ export class AuthService {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
-      }));
-  }
-  loginManager(manager: Manager) {
-    return this.http.post<Resultat<any>>(`${environment.apiUrl}/api/auth/signin`, manager)
-      .pipe(map(res => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(res.body.body.accessToken));
-        this.currentUserSubject.next(res.body.body.accessToken);
-
-        const decoded = jwt_decode(res.body.body.accessToken);
-        const exp = this.helper.isTokenExpired(res.body.body.accessToken);
-        console.log(exp);
-        console.log(decoded.exp);
-        console.log(res);
-        this.isUserLoggedIn.next(true);
-        return res;
       }));
   }
   loginEmploye(employe: Employe) {
