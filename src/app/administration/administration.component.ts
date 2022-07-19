@@ -40,10 +40,10 @@ export class AdministrationComponent implements OnInit {
           this.ROLE_NAME = val.name;
           this.userRoles.push(this.ROLE_NAME);
         });
-        if (this.ROLE_NAME === "ROLE_ADMINISTRATION") {
+        if (this.userRoles.includes("ROLE_ADMINISTRATION")) {
           this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
-            this.edit= true;
+
           });
         }else {
           this.error ='Vous n\'etes pas autorisé';
