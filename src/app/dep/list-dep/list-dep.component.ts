@@ -71,7 +71,7 @@ export class ListDepComponent implements OnInit {
           this.ROLE_NAME = val.name;
           this.userRoles.push(this.ROLE_NAME);
         });
-
+       // console.log(this.userRoles.includes('ROLE_ENTREPRISE'));
         if (this.userRoles.includes('ROLE_ENTREPRISE')){
             this.nav = true;
             this.departementService.getDepByIdEntreprise(this.personne.id)
@@ -196,13 +196,12 @@ export class ListDepComponent implements OnInit {
   }
 
   onDelete(row){
-    if (this.roles.includes('ROLE_ENTREPRISE') || this.roles.includes('ROLE_ADMINISTRATION')){
+    if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       if (confirm('Voulez-vous vraiment supprimer le departement ?')){
         this.departementService.supprimerDepartement(row.id).subscribe(result => {
           console.log(result);
         });
         this.notificationService.warn('Suppression avec succès');
-
       }
       const index: number = this.array.indexOf(row);
       if (index !== -1) {

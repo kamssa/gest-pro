@@ -40,7 +40,7 @@ import { AllProjetComponent } from './administration/all-projet/all-projet.compo
 
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
-FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
+FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme);
 
 
 @NgModule({
