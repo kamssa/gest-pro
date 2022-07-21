@@ -35,13 +35,7 @@ import { FournisseurComponent } from './comptabilite/fournisseur/fournisseur.com
 import { ClientComponent } from './comptabilite/client/client.component';
 import { MissionComponent } from './comptabilite/mission/mission.component';
 import { PrevisionTresorerieComponent } from './comptabilite/prevision-tresorerie/prevision-tresorerie.component';
-// for HttpClient import:
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-// for Router import:
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-// for Core import:
-import { LoadingBarModule } from '@ngx-loading-bar/core';
-import { LOADING_BAR_CONFIG } from '@ngx-loading-bar/core';
+
 import { AllProjetComponent } from './administration/all-projet/all-projet.component';
 
 registerLocaleData(localeFr);
@@ -81,14 +75,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     MatTableModule,
     ChartistModule,
     FusionChartsModule,
-    // for HttpClient use:
-    LoadingBarHttpClientModule,
 
-    // for Router use:
-    LoadingBarRouterModule,
-
-    // for Core use:
-    LoadingBarModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
@@ -102,7 +89,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
-    { provide: LOADING_BAR_CONFIG, useValue: { latencyThreshold: 100 } }],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
