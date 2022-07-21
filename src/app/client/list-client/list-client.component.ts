@@ -39,6 +39,8 @@ export class ListClientComponent implements OnInit {
   ROLE_NAME: any;
   error = '';
   ROLE_MANAGER: any;
+  userRoles: string [] = [];
+  edit = true;
   constructor(private projetService: ProjetService,
               public dialog: MatDialog, private authService: AuthService,
               private employeService: EmployeService,
@@ -53,8 +55,13 @@ export class ListClientComponent implements OnInit {
       const decoded = this.helper.decodeToken(token);
       this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
-        console.log(resultat.body);
-        if (this.personne.type === 'EMPLOYE') {
+        this.roles = resultat.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+        });
+        if (this.userRoles.includes('ROLE_COMPTABILITE') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_COMMERCIAL') ){
           this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
             this.projetService.getProjetByIdEntreprise(this.personne.departement.entreprise.id)
@@ -76,52 +83,11 @@ export class ListClientComponent implements OnInit {
 
             });
           });
-        }else if (this.personne.type === 'EMPLOYE'){
-          console.log('Personne est employe', this.personne);
-          this.employeService.getEmployeById(this.personne.id).subscribe(res => {
-            this.personne = res.body;
-            console.log('employe', this.personne);
-            this.projetService.getProjetByIdEntreprise(this.personne.departement.entreprise.id)
-               .subscribe(list => {
-                 this.array = list.body.map(item => {
-                   return {
-                     id: item.id,
-                     ...item
-                   };
-                 });
-                 this.listData = new MatTableDataSource(this.array);
-                 this.listData.sort = this.sort;
-                 this.listData.paginator = this.paginator;
-                 this.listData.filterPredicate = (data, filter) => {
-                   return this.displayedColumns.some(ele => {
-                     return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                   });
-                 };
-
-               });
-          });
-
         }else{
           this.error ='Vous n\'etes pas autorisé';
+          this.edit = false;
         }
       });
-    }
-
-    if(localStorage.getItem('currentUser')) {
-      const token = localStorage.getItem('currentUser');
-      const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
-        this.personne = res.body;
-        this.roles = res.body.roles;
-        this.roles.forEach(val => {
-          console.log(val.name);
-          this.ROLE_NAME = val.name;
-          if (this.ROLE_NAME === 'ROLE_MANAGER'){
-            this.ROLE_MANAGER = this.ROLE_NAME;
-          }
-        });
-      });
-
     }
 
   }

@@ -14,7 +14,6 @@
                 <div class="listes">
 
                   <div class="item">
-                   <!-- <span>{{projet?.length}} projet(s)</span>-->
                       <div>
 
                         <mat-card class="mat-card" matTooltip="Selectioner un projet pour les details">
@@ -51,7 +50,7 @@
                 </div>
               </div>
             </div>
-         <app-list-projet travauxid="{{projetId}}" *ngIf="edit==0"></app-list-projet>
+         <app-list-projet projetId="{{projetId}}" *ngIf="edit==0"></app-list-projet>
           </div>
 
         </div>

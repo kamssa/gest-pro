@@ -1,4 +1,4 @@
-<!--<div *ngIf="!array.length">
+<!--<div *ngIf="!departements.length">
   <div class="spinner-border m-5" role="status">
     <span class="sr-only"></span>
   </div>
@@ -6,8 +6,11 @@
 <div class="main-content" >
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8">
-<div class="search-div">
+      <div *ngIf="error" class="btn btn-danger">{{error}}</div>
+
+      <div class="col-md-8" *ngIf="erreur">
+
+        <div class="search-div">
   <button mat-raised-button  (click)="onCreate()">
     <mat-icon>add</mat-icon>Departement
   </button>
@@ -18,7 +21,7 @@
     </button>
   </mat-form-field>
 </div>
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" >
   <mat-table [dataSource]="listData"  matSort>
     <ng-container matColumnDef="libelle">
       <mat-header-cell *matHeaderCellDef  mat-sort-header>Libelle</mat-header-cell>
@@ -52,7 +55,6 @@
   </mat-table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
 </div>
-        <div *ngIf="error" class="btn btn-danger">{{error}}</div>
 
       </div>
 </div>

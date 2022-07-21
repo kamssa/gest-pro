@@ -14,8 +14,8 @@ import {Projet} from '../model/projet';
 })
 export class DetailVersementService {
 // observables sources
-  private clientCreerSource = new Subject<Resultat<Projet>>();
-  private clientModifSource = new Subject<Resultat<Projet>>();
+  private clientCreerSource = new Subject<Resultat<DetailVersement>>();
+  private clientModifSource = new Subject<Resultat<DetailVersement>>();
   private clientFiltreSource = new Subject<string>();
   private clientSupprimeSource = new Subject<Resultat<boolean>>();
 

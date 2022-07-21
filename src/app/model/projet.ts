@@ -7,6 +7,7 @@ export class Projet {
   constructor(public  id?: number,
               public  version?: number,
               public  libelle?: string,
+              public  description?: string,
               public  numeroBon?: string,
               public  numeroPojet?: string,
               public  accompte?: number,

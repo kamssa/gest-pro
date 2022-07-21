@@ -78,6 +78,7 @@ export class EditSiteTravauxComponent implements OnInit {
              if (res.status === 0){
                this.createSiteForm = this.fb.group({
                  libelle: new FormControl('', [Validators.required]),
+                 description: new FormControl('', [Validators.required]),
                  numeroBon: new FormControl('', [Validators.required]),
                  accompte: new FormControl(''),
                  budget: new FormControl('', [Validators.required]),

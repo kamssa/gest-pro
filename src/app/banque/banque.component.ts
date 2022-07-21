@@ -6,6 +6,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {SuccessDialogComponent} from '../service/shared/dialogs/success-dialog/success-dialog.component';
 import {Router} from '@angular/router';
 import {AddBanqueComponent} from './add-banque/add-banque.component';
+import {EmployeService} from '../service/employe.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-banque',
@@ -18,25 +20,53 @@ export class BanqueComponent implements OnInit {
   banques: any[] = ['BOA', 'Banque altantique', 'NSIA'];
   private dialogConfig;
   edit = 0;
+  userRoles: string [] = [];
+  roles: any;
+  ROLE_NAME: any;
+  error = '';
+  personne: any;
+  editer: boolean;
   constructor(private fb: FormBuilder, private operationService: OperationBanqueService,
-              private dialog: MatDialog, private router: Router) { }
+              private dialog: MatDialog, private router: Router,
+              private employeService: EmployeService,  private helper: JwtHelperService) { }
 
   ngOnInit(): void {
-    this.dialogConfig = {
-      height: '200px',
-      width: '400px',
-      disableClose: true,
-      data: { }
-    };
-    this.banqueForm = this.fb.group({
-      date: new Date(),
-      libelle: '',
-      montant: '',
-      motif: '',
-      banque: this.fb.group({
-        nom: ''
-      })
-    });
+    if(localStorage.getItem('currentUser')) {
+      const token = localStorage.getItem('currentUser');
+      const decoded = this.helper.decodeToken(token);
+      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+        console.log('Voir la personne ', this.personne);
+        this.roles = resultat.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+        });
+        if (this.userRoles.includes('ROLE_COMPTABILITE') || this.userRoles.includes('ROLE_ADMINISTRATION') ){
+          this.editer = true;
+          this.dialogConfig = {
+            height: '200px',
+            width: '400px',
+            disableClose: true,
+            data: { }
+          };
+          this.banqueForm = this.fb.group({
+            date: new Date(),
+            libelle: '',
+            montant: '',
+            motif: '',
+            banque: this.fb.group({
+              nom: ''
+            })
+          });
+        }else {
+          this.error ='Vous n\'etes pas autorisé';
+          this.editer = false;
+        }
+
+      });
+    }
+
   }
   onSubmit(banqueFormValue){
     console.log(this.banqueForm.value);

@@ -52,6 +52,7 @@ export class UpdateProjetComponent implements OnInit {
                   id: this.projet.id,
                   version: this.projet.version ,
                   libelle: this.projet.libelle,
+                  description: this.projet.description,
                   numeroBon: this.projet.numeroBon,
                   budget: this.projet.budget,
                   accompte: this.projet.accompte,

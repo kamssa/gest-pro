@@ -21,7 +21,7 @@ import {ProjetService} from '../../../service/projet.service';
 })
 export class ListVersementComponent implements OnInit {
   displayedColumns: string[] = ['date', 'solde', 'actions'];
-  listData: MatTableDataSource<any>;
+  listData: MatTableDataSource<Versement>;
   departement: Departement;
   receptacle: any = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
@@ -53,8 +53,10 @@ export class ListVersementComponent implements OnInit {
     this.versementService.getVersementByTravaux(this.data['projet'])
                         .subscribe(list => {
                           console.log(list);
+                          console.log(list.status);
                           if (list.status === 0){
                             this.versement = list.body;
+
                             this.detailVersementService.getDetailVersementByVersement(list.body.id)
                               .subscribe(data => {
                                 this.array = data.body.map(item => {
@@ -75,7 +77,14 @@ export class ListVersementComponent implements OnInit {
                               });
 
                           }else {
-                           console.log('liste vide');
+                            this.listData = new MatTableDataSource(this.array);
+                            this.listData.sort = this.sort;
+                            this.listData.paginator = this.paginator;
+                            this.listData.filterPredicate = (data, filter) => {
+                              return this.displayedColumns.some(ele => {
+                                return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                              });
+                            };
                           }
 
 
@@ -87,12 +96,13 @@ export class ListVersementComponent implements OnInit {
 
 
 
-  applyFilter() {
-
+  onSearchClear() {
+    this.searchKey = '';
+    this.applyFilter();
   }
 
-  onSearchClear() {
-
+  applyFilter() {
+    this.listData.filter = this.searchKey.trim().toLowerCase();
   }
 
   onEdit(row: any) {
@@ -113,9 +123,12 @@ export class ListVersementComponent implements OnInit {
       this.versementService.versementCreer$
         .subscribe(result => {
           if (result.status === 0){
+            console.log(result.body);
             this.detailVersementService.getDetailVersementByVersement(result.body.id)
               .subscribe(res => {
+                console.log(res.body);
                 this.array.unshift(res.body);
+                this.array = this.array;
                 this.listData = new MatTableDataSource(this.array);
                 this.listData.sort = this.sort;
                 this.listData.paginator = this.paginator;

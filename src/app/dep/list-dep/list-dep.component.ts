@@ -43,6 +43,9 @@ export class ListDepComponent implements OnInit {
   error = '';
   ROLE_MANAGER: any;
   userRoles: string [] = [];
+  erreur = true;
+  departements: Departement[];
+
   constructor(private departementService: DepService,
               private entrepriseService: EntrepriseService,
               public dialog: MatDialog,
@@ -62,7 +65,6 @@ export class ListDepComponent implements OnInit {
       const decoded = this.helper.decodeToken(token);
       this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
-        console.log(this.personne);
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée
         this.roles.forEach(val => {
@@ -74,12 +76,14 @@ export class ListDepComponent implements OnInit {
             this.nav = true;
             this.departementService.getDepByIdEntreprise(this.personne.id)
               .subscribe(list => {
+                this.departements = list.body;
               this.array = list.body.map(item => {
                 return {
                   id: item.id,
                   ...item
                 };
               });
+
               this.listData = new MatTableDataSource(this.array);
               this.listData.sort = this.sort;
               this.listData.paginator = this.paginator;
@@ -91,19 +95,21 @@ export class ListDepComponent implements OnInit {
 
             });
 
-        }else if(this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
-          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
-            console.log(result.body.departement.entreprise.id);
-            this.personne = result.body;
+        }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
             this.nav = true;
-            this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id)
+
+          this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id)
               .subscribe(list => {
+                this.departements = list.body;
+                console.log('taille de departement', this.departements.length);
                 this.array = list.body.map(item => {
                   return {
                     id: item.id,
                     ...item
                   };
                 });
+                console.log('taille de array', this.array.length);
+
                 this.listData = new MatTableDataSource(this.array);
                 this.listData.sort = this.sort;
                 this.listData.paginator = this.paginator;
@@ -114,10 +120,10 @@ export class ListDepComponent implements OnInit {
                 };
 
               });
-          });
+
         }else {
           this.error ='Vous n\'etes pas autorisé';
-
+          this.erreur = false;
         }
 
       });
@@ -134,7 +140,7 @@ export class ListDepComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
   onCreate() {
-      if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+      if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.departementService.initializeFormGroup();
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -155,14 +161,14 @@ export class ListDepComponent implements OnInit {
 
           });
       });
-    }else if (!this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+    }else {
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;
     }
 
   }
 
   onEdit(row){
-    if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+    if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.departementService.populateForm(row);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -183,14 +189,14 @@ export class ListDepComponent implements OnInit {
             }
           });
       });
-    }/*else if (this.ROLE_NAME === 'ROLE_EMPLOYE') {
+    }else{
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }*/
+    }
 
   }
 
   onDelete(row){
-    if (this.roles.includes('ROLE_ENTREPRISE') || this.roles.includes('ROLE_EMPLOYE') || this.roles.includes('ROLE_ADMINISTRATION')){
+    if (this.roles.includes('ROLE_ENTREPRISE') || this.roles.includes('ROLE_ADMINISTRATION')){
       if (confirm('Voulez-vous vraiment supprimer le departement ?')){
         this.departementService.supprimerDepartement(row.id).subscribe(result => {
           console.log(result);
@@ -204,8 +210,6 @@ export class ListDepComponent implements OnInit {
         this.listData = new MatTableDataSource(this.array);
         this.listData.sort = this.sort;
         this.listData.paginator = this.paginator;
-        console.log('Affiche Voici mon tableau', index);
-
       }
     }else {
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;

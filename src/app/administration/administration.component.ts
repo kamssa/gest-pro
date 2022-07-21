@@ -22,7 +22,7 @@ export class AdministrationComponent implements OnInit {
   error = '';
   ROLE_MANAGER: any;
   userRoles: string [] = [];
-  edit = false;
+  affiche: boolean;
   constructor(private router: Router,
               private employeService: EmployeService,
               private  helper: JwtHelperService) { }
@@ -43,10 +43,11 @@ export class AdministrationComponent implements OnInit {
         if (this.userRoles.includes("ROLE_ADMINISTRATION")) {
           this.employeService.getEmployeById(this.personne.id).subscribe(res => {
             this.personne = res.body;
-
+            this.affiche = true;
           });
         }else {
           this.error ='Vous n\'etes pas autorisé';
+          this.affiche = false;
         }
       });
     }

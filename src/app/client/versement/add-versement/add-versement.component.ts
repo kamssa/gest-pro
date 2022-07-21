@@ -6,6 +6,7 @@ import {DetailVersement} from '../../../model/DetailVersement';
 import {VersementService} from '../../../service/versement.service';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
+import {NotificationService} from '../../../helper/notification.service';
 
 @Component({
   selector: 'app-add-versement',
@@ -25,6 +26,7 @@ export class AddVersementComponent implements OnInit {
               private  fb: FormBuilder,
               public dialogRef: MatDialogRef<AddVersementComponent>,
               private projetService: ProjetService,
+              private notificationService: NotificationService,
               private versementService: VersementService) {
   }
 
@@ -98,7 +100,7 @@ initItemRows() {
     console.log(versement);
     this.versementService.ajoutVersement(versement)
       .subscribe(data => {
-        console.log(data);
+        this.notificationService.success('Versement ajouté avec succès');
       });
     this.dialogRef.close();
   }

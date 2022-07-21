@@ -51,11 +51,11 @@
                 <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
                 <mat-error *ngIf="hasError('libelle', 'required')">Champ obligatoire</mat-error>
               </mat-form-field>
-        <!-- <mat-form-field class="example-full-width" formGroupName="ville">
-              <input matInput type="text" placeholder="Nom de la ville" formControlName="nom" id="nom">
-              <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
-              <mat-error *ngIf="hasError('nom', 'required')">Champ obligatoire</mat-error>
-            </mat-form-field>-->
+              <mat-form-field class="example-full-width">
+                <input matInput type="text" placeholder="Description du projet" formControlName="description" id="description">
+                <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
+                <mat-error *ngIf="hasError('description', 'required')">Champ obligatoire</mat-error>
+              </mat-form-field>
             </div>
 
 

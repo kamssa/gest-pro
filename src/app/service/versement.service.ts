@@ -41,7 +41,7 @@ export class VersementService {
       .pipe(
         tap(res => {
           this.log(`versement crée =${res.body}`);
-          this.versementtCreer(res);
+          this.versementCreer(res);
         }),
         catchError(this.handleError<Resultat<Versement>>('ajoutVersement'))
       );
@@ -49,12 +49,12 @@ export class VersementService {
   }
 
 
-  versementtCreer(res: Resultat<Projet>) {
+  versementCreer(res: Resultat<Versement>) {
     console.log('Travail a ete  creer correctement essaie source');
     this.versementCreerSource.next(res);
   }
 
-  clientModif(res: Resultat<Projet>) {
+  clientModif(res: Resultat<Versement>) {
     this.versementModifSource.next(res);
   }
 

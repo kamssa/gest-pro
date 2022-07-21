@@ -69,11 +69,9 @@ export class AddEmployeComponent implements OnInit {
           this.departementService.getDepByIdEntreprise(this.personne.id).subscribe(res => {
             console.log(res);
             this.departements = res.body;
-            console.log(this.departements);
           }, error => {
-            console.log(error.message);
           });
-        }else if(this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
+        }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
           this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id).subscribe(res => {
             console.log(res);
             this.departements = res.body;

@@ -66,7 +66,7 @@ export class TechniqueComponent implements OnInit {
           this.ROLE_NAME = val.name;
           this.userRoles.push(this.ROLE_NAME);
         });
-        if (this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_ACHAT') ){
+        if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_TECHNICIEN') ){
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.employe = result.body;
             console.log('Voir employe retournée', this.employe);
@@ -121,7 +121,6 @@ export class TechniqueComponent implements OnInit {
         }else {
           this.error ='Vous n\'etes pas autorisé';
           this.edit = false;
-
         }
 
       });

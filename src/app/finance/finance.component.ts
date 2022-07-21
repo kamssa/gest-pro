@@ -73,7 +73,7 @@ export class FinanceComponent implements OnInit{
           this.ROLE_NAME = val.name;
           this.userRoles.push(this.ROLE_NAME);
         });
-        if (this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_ACHAT') ){
+        if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_ACHAT') ){
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.employe = result.body;
             console.log('Voir employe retournée', this.employe);
@@ -193,7 +193,7 @@ export class FinanceComponent implements OnInit{
     console.log(id);
     this.dialog.open(ListTransportComponent,{
       data: {
-        travaux: id
+        projet: id
       }
     });
 

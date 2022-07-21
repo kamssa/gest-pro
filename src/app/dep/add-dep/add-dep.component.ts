@@ -54,7 +54,7 @@ export class AddDepComponent implements OnInit {
         if (this.userRoles.includes('ROLE_ENTREPRISE')){
           this.entreprise = res.body;
 
-        }else if ( this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+        }else if ( this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
 
           this.personne = res.body;
           this.entreprise = res.body.departement.entreprise;
@@ -82,7 +82,6 @@ export class AddDepComponent implements OnInit {
         description: this.departementService.form.value.description,
         entreprise: this.entreprise
       };
-      console.log(this.departement);
       this.departementService.ajoutDepartement(this.departement).subscribe(res =>{
         if(res.status === 0){
           this.notificationService.success('Departement ajouté avec succès');

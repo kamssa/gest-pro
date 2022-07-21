@@ -74,22 +74,19 @@ export class AdvanceProjetComponent implements OnInit {
           this.ROLE_NAME = val.name;
           this.userRoles.push(this.ROLE_NAME);
         });
-        if (this.userRoles.includes('ROLE_ADMINSTRATION')){
+        if (this.userRoles.includes('ROLE_ADMINISTRATION')){
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
+            console.log(result.body);
             this.nav = true;
             this.oTravaux = this.searchProjetSource
               .pipe(
                 debounceTime(100),
                 distinctUntilChanged(),
                 switchMap(mc => mc ?  this.projetService.rechercheProjetParMc(mc, this.personne.departement.entreprise.nom)
-                  : this.projetService.rechercheProjetParMc('Aucun projet trouvé !',''))
+                  : this.projetService.rechercheProjetParMc('Aucun projet trouvé !','Aucun projet trouvé !'))
               );
-            /*this.siteService.getSiteEntreprise(this.personne.entreprise.nom)
-              .subscribe(data =>
-              {
-                this.site = data.body;
-              });*/
+
             this.toutsLesTravaux();
             // renvoie le site créé
             this.projetService.projetCreer$.subscribe(res => {
@@ -101,7 +98,7 @@ export class AdvanceProjetComponent implements OnInit {
               }
             );
             this.projetService.projetModif$.subscribe(res => {
-                this.projets[this.findSelectedTravauxIndex()] = res.body;
+                this.projets[this.findSelectedProjetIndex()] = res.body;
                 this.messageSucces = res.messages.toString();
                 this.snackBar.open(this.messageSucces, '', {
                   duration: 3000
@@ -111,7 +108,7 @@ export class AdvanceProjetComponent implements OnInit {
             this.projetService.projetSupprime$.subscribe(
               res => {
                 let index: number;
-                index = this.findSelectedTravauxIndex();
+                index = this.findSelectedProjetIndex();
                 this.projets = this.projets.filter((val, i) => i !== index);
                 this.messageSucces = res.messages.toString();
                 this.snackBar.open(this.messageSucces, '', {
@@ -123,11 +120,7 @@ export class AdvanceProjetComponent implements OnInit {
                   this.search(lib);
                 }
               );
-            /* this.messageService.message$.subscribe(msg => {
-                 this.messageServiceErreur = msg.toString();
-                 this.closeMessage();
-               }
-             );*/
+
 
           });
         }else if (this.type === 'EMPLOYE'){
@@ -139,15 +132,11 @@ export class AdvanceProjetComponent implements OnInit {
                 .pipe(
                   debounceTime(100),
                   distinctUntilChanged(),
-                  switchMap(mc => mc ?  this.projetService.rechercheProjetParMc(mc, this.personne.departement.entreprise.nom)
-                    : this.projetService.rechercheProjetParMc('Aucun projet trouvé !',''))
+                  switchMap(mc => mc ?  this.projetService.rechercheProjetParMc(mc, this.employe.departement.entreprise.nom)
+                    : this.projetService.rechercheProjetParMc('Aucun projet trouvé !','Aucun projet trouvé !'))
                 );
               this.toutsLesTravaux();
-             /* this.projetService.getSiteEntreprise(this.personne.departement.entreprise.nom)
-                .subscribe(data =>
-                {
-                  this.site = data.body;
-                });*/
+
               // renvoie le site créé
               this.projetService.projetCreer$.subscribe(res => {
                   this.projets.push(res.body);
@@ -158,7 +147,7 @@ export class AdvanceProjetComponent implements OnInit {
                 }
               );
               this.projetService.projetModif$.subscribe(res => {
-                  this.projets[this.findSelectedTravauxIndex()] = res.body;
+                  this.projets[this.findSelectedProjetIndex()] = res.body;
                   this.messageSucces = res.messages.toString();
                   this.snackBar.open(this.messageSucces, '', {
                     duration: 3000
@@ -168,7 +157,7 @@ export class AdvanceProjetComponent implements OnInit {
               this.projetService.projetSupprime$.subscribe(
                 res => {
                   let index: number;
-                  index = this.findSelectedTravauxIndex();
+                  index = this.findSelectedProjetIndex();
                   this.projets = this.projets.filter((val, i) => i !== index);
                   this.messageSucces = res.messages.toString();
                   this.snackBar.open(this.messageSucces, '', {
@@ -180,12 +169,6 @@ export class AdvanceProjetComponent implements OnInit {
                     this.search(lib);
                   }
                 );
-              /* this.messageService.message$.subscribe(msg => {
-                   this.messageServiceErreur = msg.toString();
-                   this.closeMessage();
-                 }
-               );*/
-
             }
 
           );
@@ -214,11 +197,12 @@ export class AdvanceProjetComponent implements OnInit {
       });
 
   }
-  findSelectedTravauxIndex(): number {
+  findSelectedProjetIndex(): number {
     return this.projets.indexOf(this.selectedProjet);
   }
 
   search(mc: string) {
+    console.log(mc);
     this.searchProjetSource.next(mc);
   }
 

@@ -2,7 +2,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-8">
-        <div class="card">
+        <div *ngIf="error" class="btn btn-danger">{{error}}</div>
+
+        <div class="card"  *ngIf="editer">
           <div class="card-header card-header-danger">
             <h4 class="card-title">Gestion Caisse</h4>
             <mat-button-toggle-group #group="matButtonToggleGroup">

@@ -68,7 +68,6 @@ export class NavbarComponent implements OnInit {
             rest => {
               this.personne = rest.body;
               this.nav = false;
-              console.log(this.personne);
             }
           );
 

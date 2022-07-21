@@ -23,7 +23,6 @@ import {EmployePermitionComponent} from '../employe-permition/employe-permition.
 export class ListEmployeComponent implements OnInit {
   displayedColumns: string[] = ['nomComplet', 'service', 'actions'];
   listData: MatTableDataSource<any>;
-  departements: Departement[];
   departement: Departement;
   receptacle: any = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
@@ -31,7 +30,6 @@ export class ListEmployeComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   searchKey: any;
-  employes: Employe[];
   personne: any;
   array: any;
   roles: any;
@@ -40,7 +38,7 @@ export class ListEmployeComponent implements OnInit {
   error = '';
   ROLE_MANAGER: any;
   userRoles: string [] = [];
-
+  erreur = true;
   constructor(private employeService: EmployeService,
               public dialog: MatDialog, private authService: AuthService,
               private  dialogService: DialogConfirmService,
@@ -80,7 +78,7 @@ export class ListEmployeComponent implements OnInit {
                 };
 
               });
-            }else if (this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+            }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
 
               this.employeService.getEmployeByIdEntreprise(this.personne.departement.entreprise.id).subscribe(list => {
 
@@ -102,7 +100,7 @@ export class ListEmployeComponent implements OnInit {
               });
             }else {
               this.error ='Vous n\'etes pas autorisé';
-
+              this.erreur = false;
             }
 
 
@@ -122,14 +120,14 @@ export class ListEmployeComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
   onCreate() {
-     if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+     if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
        this.employeService.initializeFormGroup();
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = "60%";
-      const dialogRef = this.dialog.open(AddEmployeComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(resul=> {
+       const dialogConfig = new MatDialogConfig();
+       dialogConfig.disableClose = true;
+       dialogConfig.autoFocus = true;
+       dialogConfig.width = "60%";
+       const dialogRef = this.dialog.open(AddEmployeComponent, dialogConfig);
+       dialogRef.afterClosed().subscribe(resul=> {
 
         this.employeService.employeCreer$
           .subscribe(result => {
@@ -149,7 +147,7 @@ export class ListEmployeComponent implements OnInit {
   }
 
   onEdit(row){
-    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.employeService.populateForm(row);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -177,7 +175,7 @@ export class ListEmployeComponent implements OnInit {
   }
 
   onDelete(row){
-    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       if(confirm('Voulez-vous vraiment supprimer l\'employé ?')){
         this.employeService.deleteEmployeById(row.id).subscribe(result => {
 

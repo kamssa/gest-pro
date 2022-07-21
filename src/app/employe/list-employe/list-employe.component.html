@@ -1,7 +1,7 @@
-<div class="main-content" *ngIf='ROLE_NAME'>
+<div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8" *ngIf="erreur">
         <div class="search-div">
           <button mat-raised-button  (click)="onCreate()">
             <mat-icon>add</mat-icon>Employé
@@ -49,8 +49,9 @@
           </mat-table>
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
         </div>
-        <div *ngIf="error" class="btn btn-danger">{{error}}</div>
       </div>
+      <div *ngIf="error" class="btn btn-danger">{{error}}</div>
+
     </div>
   </div>
 </div>

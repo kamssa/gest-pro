@@ -1,7 +1,12 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="row">
+    <div>
+      <div *ngIf="error" class="btn btn-danger">{{error}}
+      </div>
+    </div>
+    <div class="row" *ngIf="edit">
       <div class="col-md-12">
+
         <div class="search-div">
           <mat-form-field class="search-form-field" floatLabel="never">
             <input matInput [(ngModel)]="searchKey" placeholder="Recherche..." autocomplete="off" (keyup)="applyFilter()">
@@ -55,7 +60,6 @@
           </mat-table>
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
         </div>
-        <div *ngIf="error" class="btn btn-danger">{{error}}</div>
       </div>
     </div>
   </div>

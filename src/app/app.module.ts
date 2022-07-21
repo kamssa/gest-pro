@@ -35,14 +35,15 @@ import { FournisseurComponent } from './comptabilite/fournisseur/fournisseur.com
 import { ClientComponent } from './comptabilite/client/client.component';
 import { MissionComponent } from './comptabilite/mission/mission.component';
 import { PrevisionTresorerieComponent } from './comptabilite/prevision-tresorerie/prevision-tresorerie.component';
-import { DashboardComponent } from './client/dashboard/dashboard.component';
-import { ListClientComponent } from './client/list-client/list-client.component';
-import { AddVersementComponent } from './client/versement/add-versement/add-versement.component';
-import { ListVersementComponent } from './client/versement/list-versement/list-versement.component';
-import { UpdateVersementComponent } from './client/versement/update-versement/update-versement.component';
-import { VersementComponent } from './client/versement/versement.component';
-import { UpdateClientComponent } from './client/update-client/update-client.component';
-import { DashboardClientComponent } from './client/dashboard-client/dashboard-client.component';
+// for HttpClient import:
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+// for Router import:
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+// for Core import:
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LOADING_BAR_CONFIG } from '@ngx-loading-bar/core';
+import { AllProjetComponent } from './administration/all-projet/all-projet.component';
+
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
 FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
@@ -56,6 +57,7 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     ClientComponent,
     MissionComponent,
     PrevisionTresorerieComponent,
+    AllProjetComponent,
 
 
 
@@ -78,7 +80,15 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     SalaireModule,
     MatTableModule,
     ChartistModule,
-    FusionChartsModule
+    FusionChartsModule,
+    // for HttpClient use:
+    LoadingBarHttpClientModule,
+
+    // for Router use:
+    LoadingBarRouterModule,
+
+    // for Core use:
+    LoadingBarModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
@@ -91,7 +101,8 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme)
     { provide: LOCALE_ID, useValue: 'fr-FR'},
     { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
     {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}],
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
+    { provide: LOADING_BAR_CONFIG, useValue: { latencyThreshold: 100 } }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
