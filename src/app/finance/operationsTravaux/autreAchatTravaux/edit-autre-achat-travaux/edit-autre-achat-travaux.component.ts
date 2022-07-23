@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {AchatTravauxService} from '../../../../service/achat-travaux.service';
-import {switchMap} from 'rxjs/operators';
+import {filter, map, switchMap} from 'rxjs/operators';
 import {CumulDepensesComponent} from '../../cumul-depenses/cumul-depenses.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Projet} from '../../../../model/projet';
@@ -41,11 +41,14 @@ export class EditAutreAchatTravauxComponent implements OnInit {
     //this.refreshData();
   }
   refreshData(){
-    this.mediaSub = this.mediaObserver.media$.subscribe(
-      (result: MediaChange) => {
-        console.log(result.mqAlias);
-        this.devicesXs = result.mqAlias === 'xs' ? true : false;
-      });
+    this.mediaSub = this.mediaObserver.asObservable() // New Way asObservable()
+      .pipe(
+        filter((changes: MediaChange[]) => changes.length > 0),
+        map((changes: MediaChange[]) => changes[0])
+      ).subscribe((change: MediaChange) => {
+          this.devicesXs = change.mqAlias === 'xs' ? true : false;
+        }
+      );
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.projetService.getProjetById(+params.get('id')))

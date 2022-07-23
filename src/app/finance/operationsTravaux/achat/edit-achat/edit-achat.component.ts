@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
-import {switchMap} from 'rxjs/operators';
+import {filter, map, switchMap} from 'rxjs/operators';
 import {AchatTravauxService} from '../../../../service/achat-travaux.service';
 import {CumulDepensesComponent} from '../../cumul-depenses/cumul-depenses.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -34,11 +34,14 @@ export class EditAchatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mediaSub = this.mediaObserver.media$.subscribe(
-      (result: MediaChange) => {
-        console.log(result.mqAlias);
-        this.devicesXs = result.mqAlias === 'xs' ? true : false;
-      });
+    this.mediaSub = this.mediaObserver.asObservable() // New Way asObservable()
+      .pipe(
+        filter((changes: MediaChange[]) => changes.length > 0),
+        map((changes: MediaChange[]) => changes[0])
+      ).subscribe((change: MediaChange) => {
+          this.devicesXs = change.mqAlias === 'xs' ? true : false;
+        }
+      );
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.projetService.getProjetById(+params.get('id')))
