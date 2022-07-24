@@ -1,6 +1,6 @@
 {
   "name": "Ges-pro",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -79,7 +79,7 @@
     "typescript": "~4.7.4"
   },
   "engines": {
-    "node": "16.16.0",
+    "node": "14.18.1",
     "npm": "6.14.15"
   }
 }
