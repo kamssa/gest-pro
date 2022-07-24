@@ -22,14 +22,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
 import {MatTableModule} from '@angular/material/table';
 import {ChartistModule} from 'ng-chartist';
-import { FusionChartsModule } from 'angular-fusioncharts';
-
-// Load FusionCharts
-import FusionCharts from 'fusioncharts/core';
-// Load Charts Module
-import Column2d from 'fusioncharts/viz/column2d';
-// Load Fusion Theme
-import FusionTheme from 'fusioncharts/themes/es/fusioncharts.theme.fusion';
 import { CarburantComponent } from './comptabilite/carburant/carburant.component';
 import { FournisseurComponent } from './comptabilite/fournisseur/fournisseur.component';
 import { ClientComponent } from './comptabilite/client/client.component';
@@ -40,7 +32,6 @@ import { AllProjetComponent } from './administration/all-projet/all-projet.compo
 
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
-FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme);
 
 
 @NgModule({
@@ -74,7 +65,6 @@ FusionChartsModule.fcRoot(FusionCharts, Column2d, FusionTheme);
     SalaireModule,
     MatTableModule,
     ChartistModule,
-    FusionChartsModule,
 
   ],
   providers: [

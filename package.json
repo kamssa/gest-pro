@@ -27,7 +27,6 @@
     "@ngx-loading-bar/core": "^6.0.2",
     "@ngx-loading-bar/http-client": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
-    "angular-fusioncharts": "^4.0.0",
     "arrive": "^2.4.1",
     "bootstrap": "^4.6.2",
     "bootstrap-material-design": "^4.1.3",
