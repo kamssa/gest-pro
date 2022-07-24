@@ -152,12 +152,19 @@ export class ListDepComponent implements OnInit {
         this.departementService.depCreer$
           .subscribe(result => {
             console.log(result.body);
-            this.array.unshift(result.body);
-            this.array = this.array;
-            this.listData = new MatTableDataSource(this.array);
-            this.listData.sort = this.sort;
-            this.listData.paginator = this.paginator;
+            if (result.status === 0){
+              this.array.unshift(result.body);
+              this.array = this.array;
+              this.listData = new MatTableDataSource(this.array);
+              this.listData.sort = this.sort;
+              this.listData.paginator = this.paginator;
 
+
+            }else {
+              this.listData = new MatTableDataSource(this.array);
+              this.listData.sort = this.sort;
+              this.listData.paginator = this.paginator;
+            }
 
           });
       });

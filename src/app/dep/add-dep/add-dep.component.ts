@@ -85,6 +85,11 @@ export class AddDepComponent implements OnInit {
       this.departementService.ajoutDepartement(this.departement).subscribe(res =>{
         if(res.status === 0){
           this.notificationService.success('Departement ajouté avec succès');
+          console.log('voir result ajout dep', res.messages);
+        }else {
+          console.log('voir result ajout dep', res.messages);
+
+          this.notificationService.success(res.messages);
         }
       });
 
