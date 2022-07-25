@@ -9,8 +9,12 @@ import {ProjetService} from '../service/projet.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-projets : Projet[];
-
+projets: Projet[];
+array: any;
+  evolutions: number [] = [];
+  clients: string [] = [];
+  evolution: any;
+  client: any;
   constructor( private projetService: ProjetService) { }
   startAnimationForLineChart(chart){
     let seq: any, delays: any, durations: any;
@@ -72,6 +76,14 @@ projets : Projet[];
     this.projetService.getAllProjet()
       .subscribe(res => {
        this.projets = res.body;
+        this.projets.forEach(val => {
+          this.evolution = val.percent;
+        //  this.client = val.client.nomComplet;
+          this.evolutions.push(this.evolution);
+          //this.clients.push(this.client);
+        });
+        console.log(this.evolutions);
+       // console.log(this.clients);
       });
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
@@ -125,6 +137,7 @@ projets : Projet[];
     /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
     var datawebsiteViewsChart = {
+
       labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
       series: [
         [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]

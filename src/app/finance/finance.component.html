@@ -44,8 +44,8 @@
                                    [routerLink]="[tr.id]"
                                    (click)="onSelect(tr)">
                                   <span class="pull-left"  >
-                                    <p >{{tr.libelle}}</p>
-                                    <p> {{tr.client.nomComplet}}</p>
+                                    <p >{{tr?.libelle}}</p>
+                                    <p> {{tr.client?.nomComplet}}</p>
                                   </span>
                                 </a>
                                 <div  fxLayout="row" fxLayoutAlign="space-around center">
