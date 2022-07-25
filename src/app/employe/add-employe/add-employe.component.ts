@@ -99,6 +99,7 @@ export class AddEmployeComponent implements OnInit {
         nom: this.employeService.form.value.nom,
         prenom: this.employeService.form.value.prenom,
         email: this.employeService.form.value.email,
+        telephone: this.employeService.form.value.telephone,
         password: this.employeService.form.value.password,
         activated: this.employeService.form.value.activated,
         departement: this.departement,
@@ -107,45 +108,60 @@ export class AddEmployeComponent implements OnInit {
       this.employeService.ajoutEmploye(this.employe).subscribe(res => {
         if(res.status === 0){
           this.notificationService.success('Employé ajouté avec succès');
+        }else {
+          this.notificationService.success(res.messages);
+
         }
       });
     } else {
-      if(this.code === null || this.code === undefined){
-        this.employe = {
-          id:  this.employeService.form.value.id,
-          version:  this.employeService.form.value.version,
-          email: this.employeService.form.value.email,
-          password: this.employeService.form.value.password,
-          nom: this.employeService.form.value.nom,
-          prenom: this.employeService.form.value.prenom,
-          fonction: this.employeService.form.value.fonction,
-          activated: this.employeService.form.value.activated,
-          departement: this.departement,
-          type:'EMPLOYE'
-        };
+      console.log('retour modif', this.employeService.form.value);
+      this.employeService.getEmployeById(this.employeService.form.value.id)
+        .subscribe(data => {
+          console.log(data.body);
+          if(this.code === null || this.code === undefined){
+            this.employe = {
+              id:  this.employeService.form.value.id,
+              version:  this.employeService.form.value.version,
+              email: this.employeService.form.value.email,
+              telephone: data.body.telephone,
+              password: '',
+              nom: this.employeService.form.value.nom,
+              prenom: this.employeService.form.value.prenom,
+              fonction: this.employeService.form.value.fonction,
+              activated: this.employeService.form.value.activated,
+              departement: data.body.departement,
+              type:'EMPLOYE'
+            };
 
-      }else{
-        this.employe = {
-          id:  this.employeService.form.value.id,
-          version:  this.employeService.form.value.version,
-          nom: this.employeService.form.value.nom,
-          prenom: this.employeService.form.value.prenom,
-          email: this.employeService.form.value.email,
-          password: this.employeService.form.value.password,
-          activated: this.employeService.form.value.activated,
-          departement: this.departement,
-          type:'EMPLOYE'
-        };
+          }else{
 
-      }
-      this.employeService.modifEmploye(this.employe).subscribe(result => {
-        console.log(result.status);
-        if(result.status === 0){
-          this.notificationService.success('Employé modifié avec succès');
-        }
-      });
-      this.employeService.form.reset();
-      this.employeService.initializeFormGroup();
+            this.employe = {
+              id:  this.employeService.form.value.id,
+              version:  this.employeService.form.value.version,
+              nom: this.employeService.form.value.nom,
+              prenom: this.employeService.form.value.prenom,
+              email: this.employeService.form.value.email,
+              telephone: data.body.telephone,
+              password: '',
+              activated: this.employeService.form.value.activated,
+              departement: data.body.departement,
+              type:'EMPLOYE'
+            };
+
+          }
+          this.employeService.modifEmploye(this.employe).subscribe(result => {
+            console.log(result.status);
+            if (result.status === 0){
+              this.notificationService.success('Employé modifié avec succès');
+            }else {
+              this.notificationService.success(result.messages);
+
+            }
+          });
+          this.employeService.form.reset();
+          this.employeService.initializeFormGroup();
+        });
+
 
     }
     this.onClose();
