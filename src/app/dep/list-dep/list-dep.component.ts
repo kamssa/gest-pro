@@ -76,8 +76,9 @@ export class ListDepComponent implements OnInit {
             this.nav = true;
             this.departementService.getDepByIdEntreprise(this.personne.id)
               .subscribe(list => {
-                this.departements = list.body;
-              this.array = list.body.map(item => {
+               // this.departements = list.body;
+                console.log(list.body);
+                this.array = list.body.map(item => {
                 return {
                   id: item.id,
                   ...item
@@ -97,19 +98,15 @@ export class ListDepComponent implements OnInit {
 
         }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
             this.nav = true;
-
-          this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id)
+            this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id)
               .subscribe(list => {
-                this.departements = list.body;
-                console.log('taille de departement', this.departements.length);
+             //   this.departements = list.body;
                 this.array = list.body.map(item => {
                   return {
                     id: item.id,
                     ...item
                   };
                 });
-                console.log('taille de array', this.array.length);
-
                 this.listData = new MatTableDataSource(this.array);
                 this.listData.sort = this.sort;
                 this.listData.paginator = this.paginator;
@@ -203,7 +200,7 @@ export class ListDepComponent implements OnInit {
   }
 
   onDelete(row){
-    if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+    if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_MANAGER')){
       if (confirm('Voulez-vous vraiment supprimer le departement ?')){
         this.departementService.supprimerDepartement(row.id).subscribe(result => {
           console.log(result);

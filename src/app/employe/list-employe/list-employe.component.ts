@@ -175,7 +175,7 @@ export class ListEmployeComponent implements OnInit {
   }
 
   onDelete(row){
-    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_ADMINISTRATION')){
+    if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       if(confirm('Voulez-vous vraiment supprimer l\'employé ?')){
         this.employeService.deleteEmployeById(row.id).subscribe(result => {
 
