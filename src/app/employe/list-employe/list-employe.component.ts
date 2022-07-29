@@ -22,7 +22,7 @@ import {EmployePermitionComponent} from '../employe-permition/employe-permition.
 })
 export class ListEmployeComponent implements OnInit {
   displayedColumns: string[] = ['nomComplet', 'service', 'actions'];
-  listData: MatTableDataSource<any>;
+  listData: MatTableDataSource<Employe>;
   departement: Departement;
   receptacle: any = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
@@ -71,11 +71,6 @@ export class ListEmployeComponent implements OnInit {
                 this.listData = new MatTableDataSource(this.array);
                 this.listData.sort = this.sort;
                 this.listData.paginator = this.paginator;
-                this.listData.filterPredicate = (data, filter) => {
-                  return this.displayedColumns.some(ele => {
-                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                  });
-                };
 
               });
             }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){

@@ -86,11 +86,6 @@ export class ListDepComponent implements OnInit, AfterViewInit {
               this.listData = new MatTableDataSource(this.array);
               this.listData.sort = this.sort;
               this.listData.paginator = this.paginator;
-              this.listData.filterPredicate = (data, filter) => {
-                return this.displayedColumns.some(ele => {
-                  return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                });
-              };
 
             });
 
