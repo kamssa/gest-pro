@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Departement} from '../../model/Departement';
 import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
@@ -21,15 +21,15 @@ import {EntrepriseService} from '../../service/entreprise.service';
   templateUrl: './list-dep.component.html',
   styleUrls: ['./list-dep.component.scss']
 })
-export class ListDepComponent implements OnInit {
+export class ListDepComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['libelle', 'description', 'actions'];
-  listData: MatTableDataSource<any>;
+  listData: MatTableDataSource<Departement>;
   departement: Departement;
   receptacle: any = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
 
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: any;
 
   personne: any;
@@ -71,13 +71,11 @@ export class ListDepComponent implements OnInit {
           this.ROLE_NAME = val.name;
           this.userRoles.push(this.ROLE_NAME);
         });
-       // console.log(this.userRoles.includes('ROLE_ENTREPRISE'));
         if (this.userRoles.includes('ROLE_ENTREPRISE')){
             this.nav = true;
             this.departementService.getDepByIdEntreprise(this.personne.id)
               .subscribe(list => {
                // this.departements = list.body;
-                console.log(list.body);
                 this.array = list.body.map(item => {
                 return {
                   id: item.id,
@@ -108,8 +106,6 @@ export class ListDepComponent implements OnInit {
                   };
                 });
                 this.listData = new MatTableDataSource(this.array);
-                this.listData.sort = this.sort;
-                this.listData.paginator = this.paginator;
                 this.listData.filterPredicate = (data, filter) => {
                   return this.displayedColumns.some(ele => {
                     return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
@@ -117,7 +113,7 @@ export class ListDepComponent implements OnInit {
                 };
 
               });
-
+            console.log(this.listData.paginator);
         }else {
           this.error ='Vous n\'etes pas autorisé';
           this.erreur = false;
@@ -127,15 +123,20 @@ export class ListDepComponent implements OnInit {
 
     }
   }
+  ngAfterViewInit() {
+   // this.listData.paginator = this.paginator;
 
-  onSearchClear() {
-    this.searchKey = '';
-    this.applyFilter();
   }
 
-  applyFilter() {
-    this.listData.filter = this.searchKey.trim().toLowerCase();
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.listData.filter = filterValue.trim().toLowerCase();
+
+    if (this.listData.paginator) {
+      this.listData.paginator.firstPage();
+    }
   }
+
   onCreate() {
       if (this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
       this.departementService.initializeFormGroup();

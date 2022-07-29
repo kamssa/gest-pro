@@ -28,7 +28,7 @@ export class ListEmployeComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
 
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: any;
   personne: any;
   array: any;
@@ -113,12 +113,18 @@ export class ListEmployeComponent implements OnInit {
 
   onSearchClear() {
     this.searchKey = "";
-    this.applyFilter();
+
   }
 
-  applyFilter() {
-    this.listData.filter = this.searchKey.trim().toLowerCase();
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.listData.filter = filterValue.trim().toLowerCase();
+
+    if (this.listData.paginator) {
+      this.listData.paginator.firstPage();
+    }
   }
+
   onCreate() {
      if ( this.userRoles.includes('ROLE_ENTREPRISE') || this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')){
        this.employeService.initializeFormGroup();
