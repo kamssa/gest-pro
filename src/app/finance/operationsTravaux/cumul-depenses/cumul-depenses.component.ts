@@ -159,7 +159,7 @@ this.projetService.getProjetById(this.data['projet'])
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         this.type = this.personne.type;

@@ -17,6 +17,7 @@ import {AutreAchatTravaux} from '../../../../model/AutreAchatTravaux';
 import {CategorieService} from '../../../../service/categorie.service';
 import {Projet} from '../../../../model/projet';
 import {ProjetService} from '../../../../service/projet.service';
+import {AuthService} from '../../../../service/auth.service';
 
 @Component({
   selector: 'app-autre-achat-travaux',
@@ -65,6 +66,7 @@ export class AutreAchatTravauxComponent implements OnInit {
               private detailAticleStockGeneralService: DetailAticleStockGeneralService,
               public dialog: MatDialog,
               private router: Router,
+              private authService: AuthService,
               private projetService: ProjetService,
               private route: ActivatedRoute,
               private  dialogService: DialogConfirmService,
@@ -82,7 +84,7 @@ export class AutreAchatTravauxComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {

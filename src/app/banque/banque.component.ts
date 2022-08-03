@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {AddBanqueComponent} from './add-banque/add-banque.component';
 import {EmployeService} from '../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {AuthService} from '../service/auth.service';
 
 @Component({
   selector: 'app-banque',
@@ -28,13 +29,14 @@ export class BanqueComponent implements OnInit {
   editer: boolean;
   constructor(private fb: FormBuilder, private operationService: OperationBanqueService,
               private dialog: MatDialog, private router: Router,
+              private authService: AuthService,
               private employeService: EmployeService,  private helper: JwtHelperService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         console.log('Voir la personne ', this.personne);
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée

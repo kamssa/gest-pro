@@ -16,6 +16,7 @@ import {EmployeService} from '../service/employe.service';
 import {Stock} from '../model/Stock';
 import {MontantStock} from '../model/MontantStock';
 import {MontantStockService} from '../service/montant-stock.service';
+import {AuthService} from '../service/auth.service';
 
 @Component({
   selector: 'app-stock',
@@ -53,13 +54,14 @@ export class StockComponent implements OnInit {
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
               private employeService: EmployeService,
+              private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {

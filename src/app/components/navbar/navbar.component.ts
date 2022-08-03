@@ -53,12 +53,12 @@ export class NavbarComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         this.type = this.personne.type;
         if (this.type === 'ENTREPRISE'){
-          this.employeService.getPersonneById(this.personne.id).subscribe( result => {
+          this.authService.getPersonneById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
 

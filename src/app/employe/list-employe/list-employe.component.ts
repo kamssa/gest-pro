@@ -50,7 +50,7 @@ export class ListEmployeComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
             this.personne = resultat.body;
             this.roles = resultat.body.roles;
             // Vérifie si le tableau contient le droit de la personne retournnée
@@ -60,8 +60,7 @@ export class ListEmployeComponent implements OnInit {
             });
             if  (this.userRoles.includes('ROLE_ENTREPRISE') ){
               this.employeService.getEmployeByIdEntreprise(this.personne.id).subscribe(list => {
-                console.log(list.body);
-                console.log(list);
+               console.log(list.body);
                 this.array = list.body.map(item => {
                   return {
                     id: item.id,
@@ -190,7 +189,6 @@ export class ListEmployeComponent implements OnInit {
         this.listData = new MatTableDataSource(this.array);
         this.listData.sort = this.sort;
         this.listData.paginator = this.paginator;
-        console.log('Affiche Voici mon tableau', index);
 
       }
     }else {

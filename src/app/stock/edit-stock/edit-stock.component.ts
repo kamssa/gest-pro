@@ -10,15 +10,12 @@ import {Employe} from '../../model/Employe';
 import {EmployeService} from '../../service/employe.service';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {NotificationService} from '../../helper/notification.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {MatTableDataSource} from '@angular/material/table';
-import {Categorie} from '../../model/Categorie';
-import {Fournisseur} from '../../model/Fournisseur';
 import {DetailStockService} from '../../service/detail-stock.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {CategorieService} from '../../service/categorie.service';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-edit-stock',
@@ -62,6 +59,7 @@ export class EditStockComponent implements OnInit {
               private materielService: MaterielService,
               public dialog: MatDialog,
               private router: Router,
+              private authService: AuthService,
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
               private helper: JwtHelperService,
@@ -78,7 +76,7 @@ export class EditStockComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {

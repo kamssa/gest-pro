@@ -54,7 +54,7 @@ export class EmployePermitionComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
       console.log(decoded.sub);
-      this.employeService.getPersonneById(decoded.sub).subscribe(result => {
+      this.authService.getPersonneById(decoded.sub).subscribe(result => {
         this.personne = result.body;
         console.log(this.personne);
         this.roleService.getAllRole().subscribe(res => {

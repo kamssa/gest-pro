@@ -13,6 +13,7 @@ import {RechercheParDateComponent} from '../../../finance/operationsTravaux/cumu
 import {EmployeService} from '../../../service/employe.service';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-list-projet',
@@ -42,6 +43,7 @@ export class ListProjetComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private employeService: EmployeService,
               private autresService: AutresService,
+              private authService: AuthService,
               private projetService: ProjetService,
               private  router: Router,
               private mediaObserver: MediaObserver,
@@ -60,7 +62,7 @@ export class ListProjetComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         if (this.personne.type === 'EMPLOYE') {
           this.employeService.getEmployeById(this.personne.id).subscribe(res => {

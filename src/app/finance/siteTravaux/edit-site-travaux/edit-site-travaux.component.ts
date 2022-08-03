@@ -13,6 +13,7 @@ import {Entreprise} from '../../../model/Entreprise';
 import {ProjetService} from '../../../service/projet.service';
 import {Projet} from '../../../model/projet';
 import {EntrepriseService} from '../../../service/entreprise.service';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-edit-site-travaux',
@@ -49,6 +50,7 @@ export class EditSiteTravauxComponent implements OnInit {
     private entrepriseService: EntrepriseService,
     private location: Location,   private notificationService: NotificationService,
     private dialog: MatDialog,
+    private authService: AuthService,
     private  employeService: EmployeService,
     private helper: JwtHelperService) { }
 
@@ -63,7 +65,7 @@ export class EditSiteTravauxComponent implements OnInit {
     const token = localStorage.getItem('currentUser');
     if(token){
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {

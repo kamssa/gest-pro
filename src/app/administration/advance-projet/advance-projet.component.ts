@@ -10,7 +10,6 @@ import {AdminService} from '../../service/admin.service';
 import {EmployeService} from '../../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Employe} from '../../model/Employe';
-import {Site} from '../../model/site';
 import {Projet} from '../../model/projet';
 import {ProjetService} from '../../service/projet.service';
 
@@ -64,7 +63,7 @@ export class AdvanceProjetComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         console.log(this.personne);

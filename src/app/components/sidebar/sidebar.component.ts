@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
       });
     }

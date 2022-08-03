@@ -11,6 +11,7 @@ import {NotificationService} from '../../../../helper/notification.service';
 import {Router} from '@angular/router';
 import {EmployeService} from '../../../../service/employe.service';
 import {Projet} from '../../../../model/projet';
+import {AuthService} from '../../../../service/auth.service';
 
 @Component({
   selector: 'app-list-autre-depense',
@@ -36,6 +37,7 @@ export class ListAutreDepenseComponent implements OnInit , AfterViewInit {
               @Inject(MAT_DIALOG_DATA) public data: Projet,
               public dialog: MatDialog,
               private employeService: EmployeService,
+              private authService: AuthService,
               private helper: JwtHelperService,
               private router: Router,
               private notificationService: NotificationService) {
@@ -68,7 +70,7 @@ export class ListAutreDepenseComponent implements OnInit , AfterViewInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {

@@ -5,17 +5,15 @@
       </div>
     </div>
     <div class="row" *ngIf="edit">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="listData">
 
         <div class="search-div">
-          <mat-form-field class="search-form-field" floatLabel="never">
-            <input matInput [(ngModel)]="searchKey" placeholder="Recherche..." autocomplete="off" (keyup)="applyFilter()">
-            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"  (click)="onSearchClear()">
-              <mat-icon>close</mat-icon>
-            </button>
+          <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)"  #input>
           </mat-form-field>
         </div>
-        <div class="mat-elevation-z8">
+        <div class="mat-elevation-z8" >
           <mat-table [dataSource]="listData"  matSort>
 
             <ng-container matColumnDef="projet">
@@ -61,6 +59,7 @@
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
         </div>
       </div>
+
     </div>
   </div>
 </div>

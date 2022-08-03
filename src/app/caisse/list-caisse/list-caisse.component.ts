@@ -14,6 +14,7 @@ import {CaisseDetail} from '../../model/CaisseDetail';
 import {EmployeService} from '../../service/employe.service';
 import {CaisseDetailService} from '../../service/caisse-detail.service';
 import {CaisseService} from '../../service/caisse.service';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-list-caisse',
@@ -49,13 +50,14 @@ export class ListCaisseComponent implements OnInit {
               private _snackBar: MatSnackBar,
               private adminService: AdminService,
               private helper: JwtHelperService,
+              private authService: AuthService,
               private employeService: EmployeService) {
   }
   ngOnInit(): void {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
 
@@ -124,7 +126,7 @@ export class ListCaisseComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
 
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
 

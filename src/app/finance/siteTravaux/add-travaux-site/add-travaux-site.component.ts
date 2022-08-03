@@ -8,6 +8,7 @@ import {Site} from '../../../model/site';
 import {EmployeService} from '../../../service/employe.service';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-add-travaux-site',
@@ -28,6 +29,7 @@ export class AddTravauxSiteComponent implements OnInit {
               private employeService: EmployeService,
               private  fb: FormBuilder, private  router: Router,
               @Inject(MAT_DIALOG_DATA) public data: Site,
+              private authService: AuthService,
               private snackBar: MatSnackBar, private helper: JwtHelperService,
               public dialogRef: MatDialogRef<AddTravauxSiteComponent>) {
   }
@@ -36,7 +38,7 @@ export class AddTravauxSiteComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
 
         if (this.personne.type === 'EMPLOYE') {

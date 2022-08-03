@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EmployeService} from '../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {AuthService} from '../service/auth.service';
 
 @Component({
   selector: 'app-caisse',
@@ -15,13 +16,15 @@ export class CaisseComponent implements OnInit {
   edit: number;
   personne: any;
   editer: boolean;
-  constructor( private employeService: EmployeService,  private helper: JwtHelperService) { }
+  constructor( private employeService: EmployeService,
+               private authService: AuthService,
+               private helper: JwtHelperService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         console.log('Voir la personne ', this.personne);
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée

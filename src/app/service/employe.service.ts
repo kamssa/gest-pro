@@ -58,16 +58,13 @@ export class EmployeService {
     this.form.patchValue(id);
   }
   getAllEmploye(): Observable<Resultat<Employe[]>> {
-    return this.http.get<Resultat<Employe[]>>(`${environment.apiUrl}/api/auth/employe`);
+    return this.http.get<Resultat<Employe[]>>(`${environment.apiUrl}/api/employe`);
   }
-  registraction(employe: Employe): Observable<Resultat<Employe>> {
-    console.log('methode du service qui ajoute un employe', employe);
-    return this.http.post<Resultat<Employe>>(`${environment.apiUrl}/api/auth/signuc/`, employe);
-  }
+
   ajoutEmploye(employe: Employe): Observable<Resultat<Employe>> {
     console.log('methode du service qui ajoute un employe', employe);
     return this.http.post<Resultat<Employe>>
-    (`${environment.apiUrl}/api/auth/signupEmpl`,
+    (`${environment.apiUrl}/api/signupEmpl`,
       employe).pipe(
       tap(res => {
         this.log(`Client crée =${res.body}`);
@@ -79,7 +76,7 @@ export class EmployeService {
   modifEmploye(employe: Employe): Observable<Resultat<Employe>> {
     console.log('methode du service qui modifie un client', employe);
     return this.http.put<Resultat<Employe>>
-    (`${environment.apiUrl}/api/auth/employe`,
+    (`${environment.apiUrl}/api/employe`,
       employe).pipe(
       tap(res => {
         this.log(`Client modifié =${res.body}`);
@@ -89,42 +86,22 @@ export class EmployeService {
     );
   }
   getEmployeById(id: number): Observable<Resultat<Employe>> {
-    return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/auth/employe/${id}`);
+    return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/employe/${id}`);
   }
   deleteEmployeById(id: number): Observable<Resultat<Employe>> {
-    return this.http.delete<Resultat<Employe>>(`${environment.apiUrl}/api/auth/employe/${id}`);
+    return this.http.delete<Resultat<Employe>>(`${environment.apiUrl}/api/employe/${id}`);
   }
-  getClientByEmail(email: string): Observable<Resultat<Employe>> {
-    return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/auth/getEmploye/${email}`);
-  }
-  rechercheEmployeParMc(mc: string): Observable<Array<Employe>> {
-    return this.http.get<Resultat<Array<Employe>>>(`${environment.apiUrl}/api/auth/employebyMc/${mc}`)
-      .pipe(map(res => res.body,
-        tap(res =>
-          this.log(`client trouve =${res}`))),
-        catchError(this.handleError<Array<Employe>>('rechercheEmployeParMc'))
-      );
 
-  }
   getEmployeByIdEntreprise(id: number): Observable<Resultat<Employe[]>> {
-    return this.http.get<Resultat<Employe[]>>(`${environment.apiUrl}/api/auth/listEmployeParEntreprise/${id}`);
+    return this.http.get<Resultat<Employe[]>>(`${environment.apiUrl}/api/listEmployeParEntreprise/${id}`);
   }
   addRoleToEmploye(idEmploye: number, idRole: number): Observable<Resultat<Employe>> {
     console.log(idEmploye);
     console.log(idRole);
-    return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/auth/addRoleToEmploye/?idEmploye=${idEmploye}&idRole=${idRole}`);
-  }
-  getPersonneByEmail(email: string): Observable<Resultat<Personne>> {
-    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/api/auth/personneByEmail/${email}`);
-  }
-  getPersonneById(id: number): Observable<Resultat<Personne>> {
-    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/api/auth/getPersonneById/${id}`);
+    return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/addRoleToEmploye/?idEmploye=${idEmploye}&idRole=${idRole}`);
   }
 
-  getPersonneByEmailOrTelephone(email: string, telephone: string): Observable<Resultat<Personne>> {
-    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/` +
-      'api/auth/getPersonneByEmailOrTelephone?' + 'email=' + email + '&telephone=' + telephone);
-  }
+
   employeCreer(res: Resultat<Employe>) {
     console.log('Client a ete  creer correctement essaie source');
     this.employeCreerSource.next(res);

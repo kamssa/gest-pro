@@ -18,6 +18,7 @@ import {StepperOrientation} from '@angular/material/stepper';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {ProjetService} from '../../../../service/projet.service';
 import {Projet} from '../../../../model/projet';
+import {AuthService} from '../../../../service/auth.service';
 
 @Component({
   selector: 'app-edit-autredepense-travaux',
@@ -66,6 +67,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
               private helper: JwtHelperService,
+              private authService: AuthService,
               @Inject(MAT_DIALOG_DATA) public data: AchatTravaux,
               private employeService: EmployeService,
               private projetService: ProjetService,
@@ -88,7 +90,7 @@ export class EditAutredepenseTravauxComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {

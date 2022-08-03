@@ -8,6 +8,7 @@ import {EmployeService} from '../../../service/employe.service';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
 import {Entreprise} from '../../../model/Entreprise';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-update-projet',
@@ -27,6 +28,7 @@ export class UpdateProjetComponent implements OnInit {
     private projetService: ProjetService,
     private  fb: FormBuilder, private  router: Router,
     private employeService: EmployeService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: Projet,
     private snackBar: MatSnackBar,  private helper: JwtHelperService,
     public dialogRef: MatDialogRef<UpdateProjetComponent>) { }
@@ -35,7 +37,7 @@ export class UpdateProjetComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
 
         if (this.personne.type === 'EMPLOYE'){

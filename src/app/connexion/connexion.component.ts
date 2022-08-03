@@ -77,7 +77,7 @@ export class ConnexionComponent implements OnInit {
       this.submitted = true;
       const mail = this.managerForm.value.email;
 
-      this.employeService.getPersonneByEmail(mail).subscribe(data => {
+      this.authService.getPersonneByEmail(mail).subscribe(data => {
         if (data.status === 0) {
           this.loading = true;
           if (data.body.type === 'ENTREPRISE') {

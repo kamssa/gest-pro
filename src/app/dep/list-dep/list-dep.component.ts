@@ -15,6 +15,9 @@ import {Employe} from '../../model/Employe';
 import {EmployeService} from '../../service/employe.service';
 import {RoleService} from '../../service/role.service';
 import {EntrepriseService} from '../../service/entreprise.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-list-dep',
@@ -24,7 +27,9 @@ import {EntrepriseService} from '../../service/entreprise.service';
 export class ListDepComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['libelle', 'description', 'actions'];
   listData: MatTableDataSource<Departement>;
-  departement: Departement;
+  thingsAsMatTableDataSource$: Observable<MatTableDataSource<Departement>> ;
+
+    departement: Departement;
   receptacle: any = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
 
@@ -50,6 +55,7 @@ export class ListDepComponent implements OnInit, AfterViewInit {
               private entrepriseService: EntrepriseService,
               public dialog: MatDialog,
               private router: Router,
+              private authService: AuthService,
               private  dialogService: DialogConfirmService,
               private notificationService: NotificationService,
               private _snackBar: MatSnackBar,
@@ -60,10 +66,10 @@ export class ListDepComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit(): void {
-    if(localStorage.getItem('currentUser')) {
+    if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée
@@ -73,6 +79,16 @@ export class ListDepComponent implements OnInit, AfterViewInit {
         });
         if (this.userRoles.includes('ROLE_ENTREPRISE')){
             this.nav = true;
+/*
+            this.thingsAsMatTableDataSource$ = this.departementService.getDepByIdEntreprise(this.personne.id)
+            .pipe(
+              map((list) => {
+                this.listData = new MatTableDataSource(list.body);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+                return this.listData;
+              })
+            );*/
             this.departementService.getDepByIdEntreprise(this.personne.id)
               .subscribe(list => {
                // this.departements = list.body;
@@ -83,12 +99,11 @@ export class ListDepComponent implements OnInit, AfterViewInit {
                 };
               });
 
-              this.listData = new MatTableDataSource(this.array);
-              this.listData.sort = this.sort;
-              this.listData.paginator = this.paginator;
+                this.listData = new MatTableDataSource(this.array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
 
             });
-
         }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
             this.nav = true;
             this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id)
@@ -110,7 +125,7 @@ export class ListDepComponent implements OnInit, AfterViewInit {
               });
             console.log(this.listData.paginator);
         }else {
-          this.error ='Vous n\'etes pas autorisé';
+          this.error = 'Vous n\'etes pas autorisé';
           this.erreur = false;
         }
 

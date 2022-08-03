@@ -10,6 +10,7 @@ import {Location} from '@angular/common';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {EmployeService} from '../../service/employe.service';
 import {Entreprise} from '../../model/Entreprise';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-add-dep',
@@ -35,6 +36,7 @@ export class AddDepComponent implements OnInit {
               public departementService: DepService,
               private location: Location,
               private helper: JwtHelperService,
+              private authService: AuthService,
               private notificationService: NotificationService,
               public dialogRef: MatDialogRef<AddDepComponent>,
               private  router: Router, private _snackBar: MatSnackBar,
@@ -43,7 +45,7 @@ export class AddDepComponent implements OnInit {
     const token = localStorage.getItem('currentUser');
     if(token){
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {

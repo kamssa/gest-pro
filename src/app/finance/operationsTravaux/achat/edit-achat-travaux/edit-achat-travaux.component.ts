@@ -26,6 +26,7 @@ import {DetailAticleStockGeneral} from '../../../../model/DetailAticleStockGener
 import {DetailAchatTravaux} from '../../../../model/DtailAchat';
 import {Projet} from '../../../../model/projet';
 import {ProjetService} from '../../../../service/projet.service';
+import {AuthService} from '../../../../service/auth.service';
 
 
 @Component({
@@ -68,7 +69,7 @@ export class EditAchatTravauxComponent implements OnInit {
   myControl = new FormControl();
   constructor(private  fb: FormBuilder,
               private  achatTravauxService: AchatTravauxService,
-
+              private authService: AuthService,
               private detailAticleStockGeneralService: DetailAticleStockGeneralService,
               public dialog: MatDialog,
               private router: Router,
@@ -87,7 +88,7 @@ export class EditAchatTravauxComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {

@@ -12,6 +12,7 @@ import {AutreAchatTravauxService} from '../../../../service/autre-achat-travaux.
 import {EditAutreAchatTravauxComponent} from '../edit-autre-achat-travaux/edit-autre-achat-travaux.component';
 import {EmployeService} from '../../../../service/employe.service';
 import {Projet} from '../../../../model/projet';
+import {AuthService} from '../../../../service/auth.service';
 
 @Component({
   selector: 'app-list-autre-achat',
@@ -36,6 +37,7 @@ export class ListAutreAchatComponent implements OnInit {
   constructor(private serviceAutreAchat: AutreAchatTravauxService,
               public dialog: MatDialog,
               private router: Router,
+              private authService: AuthService,
               @Inject(MAT_DIALOG_DATA) public data: Projet,
               private employeService: EmployeService,
               private helper: JwtHelperService,
@@ -67,7 +69,7 @@ export class ListAutreAchatComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {

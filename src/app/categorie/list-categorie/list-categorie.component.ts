@@ -13,6 +13,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {EmployeService} from '../../service/employe.service';
 import {CategorieService} from '../../service/categorie.service';
 import {AddCategorieComponent} from '../add-categorie/add-categorie.component';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-list-categorie',
@@ -45,6 +46,7 @@ export class ListCategorieComponent implements OnInit {
               private notificationService: NotificationService,
               private _snackBar: MatSnackBar,
               private helper: JwtHelperService,
+              private authService: AuthService,
               private employeService: EmployeService)
   {
 
@@ -53,7 +55,7 @@ export class ListCategorieComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -121,7 +123,7 @@ export class ListCategorieComponent implements OnInit {
        const token = localStorage.getItem('currentUser');
        const decoded = this.helper.decodeToken(token);
 
-       this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+       this.authService.getPersonneById(decoded.sub).subscribe(res => {
          this.personne = res.body;
          this.roles = res.body.roles;
          this.roles.forEach(val => {

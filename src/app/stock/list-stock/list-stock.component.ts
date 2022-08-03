@@ -19,6 +19,7 @@ import {DetailHistoryService} from '../../service/detail-history.service';
 import {DetailStockHistory} from '../../model/DetailStockHistory';
 import {AddMaterielComponent} from '../../materiel/add-materiel/add-materiel.component';
 import {EditStockComponent} from '../edit-stock/edit-stock.component';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-list-stock',
@@ -58,7 +59,8 @@ export class ListStockComponent implements OnInit {
               private _snackBar: MatSnackBar,
               private helper: JwtHelperService,
               private employeService: EmployeService,
-              private route: ActivatedRoute)
+              private route: ActivatedRoute,
+              private authService: AuthService)
   {
 
   }
@@ -66,7 +68,7 @@ export class ListStockComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
@@ -146,7 +148,7 @@ export class ListStockComponent implements OnInit {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
 
-      this.employeService.getPersonneById(decoded.sub).subscribe(res => {
+      this.authService.getPersonneById(decoded.sub).subscribe(res => {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {

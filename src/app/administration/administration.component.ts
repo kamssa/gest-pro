@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {EmployeService} from '../service/employe.service';
+import {AuthService} from '../service/auth.service';
 
 @Component({
   selector: 'app-administration',
@@ -25,13 +26,14 @@ export class AdministrationComponent implements OnInit {
   affiche: boolean;
   constructor(private router: Router,
               private employeService: EmployeService,
+              private authService: AuthService,
               private  helper: JwtHelperService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
 
         this.personne = resultat.body;
         this.roles = resultat.body.roles;

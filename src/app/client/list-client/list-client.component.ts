@@ -41,6 +41,7 @@ export class ListClientComponent implements OnInit {
   ROLE_MANAGER: any;
   userRoles: string [] = [];
   edit = true;
+  loading: boolean;
   constructor(private projetService: ProjetService,
               public dialog: MatDialog, private authService: AuthService,
               private employeService: EmployeService,
@@ -53,7 +54,7 @@ export class ListClientComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);
-      this.employeService.getPersonneById(decoded.sub).subscribe(resultat => {
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée
@@ -63,25 +64,29 @@ export class ListClientComponent implements OnInit {
         });
         if (this.userRoles.includes('ROLE_COMPTABILITE') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_COMMERCIAL') ){
           this.employeService.getEmployeById(this.personne.id).subscribe(res => {
-            this.personne = res.body;
-            this.projetService.getProjetByIdEntreprise(this.personne.departement.entreprise.id)
-              .subscribe(list => {
-              this.array = list.body.map(item => {
-                return {
-                  id: item.id,
-                  ...item
-                };
-              });
-              this.listData = new MatTableDataSource(this.array);
-              this.listData.sort = this.sort;
-              this.listData.paginator = this.paginator;
-              this.listData.filterPredicate = (data, filter) => {
-                return this.displayedColumns.some(ele => {
-                  return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                });
-              };
+           if (res.status === 0){
+             this.personne = res.body;
+             this.projetService.getProjetByIdEntreprise(this.personne.departement.entreprise.id)
+               .subscribe(list => {
+                 this.array = list.body.map(item => {
+                   return {
+                     id: item.id,
+                     ...item
+                   };
+                 });
+                 this.listData = new MatTableDataSource(this.array);
+                 this.listData.sort = this.sort;
+                 this.listData.paginator = this.paginator;
+                 this.listData.filterPredicate = (data, filter) => {
+                   return this.displayedColumns.some(ele => {
+                     return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+                   });
+                 };
 
-            });
+               });
+           }else {
+           }
+
           });
         }else{
           this.error ='Vous n\'etes pas autorisé';
@@ -94,12 +99,17 @@ export class ListClientComponent implements OnInit {
 
   onSearchClear() {
     this.searchKey = '';
-    this.applyFilter();
   }
 
-  applyFilter() {
-    this.listData.filter = this.searchKey.trim().toLowerCase();
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.listData.filter = filterValue.trim().toLowerCase();
+
+    if (this.listData.paginator) {
+      this.listData.paginator.firstPage();
+    }
   }
+
 
   onEdit(row: any) {
       const dialogConfig = new MatDialogConfig();

@@ -44,14 +44,20 @@ export class AuthService {
 
         const decoded = jwt_decode(res.body.body.accessToken);
         const exp = this.helper.isTokenExpired(res.body.body.accessToken);
-        console.log(exp);
-        console.log(decoded.exp);
-        console.log(res);
         this.isUserLoggedIn.next(true);
         return res;
       }));
   }
-
+  getPersonneByEmailOrTelephone(email: string, telephone: string): Observable<Resultat<Personne>> {
+    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/` +
+      'api/auth/getPersonneByEmailOrTelephone?' + 'email=' + email + '&telephone=' + telephone);
+  }
+  getPersonneByEmail(email: string): Observable<Resultat<Personne>> {
+    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/api/auth/personneByEmail/${email}`);
+  }
+  getPersonneById(id: number): Observable<Resultat<Personne>> {
+    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/api/auth/getPersonneById/${id}`);
+  }
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
