@@ -240,7 +240,7 @@ export class CumulParDateComponent implements OnInit {
 
   }
   makePDF(){
-    if (this.type === 'MANAGER'){
+    if (this.type === 'EMPLOYE'){
       html2canvas(this.invoiceElement.nativeElement, { scale: 3 }).then((canvas:any) => {
         const imgWidth = 208;
         const pageHeight = 295;
