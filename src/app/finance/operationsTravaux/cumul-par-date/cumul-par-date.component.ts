@@ -256,7 +256,7 @@ export class CumulParDateComponent implements OnInit {
           doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
           heightLeft -= pageHeight;
         }
-        doc.save(this.personne.entreprise.nom);
+        doc.save(this.personne.departement.entreprise.nom);
       });
     }else if (this.role && this.role1 && this.role2 && this.role3){
       html2canvas(this.invoiceElement.nativeElement, { scale: 3 }).then((canvas:any) => {
@@ -274,7 +274,7 @@ export class CumulParDateComponent implements OnInit {
           doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
           heightLeft -= pageHeight;
         }
-        doc.save(this.personne.entreprise.nom);
+        doc.save(this.personne.departement.entreprise.nom);
       });
     }
 
