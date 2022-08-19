@@ -6,7 +6,8 @@ import {Observable, of, Subject} from 'rxjs';
 import {Resultat} from '../model/resultat';
 import {environment} from '../../environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
+import {Projet} from '../model/projet';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +16,12 @@ export class DepService {
   private depCreerSource = new Subject<Resultat<Departement>>();
   private depModifSource = new Subject<Resultat<Departement>>();
   private depFiltreSource = new Subject<string>();
-  private depSupprimeSource = new Subject<Resultat<boolean>>();
 
 
 // observables streams
   depCreer$ = this.depCreerSource.asObservable();
   depModif$ = this.depModifSource.asObservable();
-  depFiltre$ = this.depFiltreSource.asObservable();
-  depSupprime$ = this.depSupprimeSource.asObservable();
-  // observables sources
-  departements: Departement[];
+
 
   constructor(private  http: HttpClient, private messageService: MessageService) {
   }
@@ -48,7 +45,6 @@ export class DepService {
     });
   }
   ajoutDepartement(departement: Departement): Observable<Resultat<Departement>> {
-    console.log('methode du service qui ajoute  departement', departement);
     return this.http.post<Resultat<Departement>>(`${environment.apiUrl}/api/departement`,
       departement)
       .pipe(
@@ -58,10 +54,9 @@ export class DepService {
         }),
         catchError(this.handleError<Resultat<Departement>>('ajoutDepartement'))
       );
-      ;
+
   }
   modifDepartement(departement: Departement): Observable<Resultat<Departement>> {
-    console.log('methode du service qui modifier departement', departement);
     return this.http.put<Resultat<Departement>>(`${environment.apiUrl}/api/departement`,
       departement)
       .pipe(
@@ -86,12 +81,20 @@ export class DepService {
     return this.http.delete(`${environment.apiUrl}/api/departement/${id}`);
 
   }
+  rechercheDepartementParMc(mc: string, nom: string): Observable<Array<Departement>> {
+    return this.http.get<Resultat<Array<Departement>>>(`${environment.apiUrl}/api/rechercheDepmc/?mc=${mc}&nom=${nom}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Array<Projet>>('rechercheTravauxParMc'))
+      );
+
+  }
 
   populateForm(id) {
     this.form.patchValue(id);
   }
   depCreer(res: Resultat<Departement>) {
-    console.log('Client a ete  creer correctement essaie source');
     this.depCreerSource.next(res);
   }
 

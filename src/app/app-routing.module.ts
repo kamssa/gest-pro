@@ -6,19 +6,20 @@ import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.componen
 import {ConnexionComponent} from './connexion/connexion.component';
 import {AuthGuardService} from './helper/auth-guard.service';
 import {DashboardClientComponent} from './client/dashboard-client/dashboard-client.component';
+import {AuthGuardClientService} from './helper/auth-guard-client.service';
 
 
 
 const routes: Routes = [
   { path: 'login', component: ConnexionComponent },
   {path: 'dashboardClient',
+    canActivate: [AuthGuardClientService],
     component: DashboardClientComponent},
   {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
-
   {
     path: '',
     component: AdminLayoutComponent,

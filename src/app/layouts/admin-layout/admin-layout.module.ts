@@ -46,51 +46,61 @@ import {VersementComponent} from '../../client/versement/versement.component';
 import {UpdateClientComponent} from '../../client/update-client/update-client.component';
 import {DashboardClientComponent} from '../../client/dashboard-client/dashboard-client.component';
 import {NgxGalleryModule} from 'ngx-gallery-9';
+import {DepNavBarComponent} from '../../dep/dep-nav-bar/dep-nav-bar.component';
+import {DepartementComponent} from '../../dep/departement/departement.component';
+import {ListDepItemComponent} from '../../dep/list-dep/list-dep-item/list-dep-item.component';
 
 
 
 
 @NgModule({
-  declarations: [
-    AdminLayoutComponent,
-    DashboardComponent,
-    UserProfileComponent,
-    AddEmployeComponent,
-    ListEmployeComponent,
-    ListDepComponent,
-    AddDepComponent,
-    MatConfirmDialogComponent,
-    AddStockComponent,
-    ListStockComponent,
-    AddMaterielComponent,
-    ListMaterielComponent,
-    AddCategorieComponent,
-    ListCategorieComponent,
-    ListCaisseComponent,
-    AddCaisseComponent,
-    CaisseComponent,
-    RetraitCaisseComponent,
-    VersementCaisseComponent,
-    OperationCaisseComponent,
-    EditOperationCaisseComponent,
-    AdministrationComponent,
-    StockComponent,
-    EditStockComponent,
-    DetailHistoryComponent,
-    ComptabiliteComponent,
-    EmployePermitionComponent,
-    AdvanceProjetComponent,
-    ListProjetComponent,
-    DashboardComponent,
-    ListClientComponent,
-    AddVersementComponent,
-    ListVersementComponent,
-    UpdateVersementComponent,
-    VersementComponent,
-    UpdateClientComponent,
-    DashboardClientComponent
+    declarations: [
+        AdminLayoutComponent,
+        DashboardComponent,
+        UserProfileComponent,
+        AddEmployeComponent,
+        ListEmployeComponent,
+        ListDepComponent,
+        AddDepComponent,
+        MatConfirmDialogComponent,
+        AddStockComponent,
+        ListStockComponent,
+        AddMaterielComponent,
+        ListMaterielComponent,
+        AddCategorieComponent,
+        ListCategorieComponent,
+        ListCaisseComponent,
+        AddCaisseComponent,
+        CaisseComponent,
+        RetraitCaisseComponent,
+        VersementCaisseComponent,
+        OperationCaisseComponent,
+        EditOperationCaisseComponent,
+        AdministrationComponent,
+        StockComponent,
+        EditStockComponent,
+        DetailHistoryComponent,
+        ComptabiliteComponent,
+        EmployePermitionComponent,
+        AdvanceProjetComponent,
+        ListProjetComponent,
+        DashboardComponent,
+        ListClientComponent,
+        AddVersementComponent,
+        ListVersementComponent,
+        UpdateVersementComponent,
+        VersementComponent,
+        UpdateClientComponent,
+        DashboardClientComponent,
+        DepNavBarComponent,
+        DepartementComponent,
+        ListDepItemComponent
 
-  ],
+
+    ],
+    exports: [
+        ListDepComponent
+    ],
     imports: [
         CommonModule,
         RouterModule.forChild(AdminLayoutRoutes),
@@ -102,7 +112,7 @@ import {NgxGalleryModule} from 'ngx-gallery-9';
         NgxIntlTelInputModule,
         Ng2TelInputModule,
         FinanceModule,
-         NgxGalleryModule
+        NgxGalleryModule
     ]
 
 })

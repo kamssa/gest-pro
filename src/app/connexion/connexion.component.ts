@@ -87,7 +87,6 @@ export class ConnexionComponent implements OnInit {
               type: 'ENTREPRISE'
             };
             this.authService.login(request).subscribe(res => {
-                console.log(res);
                 if (res) {
                   this.router.navigate([this.returnUrl]);
 

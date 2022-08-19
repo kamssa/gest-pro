@@ -30,13 +30,17 @@ import {EditAutreAchatTravauxComponent} from '../../finance/operationsTravaux/au
 import {ListClientComponent} from '../../client/list-client/list-client.component';
 import {BanqueComponent} from '../../banque/banque.component';
 import {RetraitComponent} from '../../banque/retrait/retrait.component';
+import {DepartementComponent} from '../../dep/departement/departement.component';
+import {RouteGuardService} from '../../helper/route-guard.service';
 
 
 export const AdminLayoutRoutes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-profile',   component: ListEmployeComponent },
-  { path: 'dep' , component: ListDepComponent},
+  { path: 'dep' ,
+    canActivate: [RouteGuardService],
+    component: DepartementComponent},
   {  path : 'finance',
     canActivate: [AuthGuardService],
     children: [

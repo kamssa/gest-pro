@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit {
   roles: any;
   ROLE_ADMIN: any;
   ROLE_NAME: any;
+  nav: any;
   constructor(private authService: AuthService,
               private router: Router,
               private employeService: EmployeService,

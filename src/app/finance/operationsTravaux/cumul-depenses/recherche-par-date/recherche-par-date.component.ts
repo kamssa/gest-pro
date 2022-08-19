@@ -39,7 +39,7 @@ export class RechercheParDateComponent implements OnInit {
   submit() {
     console.log("date 1",this.roomsFilter);
     console.log("date 2", this.roomsFilter1);
-    const id = this.data['travaux'];
+    const id = this.data['projet'];
     const dateDebut = this.datepipe.transform(this.roomsFilter, 'yyyy-MM-dd');
     const dateFin = this.datepipe.transform(this.roomsFilter1, 'yyyy-MM-dd');
 

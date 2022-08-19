@@ -69,7 +69,7 @@ export class CumulParDateComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CumulParDateComponent>,
 
-  @Inject(MAT_DIALOG_DATA) public data: any,
+              @Inject(MAT_DIALOG_DATA) public data: any,
               private achatTravauxService: AchatTravauxService,
               private mainoeuvreService: MainoeuvreService,
               private  autreAchatTravauxService: AutreAchatTravauxService,
@@ -200,7 +200,7 @@ export class CumulParDateComponent implements OnInit {
 
       console.log('lenght6', this.detailTransport.length);
     });
-    this.total = this.somme.valueOf() + this.somme1 + this.somme2 + this.somme3 + this.somme4 + this.somme5 + this.somme6 ;
+    this.total = this.somme + this.somme1 + this.somme2 + this.somme3 + this.somme4 + this.somme5 + this.somme6 ;
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);

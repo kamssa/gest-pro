@@ -29,6 +29,11 @@ import { MissionComponent } from './comptabilite/mission/mission.component';
 import { PrevisionTresorerieComponent } from './comptabilite/prevision-tresorerie/prevision-tresorerie.component';
 
 import { AllProjetComponent } from './administration/all-projet/all-projet.component';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {departementReducer} from './dep/ngrx-dep/dep.reducer';
+import {DepartementEffects} from './dep/ngrx-dep/dep.effects';
 
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
@@ -43,10 +48,6 @@ registerLocaleData(localeFr);
     MissionComponent,
     PrevisionTresorerieComponent,
     AllProjetComponent,
-
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -65,21 +66,25 @@ registerLocaleData(localeFr);
     SalaireModule,
     MatTableModule,
     ChartistModule,
+    StoreModule.forRoot({departementState: departementReducer}),
+    EffectsModule.forRoot([DepartementEffects]),
+    StoreDevtoolsModule.instrument()
 
   ],
   providers: [
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,
     DatePipe, DecimalPipe,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatDialogRef, useValue: {} },
-    { provide: LOCALE_ID, useValue: 'fr-FR'},
-    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: MAT_DIALOG_DATA, useValue: {}},
+    {provide: MatDialogRef, useValue: {}},
+    {provide: LOCALE_ID, useValue: 'fr-FR'},
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -66,7 +66,6 @@ export class FinanceComponent implements OnInit{
       const decoded = this.helper.decodeToken(token);
       this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
-        console.log('Voir la personne ', this.personne);
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée
         this.roles.forEach(val => {
@@ -76,14 +75,13 @@ export class FinanceComponent implements OnInit{
         if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_ACHAT') ){
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.employe = result.body;
-            console.log('Voir employe retournée', this.employe);
             this.nav = true;
             this.oTravaux = this.searchProjetSource
               .pipe(
                 debounceTime(100),
                 distinctUntilChanged(),
                 switchMap(mc => mc ?  this.projetService.rechercheProjetParMc(mc, this.employe.departement.entreprise.nom)
-                  : this.projetService.rechercheProjetParMc('Aucun projet trouvé !','Aucun projet trouvé !'))
+                  : this.projetService.rechercheProjetParMc('','Aucun projet trouvé !'))
               );
             this.toutsLesTravaux();
             // renvoie le site créé
