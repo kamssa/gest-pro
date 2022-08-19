@@ -11,7 +11,7 @@ import {
   GetAllDepartementByEntrepriseActionSuccess,
   NewDepartementActionSuccess,
   SaveDepartementActionError,
-  SaveDepartementActionSuccess, SearchDepartementActionSuccess, UpdateDepartementActionError,
+  SaveDepartementActionSuccess, UpdateDepartementActionError,
   UpdateDepartementActionSuccess
 } from './dep.actions';
 import {catchError, map, mergeMap} from 'rxjs/operators';
@@ -87,32 +87,5 @@ export class DepartementEffects {
       })
     )
   );
-   /*Get Selected Products*/
- searchDepartementByEntrepriseEffect: Observable<DepartementActions> = createEffect(
-   () => this.effectActions.pipe(
-     ofType(DepartementsActionsTypes.SEARCH_DEPARTEMENTS),
-     mergeMap((action: DepartementActions) => {
-       return this.depService.rechercheDepartementParMc(action.payload, action.payload)
-         .pipe(
-           map((departement) => new SearchDepartementActionSuccess(departement)),
-           catchError((err) => of(new SaveDepartementActionError(err.messages)))
-         );
-     })
-   )
- );
-
-  /*/!* Get Selected Products*!/
-  getSelectedProductsEffect:Observable<Action>=createEffect(
-    ()=>this.effectActions.pipe(
-      ofType(ProductsActionsTypes.GET_SELECTED_PRODUCTS),
-      mergeMap((action)=>{
-        return this.productService.getSelectedProducts()
-          .pipe(
-            map((products)=> new GetSelectedProductsActionSuccess(products)),
-            catchError((err)=>of(new GetSelectedProductsActionError(err.message)))
-          )
-      })
-    )
-  );
-*/
+  
 }

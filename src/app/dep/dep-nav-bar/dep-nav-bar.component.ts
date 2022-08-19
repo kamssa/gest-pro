@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from '@ngrx/store';
-import {GetAllDepartementByEntrepriseAction, SearchDepartementAction} from '../ngrx-dep/dep.actions';
+import {GetAllDepartementByEntrepriseAction} from '../ngrx-dep/dep.actions';
 import {AuthService} from '../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -74,7 +74,9 @@ entreprise: any;
   }
 
   onSearch(dataForm: any) {
+/*
     this.store.dispatch(new SearchDepartementAction(dataForm.keyword, this.entreprise.nom));
+*/
 
   }
 }

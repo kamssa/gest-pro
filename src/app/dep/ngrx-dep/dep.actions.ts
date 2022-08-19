@@ -31,9 +31,7 @@ export enum DepartementsActionsTypes{
   EDIT_DEPARTEMENTS_SUCCESS= '[Departement] Edit departements Success',
   EDIT_DEPARTEMENTS_ERROR= '[Departement] Edit departements Error',
   /* Search  departements*/
-  SEARCH_DEPARTEMENTS = '[Departement] Search departements',
-  SEARCH_DEPARTEMENTS_SUCCESS= '[Departement] Search departements Success',
-  SEARCH_DEPARTEMENTS_ERROR= '[Departement] Search departements Error',
+
   /* Update  departements*/
   UPDATE_DEPARTEMENTS = '[Departement] Update departements',
   UPDATE_DEPARTEMENTS_SUCCESS= '[Departement] Update departements Success',
@@ -159,24 +157,7 @@ export class EditDepartementActionError implements Action{
 }
 /* Search Products Actions*/
 
-export class SearchDepartementAction implements Action{
-  type: DepartementsActionsTypes = DepartementsActionsTypes.SEARCH_DEPARTEMENTS;
-  constructor(public payload: string , public payloaded: string) {
-  }
-}
 
-export class SearchDepartementActionSuccess implements Action{
-  type: DepartementsActionsTypes = DepartementsActionsTypes.SEARCH_DEPARTEMENTS_SUCCESS;
-
-  constructor(public payload: Array<Departement>) {
-  }
-}
-
-export class SearchDepartementActionError implements Action{
-  type: DepartementsActionsTypes = DepartementsActionsTypes.SEARCH_DEPARTEMENTS_ERROR;
-  constructor(public payload: string) {
-  }
-}
 /* Update Products Actions*/
 
 export class UpdateDepartementAction implements Action{
@@ -204,6 +185,5 @@ export type DepartementActions =
   | SaveDepartementAction | SaveDepartementActionSuccess | SaveDepartementActionError
   | DeleteDepartementAction | DeleteDepartementActionSuccess | DeleteDepartementActionError
   | EditDepartementAction | EditDepartementActionSuccess | EditDepartementActionError
-  | SearchDepartementAction | SearchDepartementActionSuccess | SearchDepartementActionError
   | UpdateDepartementAction | UpdateDepartementActionSuccess | UpdateDepartementActionError
   ;

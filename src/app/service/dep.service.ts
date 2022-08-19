@@ -81,7 +81,7 @@ export class DepService {
     return this.http.delete(`${environment.apiUrl}/api/departement/${id}`);
 
   }
-  rechercheDepartementParMc(mc: string, nom: string): Observable<Array<Departement>> {
+  /*rechercheDepartementParMc(mc: string, nom: string): Observable<Array<Departement>> {
     return this.http.get<Resultat<Array<Departement>>>(`${environment.apiUrl}/api/rechercheDepmc/?mc=${mc}&nom=${nom}`)
       .pipe(map(res => res.body,
         tap(res =>
@@ -89,7 +89,7 @@ export class DepService {
         catchError(this.handleError<Array<Projet>>('rechercheTravauxParMc'))
       );
 
-  }
+  }*/
 
   populateForm(id) {
     this.form.patchValue(id);

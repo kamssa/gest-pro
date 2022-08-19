@@ -84,12 +84,12 @@ export function departementReducer(state= initState, action: Action): Departemen
     case DepartementsActionsTypes.UPDATE_DEPARTEMENTS_ERROR:
       return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};
       /* Search Products*/
-    case DepartementsActionsTypes.SEARCH_DEPARTEMENTS:
+   /* case DepartementsActionsTypes.SEARCH_DEPARTEMENTS:
       return {...state, dataState: DepartementStateEnum.LOADING };
     case DepartementsActionsTypes. SEARCH_DEPARTEMENTS_SUCCESS:
       return {...state, dataState: DepartementStateEnum.LOADED, departements: (action as DepartementActions).payload};
     case DepartementsActionsTypes.SEARCH_DEPARTEMENTS_ERROR:
-      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};
+      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};*/
       default : return {...state};
   }
 }
