@@ -1,0 +1,45 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand text-white" href="#">Gestion des opérations bancaire</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Opérations
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item text-dark" (click)="addVersement()">Effectuer un versement</a>
+          <a class="dropdown-item text-dark"(click)="addRetrait()">Effectuer un retrait</a>
+          <a class="dropdown-item text-dark"(click)="addVirement()">Effectuer un virement</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="#">Liste des retraits</a>
+          <a class="dropdown-item text-danger" href="#">Liste des versements</a>
+          <a class="dropdown-item text-danger" href="#">Liste des virements</a>
+
+        </div>
+      </li>
+
+    </ul>
+    <form class="navbar-form" #f="ngForm" (submit)="onSearch(f.value)">
+      <div class="input-group no-border">
+        <input type="text" ngModel name="keyword" class="form-control text-white" placeholder="Recherche...">
+        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </form>
+  </div>
+</nav>
+<br>
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+export class VersementBanque {
+  constructor() {
+  }
+}

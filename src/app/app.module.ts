@@ -1,4 +1,4 @@
-import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,18 +22,19 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
 import {MatTableModule} from '@angular/material/table';
 import {ChartistModule} from 'ng-chartist';
-import { CarburantComponent } from './comptabilite/carburant/carburant.component';
-import { FournisseurComponent } from './comptabilite/fournisseur/fournisseur.component';
-import { ClientComponent } from './comptabilite/client/client.component';
-import { MissionComponent } from './comptabilite/mission/mission.component';
-import { PrevisionTresorerieComponent } from './comptabilite/prevision-tresorerie/prevision-tresorerie.component';
-
-import { AllProjetComponent } from './administration/all-projet/all-projet.component';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {departementReducer} from './dep/ngrx-dep/dep.reducer';
 import {DepartementEffects} from './dep/ngrx-dep/dep.effects';
+import {ErrorCatchingInterceptor} from './helper/errorCatchingInterceptor';
+import {banqueReducer} from './banque/banque/ngrx-banque/banque.reducer';
+import {BanqueEffects} from './banque/banque/ngrx-banque/banque.effects';
+import {vehiculeReducer} from './vehicule/ngrx-vehicule/vehicule.reducer';
+import {VehiculeEffects} from './vehicule/ngrx-vehicule/vehicule.effects';
+
+
+
 
 registerLocaleData(localeFr);
 // Add dependencies to FusionChartsModule
@@ -42,12 +43,11 @@ registerLocaleData(localeFr);
 @NgModule({
   declarations: [
     AppComponent,
-    CarburantComponent,
-    FournisseurComponent,
-    ClientComponent,
-    MissionComponent,
-    PrevisionTresorerieComponent,
-    AllProjetComponent,
+
+
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -66,8 +66,15 @@ registerLocaleData(localeFr);
     SalaireModule,
     MatTableModule,
     ChartistModule,
-    StoreModule.forRoot({departementState: departementReducer}),
-    EffectsModule.forRoot([DepartementEffects]),
+    StoreModule.forRoot({
+      departementState: departementReducer,
+      banqueState: banqueReducer,
+      vehiculeSate: vehiculeReducer
+    }),
+    EffectsModule.forRoot([
+      DepartementEffects,
+      BanqueEffects,
+      VehiculeEffects]),
     StoreDevtoolsModule.instrument()
 
   ],
@@ -77,6 +84,7 @@ registerLocaleData(localeFr);
     DatePipe, DecimalPipe,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     {provide: MAT_DIALOG_DATA, useValue: {}},
     {provide: MatDialogRef, useValue: {}},
     {provide: LOCALE_ID, useValue: 'fr-FR'},

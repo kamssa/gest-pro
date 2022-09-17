@@ -32,7 +32,7 @@ export function departementReducer(state= initState, action: Action): Departemen
     case DepartementsActionsTypes.GET_ALL_DEPARTEMENTSBYENTREPRISE_SUCCESS:
       return {...state, dataState: DepartementStateEnum.LOADED, departements: (action as DepartementActions).payload['body']};
     case DepartementsActionsTypes.GET_ALL_DEPARTEMENTSBYENTREPRISE_ERROR:
-      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload['messages']};
+      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};
     /* New  Departement*/
    /* case DepartementsActionsTypes.NEW_DEPARTEMENTS:
       return {...state, dataState: DepartementStateEnum.LOADING };

@@ -46,6 +46,7 @@
     "jspdf": "^2.5.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.19",
+    "mat-select-filter": "^2.4.1",
     "moment": "^2.27.0",
     "ng-chartist": "^6.8.0",
     "ng2-tel-input": "^2.3.0",

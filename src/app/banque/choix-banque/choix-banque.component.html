@@ -1,0 +1,18 @@
+
+<mat-card>
+  <mat-card-header></mat-card-header>
+  <mat-form-field appearance="fill">
+    <mat-label>Choisir la banque</mat-label>
+      <mat-select  [(ngModel)]="selectedValue" name="food" (selectionChange)="changeClient($event.value)">
+        <mat-option *ngFor="let client of clients" [value]="client.id">
+          {{client.clientName}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <button type="submit" class="btn btn-primary" (click)="onValider()">Valider</button>
+</mat-card>
+
+
+
+
+

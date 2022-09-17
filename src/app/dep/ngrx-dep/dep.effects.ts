@@ -34,7 +34,7 @@ export class DepartementEffects {
           .pipe(
             map((deparments) =>
               new GetAllDepartementByEntrepriseActionSuccess(deparments)),
-            catchError((err) => of(new GetAllDepartementByEntrepriseActionError(err.message)))
+            catchError((err) => of(new GetAllDepartementByEntrepriseActionError(err)))
           );
       })
     )

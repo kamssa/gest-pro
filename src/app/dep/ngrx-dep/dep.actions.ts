@@ -41,7 +41,7 @@ export enum DepartementsActionsTypes{
 
 export class GetAllDepartementByEntrepriseAction implements Action{
   type: DepartementsActionsTypes = DepartementsActionsTypes.GET_ALL_DEPARTEMENTSBYENTREPRISE;
-  constructor(public payload: any) {
+  constructor(public payload: number) {
   }
 }
 
@@ -54,7 +54,7 @@ export class GetAllDepartementByEntrepriseActionSuccess implements Action{
 
 export class GetAllDepartementByEntrepriseActionError implements Action{
   type: DepartementsActionsTypes = DepartementsActionsTypes.GET_ALL_DEPARTEMENTSBYENTREPRISE_ERROR;
-  constructor(public payload: number) {
+  constructor(public payload: string) {
   }
 }
 /* New Products Actions*/

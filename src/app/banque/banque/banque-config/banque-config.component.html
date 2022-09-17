@@ -1,0 +1,16 @@
+          <ng-container *ngIf="banquesState$ | async as state" [ngSwitch]="state.dataState">
+            <ng-container *ngSwitchCase="banqueStateEnum.INITIAL">
+              <div class="p-2"> Initialisation</div>
+            </ng-container>
+            <ng-container *ngSwitchCase="banqueStateEnum.LOADING">
+              <div class="p-2"> Chargement...</div>
+            </ng-container>
+            <ng-container *ngSwitchCase="banqueStateEnum.ERROR">
+              <div class="p-2 text-danger"> {{state.errorMessage}}</div>
+            </ng-container>
+            <ng-container *ngSwitchCase="banqueStateEnum.LOADED" class="p-4">
+              <app-list-banque [state]="state"></app-list-banque>
+            </ng-container>
+          </ng-container>
+
+

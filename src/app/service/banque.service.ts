@@ -7,6 +7,7 @@ import {MessageService} from './message.service';
 import {environment} from '../../environments/environment';
 import {Loyer} from '../model/Loyer';
 import {Banque} from '../model/Banque';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +25,29 @@ export class BanqueService {
   travauxFiltre$ = this.travauxFiltreSource.asObservable();
   travauxSupprime$ = this.travauxSupprimeSource.asObservable();
 
+  form: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    version: new FormControl(null),
+    nom: new FormControl('',[ Validators.required] ),
+
+  });
   constructor(private  http: HttpClient, private messageService: MessageService) {
   }
-
+  initializeFormGroup() {
+    this.form.setValue({
+      id: null,
+      version: null,
+      nom: '',
+    });
+  }
+  populateForm(id) {
+    this.form.patchValue(id);
+  }
   getAllBanque(): Observable<Resultat<Banque[]>> {
     return this.http.get<Resultat<Banque[]>>(`${environment.apiUrl}/api/banque`);
   }
 
-  ajoutBanque(banque: Banque): Observable<Resultat<Banque>> {
+    ajoutBanque(banque: number | Resultat<Banque[]> | string | Banque | Resultat<Banque>): Observable<Resultat<Banque>> {
     console.log('methode du service qui ajoute une banque', banque);
     return this.http.post<Resultat<Banque>>(`${environment.apiUrl}/api/banque`, banque);
   }

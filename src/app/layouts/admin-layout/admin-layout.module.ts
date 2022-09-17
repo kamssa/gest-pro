@@ -49,6 +49,38 @@ import {NgxGalleryModule} from 'ngx-gallery-9';
 import {DepNavBarComponent} from '../../dep/dep-nav-bar/dep-nav-bar.component';
 import {DepartementComponent} from '../../dep/departement/departement.component';
 import {ListDepItemComponent} from '../../dep/list-dep/list-dep-item/list-dep-item.component';
+import {FournisseurComponent} from '../../fournisseur/fournisseur/fournisseur.component';
+import {CarburantComponent} from '../../comptabilite/carburant/carburant.component';
+import {ClientComponent} from '../../comptabilite/client/client.component';
+import {MissionComponent} from '../../comptabilite/mission/mission.component';
+import {PrevisionTresorerieComponent} from '../../comptabilite/prevision-tresorerie/prevision-tresorerie.component';
+import {AllProjetComponent} from '../../administration/all-projet/all-projet.component';
+import {ConfigComponent} from '../../config/config/config.component';
+import {AddFournisseurComponent} from '../../fournisseur/add-fournisseur/add-fournisseur.component';
+import {ListFournisseurComponent} from '../../fournisseur/list-fournisseur/list-fournisseur.component';
+import {VehiculeComponent} from '../../vehicule/vehicule/vehicule.component';
+import {AddVehiculeComponent} from '../../vehicule/add-vehicule/add-vehicule.component';
+import {ListVehiculeComponent} from '../../vehicule/list-vehicule/list-vehicule.component';
+import {FactureComponent} from '../../facture/facture/facture.component';
+import {AddFactureComponent} from '../../facture/add-facture/add-facture.component';
+import {ListFactureComponent} from '../../facture/list-facture/list-facture.component';
+import {VehiculeNavBarComponent} from '../../vehicule/vehicule-nav-bar/vehicule-nav-bar.component';
+import {FournisseurNavBarComponent} from '../../fournisseur/fournisseur-nav-bar/fournisseur-nav-bar.component';
+import {BanqueModule} from '../../banque/banque.module';
+import {FactureNavBarComponent} from '../../facture/facture-nav-bar/facture-nav-bar.component';
+import {AddCarburantComponent} from '../../comptabilite/carburant/add-carburant/add-carburant.component';
+import {ModifPasswordComponent} from '../../modif-password/modif-password.component';
+import {AppVehiculeComponent} from '../../vehicule/app-vehicule/app-vehicule.component';
+import {LayoutsVehiculeComponent} from '../../vehicule/layouts-vehicule/layouts-vehicule.component';
+import {ListCarburantComponent} from '../../comptabilite/carburant/list-carburant/list-carburant.component';
+import {CarburantNavBarComponent} from '../../comptabilite/carburant/carburant-nav-bar/carburant-nav-bar.component';
+import {AddMissionComponent} from '../../comptabilite/mission/add-mission/add-mission.component';
+import {ListMissionComponent} from '../../comptabilite/mission/list-mission/list-mission.component';
+import {ListTresorerieComponent} from '../../comptabilite/prevision-tresorerie/list-tresorerie/list-tresorerie.component';
+import {RechercheCarburantParDateComponent} from '../../comptabilite/carburant/recherche-carburant-par-date/recherche-carburant-par-date.component';
+import {AddStaionEssenceComponent} from '../../stationEssence/add-staion-essence/add-staion-essence.component';
+import {StaionEssenceComponent} from '../../stationEssence/staion-essence/staion-essence.component';
+import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essence/list-staion-essence.component';
 
 
 
@@ -94,26 +126,61 @@ import {ListDepItemComponent} from '../../dep/list-dep/list-dep-item/list-dep-it
         DashboardClientComponent,
         DepNavBarComponent,
         DepartementComponent,
-        ListDepItemComponent
+        ListDepItemComponent,
+        FournisseurComponent,
+      CarburantComponent,
+      FournisseurComponent,
+      ClientComponent,
+      MissionComponent,
+      PrevisionTresorerieComponent,
+      AllProjetComponent,
+      ConfigComponent,
+      AddFournisseurComponent,
+      ListFournisseurComponent,
+      VehiculeComponent,
+      AddVehiculeComponent,
+      ListVehiculeComponent,
+      FactureComponent,
+      AddFactureComponent,
+      ListFactureComponent,
+      VehiculeNavBarComponent,
+      FournisseurNavBarComponent,
+      FactureNavBarComponent,
+      AddCarburantComponent,
+      ModifPasswordComponent,
+      AppVehiculeComponent,
+      LayoutsVehiculeComponent,
+      ListCarburantComponent,
+      ListFournisseurComponent,
+      CarburantNavBarComponent,
+      AddMissionComponent,
+      ListMissionComponent,
+      ListTresorerieComponent,
+      RechercheCarburantParDateComponent,
+      ListStaionEssenceComponent,
+      AddStaionEssenceComponent,
+      StaionEssenceComponent,
+
 
 
     ],
     exports: [
         ListDepComponent
     ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(AdminLayoutRoutes),
-        FormsModule,
-        ReactiveFormsModule,
-        MatRippleModule,
-        ComponentsModule,
-        MaterialModule,
-        NgxIntlTelInputModule,
-        Ng2TelInputModule,
-        FinanceModule,
-        NgxGalleryModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(AdminLayoutRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MatRippleModule,
+    ComponentsModule,
+    MaterialModule,
+    NgxIntlTelInputModule,
+    Ng2TelInputModule,
+    FinanceModule,
+    NgxGalleryModule,
+    BanqueModule,
+  ]
 
 })
 export class AdminLayoutModule { }

@@ -5,7 +5,7 @@ import {OperationBanqueService} from '../service/operationBanque.service';
 import {MatDialog} from '@angular/material/dialog';
 import {SuccessDialogComponent} from '../service/shared/dialogs/success-dialog/success-dialog.component';
 import {Router} from '@angular/router';
-import {AddBanqueComponent} from './add-banque/add-banque.component';
+import {AddBanqueComponent} from './banque/add-banque/add-banque.component';
 import {EmployeService} from '../service/employe.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AuthService} from '../service/auth.service';

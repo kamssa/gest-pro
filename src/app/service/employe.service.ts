@@ -7,9 +7,6 @@ import {environment} from '../../environments/environment';
 import {Employe} from '../model/Employe';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError, map, tap} from 'rxjs/operators';
-import {Materiaux} from '../model/Materiaux';
-import {Role} from '../model/Role';
-import {Personne} from '../model/Personne';
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,43 @@
+<div *ngIf="state">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrer</mat-label>
+      <input matInput (keyup)="applyFilter($event)"  #input>
+    </mat-form-field>
+  </div>
+  <br>
+  <mat-table [dataSource]="listData"  matSort>
+    <ng-container matColumnDef="nom">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Nom</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.nom}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Patientez svp ! Chargement des données...
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Aucune donnée enregistrée.
+      </mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
+
+    </mat-footer-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

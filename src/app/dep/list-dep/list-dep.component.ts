@@ -5,9 +5,8 @@ import {DepartementState} from '../ngrx-dep/dep.reducer';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {Store} from '@ngrx/store';
-import {DeleteDepartementAction, GetAllDepartementByEntrepriseAction} from '../ngrx-dep/dep.actions';
+import {DeleteDepartementAction} from '../ngrx-dep/dep.actions';
 import {Resultat} from '../../model/resultat';
-import {map} from 'rxjs/operators';
 import {NotificationService} from '../../helper/notification.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddDepComponent} from '../add-dep/add-dep.component';
@@ -74,10 +73,10 @@ export class ListDepComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.listData.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.listData.paginator) {
+      this.listData.paginator.firstPage();
     }
   }
   onEdit(row){

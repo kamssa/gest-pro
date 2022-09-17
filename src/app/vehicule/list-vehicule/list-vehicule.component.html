@@ -1,0 +1,67 @@
+<div *ngIf="state">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrer</mat-label>
+      <input matInput (keyup)="applyFilter($event)"  #input>
+    </mat-form-field>
+  </div>
+  <br>
+  <mat-table [dataSource]="listData"  matSort>
+    <ng-container matColumnDef="chauffeur">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Chauffeur</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.chauffeur}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="matriculation">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Matriculation</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.matriculation}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="couleur">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Couleur</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.couleur}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="marque">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Marque</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.marque}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="carburant">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Carburant</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-mini-fab  color="warn" (click)="addCarburant(row)"><mat-icon>add</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="panne">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Panne</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-mini-fab  color="warn" (click)="addPanne(row)"><mat-icon>add</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-mini-fab  color="warn"  (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
+        <button mat-mini-fab  color="warn"  (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Patientez svp ! Chargement des données...
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Aucune donnée enregistrée.
+      </mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
+
+    </mat-footer-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

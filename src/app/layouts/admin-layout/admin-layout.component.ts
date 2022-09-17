@@ -53,7 +53,6 @@ export class AdminLayoutComponent implements OnInit {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationStart) {
         if (event.url !== this.lastPoppedUrl) {
-          console.log('Voir url recuperer', event.url);
           this.yScrollStack.push(window.scrollY);
         }
       } else if (event instanceof NavigationEnd) {
@@ -180,11 +179,7 @@ export class AdminLayoutComponent implements OnInit {
 
 
   config() {
- if (this.ROLE_MANAGER){
-   this.notificationService.warn('vous êtes autorisé !') ;
- }else {
-   this.notificationService.warn('vous n\'êtes pas autorisé !') ;
- }
+ this.router.navigate(['/config']);
   }
 
   document() {

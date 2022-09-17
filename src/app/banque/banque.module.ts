@@ -8,7 +8,15 @@ import {MaterialModule} from '../material/material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RetraitComponent } from './retrait/retrait.component';
 import { VersementComponent } from './versement/versement.component';
-import { AddBanqueComponent } from './add-banque/add-banque.component';
+import { AddBanqueComponent } from './banque/add-banque/add-banque.component';
+import { BanqueNavBarComponent } from './banque-nav-bar/banque-nav-bar.component';
+import { ListBanqueComponent } from './banque/list-banque/list-banque.component';
+import { BanqueConfigComponent } from './banque/banque-config/banque-config.component';
+import { ListVersementComponent } from './versement/list-versement/list-versement.component';
+import { AddVersementComponent } from './versement/add-versement/add-versement.component';
+import { AddRetraitComponent } from './retrait/add-retrait/add-retrait.component';
+import { ListRetraitComponent } from './retrait/list-retrait/list-retrait.component';
+import { ChoixBanqueComponent } from './choix-banque/choix-banque.component';
 
 
 
@@ -27,14 +35,23 @@ import { AddBanqueComponent } from './add-banque/add-banque.component';
     EditOperationComponent,
     RetraitComponent,
     VersementComponent,
-    AddBanqueComponent
+    AddBanqueComponent,
+    BanqueNavBarComponent,
+    ListBanqueComponent,
+    BanqueConfigComponent,
+    ListVersementComponent,
+    AddVersementComponent,
+    AddRetraitComponent,
+    ListRetraitComponent,
+    ChoixBanqueComponent
   ],
   exports: [
     BanqueComponent,
     BanqueComponent,
     ListOperationComponent,
     EditOperationComponent,
-    RetraitComponent
+    RetraitComponent,
+    BanqueConfigComponent
   ]
 })
 export class BanqueModule { }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Departement} from '../model/Departement';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {MessageService} from './message.service';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 import {Resultat} from '../model/resultat';
 import {environment} from '../../environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError, map, tap} from 'rxjs/operators';
-import {Projet} from '../model/projet';
+
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,7 @@ export class DepService {
           this.log(`dep ajoute =${res.body}`);
           this.depCreer(res);
         }),
-        catchError(this.handleError<Resultat<Departement>>('ajoutDepartement'))
+        catchError(this.handleError)
       );
 
   }
@@ -64,7 +64,7 @@ export class DepService {
           this.log(`dep modifié =${res.body}`);
           this.depModif(res);
         }),
-        catchError(this.handleError<Resultat<Departement>>('modifDepartement'))
+        catchError(this.handleError)
       );
   }
   getDepartementById(id: number): Observable<Resultat<Departement>> {
@@ -74,7 +74,9 @@ export class DepService {
     return this.http.get<Resultat<Departement>>(`${environment.apiUrl}/api/getdocumentByLibelle/${libelle}`);
   }
   getDepByIdEntreprise(id: number): Observable<Resultat<Departement[]>> {
-    return this.http.get<Resultat<Departement[]>>(`${environment.apiUrl}/api/getDepartementByidEntreprise/${id}`);
+    return this.http.get<Resultat<Departement[]>>
+    (`${environment.apiUrl}/api/getDepartementByidEntreprise/${id}`);
+
   }
 
   supprimerDepartement(id: number): Observable<any> {
@@ -112,17 +114,17 @@ export class DepService {
   ///////////////////////////////////////////
   ///////////////////////////////////////////
   // recuper les erreurs
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-
-      console.error(error);
-
-
-      this.log(`${operation} non disponible: ${error.message}`);
-
-
-      return of(result as T);
-    };
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 }

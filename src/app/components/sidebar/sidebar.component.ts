@@ -12,15 +12,21 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
-  { path: '/administration', title: 'Direction',  icon: 'dashboard', class: '' },
+  { path: '/administration', title: 'Gestion Direction',  icon: 'dashboard', class: '' },
   { path: '/finance', title: 'Gestion Financière',  icon: 'content_paste', class: '' },
   { path: '/technique', title: 'Gestion Technique',  icon: 'library_books', class: '' },
   { path: '/caisse', title: 'Gestion Caisse',  icon: 'bubble_chart', class: '' },
   { path: '/banque', title: 'Gestion Banque',  icon: 'bubble_chart', class: '' },
-  { path: '/user-profile', title: 'Profile',  icon: 'person', class: ''  },
-  { path: '/dep', title: 'Departement',  icon: 'domain', class: '' },
-  { path: '/client', title: 'Gérer Client',  icon: 'person', class: ''  },
-  { path: '/categorie', title: 'Categories',  icon: 'domain', class: '' },
+  { path: '/carburant', title: 'Gestion Carburant',  icon: 'bubble_chart', class: '' },
+  { path: '/mission', title: 'Gestion Mission',  icon: 'bubble_chart', class: '' },
+  { path: '/tresorerie', title: 'Gestion Tresorerie',  icon: 'bubble_chart', class: '' },
+  { path: '/fournisseur', title: 'Gestion Fournisseur',  icon: 'bubble_chart', class: '' },
+  { path: '/vehicule', title: 'Gestion Vehicule',  icon: 'bubble_chart', class: '' },
+  { path: '/facture', title: 'Gestion Facture',  icon: 'bubble_chart', class: '' },
+  { path: '/client', title: 'Recrouvement',  icon: 'person', class: ''  },
+  { path: '/user-profile', title: 'Gestion Employés',  icon: 'person', class: ''  },
+  { path: '/dep', title: 'Gestion Departement',  icon: 'domain', class: '' },
+  { path: '/categorie', title: 'Gestion Categories',  icon: 'domain', class: '' },
 ];
 @Component({
   selector: 'app-sidebar',

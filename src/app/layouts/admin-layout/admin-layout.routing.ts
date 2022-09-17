@@ -13,7 +13,6 @@ import {TechniqueComponent} from '../../technique/technique.component';
 import {EditTecniqueComponent} from '../../technique/edit-tecnique/edit-tecnique.component';
 import {AddImageComponent} from '../../technique/add-image/add-image.component';
 import {ListEmployeComponent} from '../../employe/list-employe/list-employe.component';
-import {ListDepComponent} from '../../dep/list-dep/list-dep.component';
 import {AuthGuardService} from '../../helper/auth-guard.service';
 import {ListStockComponent} from '../../stock/list-stock/list-stock.component';
 import {ListCategorieComponent} from '../../categorie/list-categorie/list-categorie.component';
@@ -32,15 +31,79 @@ import {BanqueComponent} from '../../banque/banque.component';
 import {RetraitComponent} from '../../banque/retrait/retrait.component';
 import {DepartementComponent} from '../../dep/departement/departement.component';
 import {RouteGuardService} from '../../helper/route-guard.service';
+import {ConfigComponent} from '../../config/config/config.component';
+import {FactureComponent} from '../../facture/facture/facture.component';
+import {VehiculeComponent} from '../../vehicule/vehicule/vehicule.component';
+import {FournisseurComponent} from '../../fournisseur/fournisseur/fournisseur.component';
+import {ListVehiculeComponent} from '../../vehicule/list-vehicule/list-vehicule.component';
+import {CarburantComponent} from '../../comptabilite/carburant/carburant.component';
+import {AppVehiculeComponent} from '../../vehicule/app-vehicule/app-vehicule.component';
+import {LayoutsVehiculeComponent} from '../../vehicule/layouts-vehicule/layouts-vehicule.component';
+import {ListCarburantComponent} from '../../comptabilite/carburant/list-carburant/list-carburant.component';
+import {MissionComponent} from '../../comptabilite/mission/mission.component';
+import {PrevisionTresorerieComponent} from '../../comptabilite/prevision-tresorerie/prevision-tresorerie.component';
+import {ListTresorerieComponent} from '../../comptabilite/prevision-tresorerie/list-tresorerie/list-tresorerie.component';
+import {ListMissionComponent} from '../../comptabilite/mission/list-mission/list-mission.component';
 
 
 export const AdminLayoutRoutes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-profile',   component: ListEmployeComponent },
+  { path: 'config',   component: ConfigComponent },
   { path: 'dep' ,
     canActivate: [RouteGuardService],
     component: DepartementComponent},
+  { path: 'facture' ,
+    canActivate: [RouteGuardService],
+    component: FactureComponent},
+  { path: 'fournisseur' ,
+    canActivate: [RouteGuardService],
+    component: FournisseurComponent},
+  { path: 'vehicule' ,
+    canActivate: [RouteGuardService],
+    component: LayoutsVehiculeComponent,
+    children: [
+      {
+      path: 'listVehicule',
+      component: VehiculeComponent,
+    },
+
+  ]},
+  { path: 'carburant' ,
+    canActivate: [RouteGuardService],
+    component: CarburantComponent,
+    children: [
+      {
+        path: 'listCarburant',
+        component: ListCarburantComponent,
+      },
+      {
+        path: 'listVehiculeCarburant',
+        component: VehiculeComponent,
+      },
+
+    ]},
+  { path: 'tresorerie' ,
+    canActivate: [RouteGuardService],
+    component: PrevisionTresorerieComponent,
+    children: [
+      {
+        path: 'listTresorerie',
+        component:  ListTresorerieComponent
+      }
+
+    ]},
+  { path: 'mission' ,
+    canActivate: [RouteGuardService],
+    component: MissionComponent,
+    children: [
+      {
+        path: 'listMission',
+        component: ListMissionComponent
+      }
+
+    ]},
   {  path : 'finance',
     canActivate: [AuthGuardService],
     children: [

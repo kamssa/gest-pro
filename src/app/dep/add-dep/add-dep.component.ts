@@ -1,17 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {Departement} from '../../model/Departement';
-import {MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {DepService} from '../../service/dep.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NotificationService} from '../../helper/notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Entreprise} from '../../model/Entreprise';
 import {AuthService} from '../../service/auth.service';
-import {DepartementState, DepartementStateEnum} from '../ngrx-dep/dep.reducer';
 import {Store} from '@ngrx/store';
-import {NewDepartementAction, SaveDepartementAction, UpdateDepartementAction} from '../ngrx-dep/dep.actions';
-import {Stock} from '../../model/Stock';
+import {SaveDepartementAction, UpdateDepartementAction} from '../ngrx-dep/dep.actions';
 
 @Component({
   selector: 'app-add-dep',
