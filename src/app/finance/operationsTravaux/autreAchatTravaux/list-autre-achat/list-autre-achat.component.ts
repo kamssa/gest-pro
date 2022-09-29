@@ -73,7 +73,6 @@ export class ListAutreAchatComponent implements OnInit {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {
-          console.log(val.name);
           this.ROLE_NAME = val.name;
           if (this.ROLE_NAME === 'ROLE_MANAGER'){
             this.ROLE_MANAGER = this.ROLE_NAME;

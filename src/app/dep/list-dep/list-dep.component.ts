@@ -53,13 +53,14 @@ export class ListDepComponent implements OnInit, AfterViewInit {
           this.entreprise = this.personne;
 
         }else if (this.personne.type === 'EMPLOYE'){
-          this.entreprise = this.personne.entreprise;
+          this.entreprise = this.personne.departement.entreprise;
 
         }
       });
     }
 
     this.array = this.state.departements.map(item => {
+      console.log(item);
       return {
         id: item.id,
         ...item

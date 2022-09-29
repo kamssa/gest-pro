@@ -74,7 +74,6 @@ export class ListEmployeComponent implements OnInit, AfterViewInit{
     }
 
     this.array = this.state.employes.map(item => {
-      console.log(item);
       return {
         id: item.id,
         ...item
