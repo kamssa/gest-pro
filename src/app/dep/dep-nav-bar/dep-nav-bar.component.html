@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand text-white" href="#">Gestion des départements</a>
 
@@ -15,8 +14,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item text-dark" (click)="addDep()">Ajouter un département</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-danger" href="#">Liste des départements</a>
-
+          <a class="dropdown-item text-dark"(click)="openListDep()">Liste des départements</a>
         </div>
       </li>
 
@@ -32,10 +30,5 @@
     </form>
   </div>
 </nav>
-<button mat-raised-button  (click)="onCreate()">
-  <mat-icon>add</mat-icon>Département
-</button>
-<!--<button mat-raised-button (click)="removeColumn()"> Remove column </button>
-<button mat-raised-button (click)="shuffle()"> Shuffle </button>-->
 
 

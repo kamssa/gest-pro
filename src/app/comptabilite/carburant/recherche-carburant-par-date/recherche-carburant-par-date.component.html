@@ -1,20 +1,31 @@
-<mat-form-field appearance="fill">
-  <mat-label>Favorite food</mat-label>
-  <mat-select [(ngModel)]="selectedValue" name="food">
-    <mat-option *ngFor="let food of foods" [value]="food.value">
-      {{food.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="container">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Véhicules</mat-label>
+      <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                        (optionSelected)="OnHumanSelected($event.option)">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.chauffeur}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 <mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="Choisir une date" (dateChange)="dateChange($event)">
+  <input matInput [matDatepicker]="picker" placeholder="Choisir une date debut" (dateChange)="dateChange($event)">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker  ></mat-datepicker>
+  <mat-datepicker #picker>
+  </mat-datepicker>
 </mat-form-field>
 <mat-form-field>
-  <input matInput [matDatepicker]="picker1" placeholder="Choisir une date" (dateChange)="dateChange1($event)">
+  <input matInput [matDatepicker]="picker1" placeholder="Choisir une date fin" (dateChange)="dateChange1($event)">
   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-  <mat-datepicker #picker1  ></mat-datepicker>
+  <mat-datepicker #picker1>
+  </mat-datepicker>
 </mat-form-field>
-<button mat-raised-button color="primary" (click)="submit()">Valider</button>
-
+  <br>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <button mat-raised-button (click)="submit()"> Enregistrer
+    </button>
+    <button mat-raised-button  type="button" type="reset">Annuler
+    </button>
+  </div>
+</div>

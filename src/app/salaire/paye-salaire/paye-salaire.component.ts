@@ -7,6 +7,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {SuccessDialogComponent} from '../../service/shared/dialogs/success-dialog/success-dialog.component';
 import {DetailSalaire} from '../../model/DetailSalaire';
 import {DetailSalaireService} from '../../service/detail-salaire.service';
+import {AuthService} from '../../service/auth.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-paye-salaire',
@@ -20,14 +22,33 @@ export class PayeSalaireComponent implements OnInit {
   employeId: number;
   employes: Employe[];
   private dialogConfig;
+  entreprise: any;
+  personne: any;
   constructor(public fb: FormBuilder,
               private  detailSalaireService: DetailSalaireService,
               private  employeService: EmployeService,
               private location: Location,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private authService: AuthService,
+              private helper: JwtHelperService) { }
 
   ngOnInit(): void {
-    this.employeService.getAllEmploye().subscribe(result => {
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser) {
+      const token = currentUser.body.body.accessToken;
+      const decoded = this.helper.decodeToken(token);
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
+        this.personne = resultat.body;
+        if (this.personne.type === 'ENTREPRISE') {
+          this.entreprise = this.personne;
+
+        }else if (this.personne.type === 'EMPLOYE'){
+          this.entreprise = this.personne.departement.entreprise;
+
+        }
+      });
+    }
+    this.employeService.getEmployeByIdEntreprise(this.entreprise.id).subscribe(result => {
       console.log(result.body);
       this.employes = result.body;
     });

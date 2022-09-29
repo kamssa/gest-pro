@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {Resultat} from '../../../model/resultat';
-import {Banque} from '../../../model/Banque';
+import {RetraitBanque} from '../../../model/RetraitBanque';
 
 
 
@@ -40,50 +40,50 @@ export class GetAllRetraitBanqueActionSuccess implements Action{
   }
 }
 
-export class GetAllBanqueError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUE_ERROR;
+export class GetAllRetraitBanqueError implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.GET_ALL_RETRAIT_BANQUE_ERROR;
   constructor(public payload: string) {
   }
 }
 
 /* Save Products Actions*/
 
-export class SaveBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUE;
-  constructor(public payload: Banque) {
+export class SaveRetraitBanqueAction implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.SAVE_RETRAIT_BANQUE;
+  constructor(public payload: RetraitBanque) {
   }
 }
 
-export class SaveBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUE_SUCCESS;
+export class SaveRetraitBanqueActionSuccess implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.SAVE_RETRAIT_BANQUE_SUCCESS;
 
-  constructor(public payload: Resultat<Banque>) {
+  constructor(public payload: Resultat<RetraitBanque>) {
   }
 }
 
-export class SaveBanqueActionError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUE_ERROR;
-  constructor(public payload: Resultat<Banque>) {
+export class SaveRetraitBanqueActionError implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.SAVE_RETRAIT_BANQUE_ERROR;
+  constructor(public payload: Resultat<RetraitBanque>) {
   }
 }
 
 /* Delete Products Actions*/
 
-export class DeleteBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUE;
-  constructor(public payload: Banque) {
+export class DeleteRetraitBanqueAction implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.DELETE_RETRAIT_BANQUE;
+  constructor(public payload: RetraitBanque) {
   }
 }
 
-export class DeleteBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUE_SUCCESS;
+export class DeleteRetraitBanqueActionSuccess implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.DELETE_RETRAIT_BANQUE_SUCCESS;
 
-  constructor(public payload: Resultat<Banque>) {
+  constructor(public payload: Resultat<RetraitBanque>) {
   }
 }
 
-export class DeleteBanqueActionError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUE_ERROR;
+export class DeleteRetraitBanqueActionError implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.DELETE_RETRAIT_BANQUE_ERROR;
   constructor(public payload: string) {
   }
 }
@@ -93,27 +93,27 @@ export class DeleteBanqueActionError implements Action{
 
 /* Update Products Actions*/
 
-export class UpdateBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUE;
-  constructor(public payload: Banque) {
+export class UpdateRetraitBanqueAction implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.UPDATE_RETRAIT_BANQUE;
+  constructor(public payload: RetraitBanque) {
   }
 }
 
-export class UpdateBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUE_SUCCESS;
+export class UpdateRetraitBanqueActionSuccess implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.UPDATE_RETRAIT_BANQUE_SUCCESS;
 
-  constructor(public payload: Resultat<Banque>) {
+  constructor(public payload: Resultat<RetraitBanque>) {
   }
 }
 
-export class UpdateBanqueActionError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUE_ERROR;
-  constructor(public payload: Resultat<Banque>) {
+export class UpdateRetraitBanqueActionError implements Action{
+  type: RetraitBanqueActionsTypes = RetraitBanqueActionsTypes.UPDATE_RETRAIT_BANQUE_ERROR;
+  constructor(public payload: Resultat<RetraitBanque>) {
   }
 }
 export type RetraitBanqueActions =
-  GetAllBanqueAction | GetAllBanqueActionSuccess | GetAllBanqueError
-  | SaveBanqueAction | SaveBanqueActionSuccess | SaveBanqueActionError
-  | DeleteBanqueAction | DeleteBanqueActionSuccess | DeleteBanqueActionError
-  | UpdateBanqueAction | UpdateBanqueActionSuccess | UpdateBanqueActionError
+  GetAllRetaitBanqueAction | GetAllRetraitBanqueActionSuccess | GetAllRetraitBanqueError
+  | SaveRetraitBanqueAction | SaveRetraitBanqueActionSuccess | SaveRetraitBanqueActionError
+  | DeleteRetraitBanqueAction | DeleteRetraitBanqueActionSuccess | DeleteRetraitBanqueActionError
+  | UpdateRetraitBanqueAction | UpdateRetraitBanqueActionSuccess | UpdateRetraitBanqueActionError
   ;

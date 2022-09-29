@@ -26,6 +26,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatMenuModule} from '@angular/material/menu';
+import {A11yModule} from '@angular/cdk/a11y';
 
 const  materialComponents = [
   MatToolbarModule,
@@ -59,7 +60,8 @@ const  materialComponents = [
   MatCheckboxModule,
   MatAutocompleteModule,
   MatButtonToggleModule,
-  MatMenuModule
+  MatMenuModule,
+  A11yModule
 
 ];
 

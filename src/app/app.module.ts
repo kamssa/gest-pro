@@ -32,7 +32,14 @@ import {banqueReducer} from './banque/banque/ngrx-banque/banque.reducer';
 import {BanqueEffects} from './banque/banque/ngrx-banque/banque.effects';
 import {vehiculeReducer} from './vehicule/ngrx-vehicule/vehicule.reducer';
 import {VehiculeEffects} from './vehicule/ngrx-vehicule/vehicule.effects';
-
+import {stationEssenceReducer} from './stationEssence/ngrx-station/stationEssence.reducer';
+import {StationEssenceEffects} from './stationEssence/ngrx-station/stationEssence.effects';
+import {employeReducer} from './employe/ngrx-employe/employe.reducer';
+import {EmployeEffects} from './employe/ngrx-employe/employe.effects';
+import {CarburantEffects} from './comptabilite/carburant/ngrx-carburant/carburant.effects';
+import {carburantReducer} from './comptabilite/carburant/ngrx-carburant/carburant.reducer';
+import { CarburantParVehiculeComponent } from './comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
+import { CarburantParVehiculeMoisComponent } from './comptabilite/carburant/carburant-par-vehicule-mois/carburant-par-vehicule-mois.component';
 
 
 
@@ -43,10 +50,6 @@ registerLocaleData(localeFr);
 @NgModule({
   declarations: [
     AppComponent,
-
-
-
-
 
   ],
   imports: [
@@ -69,12 +72,20 @@ registerLocaleData(localeFr);
     StoreModule.forRoot({
       departementState: departementReducer,
       banqueState: banqueReducer,
-      vehiculeSate: vehiculeReducer
+      vehiculeSate: vehiculeReducer,
+      stationEssenceState: stationEssenceReducer,
+      employesState: employeReducer,
+      carburantState: carburantReducer
+
     }),
     EffectsModule.forRoot([
       DepartementEffects,
       BanqueEffects,
-      VehiculeEffects]),
+      VehiculeEffects,
+      StationEssenceEffects,
+      EmployeEffects,
+      CarburantEffects
+    ]),
     StoreDevtoolsModule.instrument()
 
   ],

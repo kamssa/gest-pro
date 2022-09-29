@@ -171,4 +171,8 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  onPasowork() {
+    this.router.navigate(['entreEmail']);
+  }
 }

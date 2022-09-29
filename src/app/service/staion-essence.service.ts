@@ -37,9 +37,10 @@ export class StaionEssenceService {
 
   }
 
-  ajoutStationEssence(vehicule: StationEssence): Observable<Resultat<StationEssence>> {
+  ajoutStationEssence(stationEssence: StationEssence): Observable<Resultat<StationEssence>> {
+    console.log('Dans le service', stationEssence);
     return this.http.post<Resultat<StationEssence>>(`${environment.apiUrl}/api/stationEssence`,
-      vehicule)
+      stationEssence)
       .pipe(
         tap(res => {
           this.log(`dep ajoute =${res.body}`);

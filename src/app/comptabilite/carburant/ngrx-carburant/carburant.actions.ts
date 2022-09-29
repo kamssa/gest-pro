@@ -1,14 +1,18 @@
 import {Action} from '@ngrx/store';
 import {Resultat} from '../../../model/resultat';
 import {Carburant} from '../../../model/carburant';
-import {GetAllVehiculeByEntrepriseActionError} from '../../../vehicule/ngrx-vehicule/vehicule.actions';
 
 
 export enum CarburantsActionsTypes{
-  /* Get All carburant*/
-  GET_ALL_CARUBURANTSBYENTREPRISE= '[carburants] Get All carburants by entreprise',
-  GET_ALL_CARUBURANTSBYENTREPRISE_SUCCESS= '[carburants] Get All carburants by entreprise Success',
-  GET_ALL_CARUBURANTSBYENTREPRISE_ERROR= '[carburants] Get All carburants by entreprise Error',
+  /* Get All carburant by vehicule*/
+  GET_ALL_CARUBURANTS= '[carburants] Get All carburants by entreprise',
+  GET_ALL_CARUBURANTS_SUCCESS= '[carburants] Get All carburants by entreprise Success',
+  GET_ALL_CARUBURANTS_ERROR= '[carburants] Get All carburants by entreprise Error',
+
+  /* Get All carburant by vehicule*/
+  GET_ALL_CARUBURANTSBYVEHICULE= '[carburants] Get All carburants by vehicule',
+  GET_ALL_CARUBURANTSBYVEHICULE_SUCCESS= '[carburants] Get All carburants by vehicule Success',
+  GET_ALL_CARUBURANTSBYVEHICULE_ERROR= '[carburants] Get All carburants by vehicule Error',
 
   /* Get Selected carburant*/
   GET_SELECTED_CARUBURANTS= '[carburants] Get Selected carburants',
@@ -33,23 +37,44 @@ export enum CarburantsActionsTypes{
   UPDATE_CARUBURANTS_SUCCESS= '[carburants] Update carburants Success',
   UPDATE_CARUBURANTS_ERROR= '[carburants] Update carburants Error',
 }
-/* Get All Products Actions*/
+/* Get All carburant by entreprise Actions*/
 
-export class GetAllCarburantsByEntrepriseAction implements Action{
-  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE;
+export class GetAllCarburantsAction implements Action{
+  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTS;
   constructor(public payload: number) {
   }
 }
 
-export class GetAllCarburantsByEntrepriseActionSuccess implements Action{
-  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE_SUCCESS;
+export class GetAllCarburantsActionSuccess implements Action{
+  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTS_SUCCESS;
 
   constructor(public payload: Resultat<Carburant[]>) {
   }
 }
 
-export class GetAllCarburantsByEntrepriseActionError implements Action{
-  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE_ERROR;
+export class GetAllCarburantsActionError implements Action{
+  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTS_ERROR;
+  constructor(public payload: string) {
+  }
+}
+
+/* Get All carburant by vehicule Actions*/
+
+export class GetAllCarburantsByVehiculeAction implements Action{
+  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE;
+  constructor(public payload: number) {
+  }
+}
+
+export class GetAllCarburantsByVehiculeActionSuccess implements Action{
+  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE_SUCCESS;
+
+  constructor(public payload: Resultat<Carburant[]>) {
+  }
+}
+
+export class GetAllCarburantsByVehiculeActionError implements Action{
+  type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE_ERROR;
   constructor(public payload: string) {
   }
 }
@@ -138,7 +163,8 @@ export class UpdateCarburantsActionError implements Action{
   }
 }
 export type CarburantActions =
-  GetAllCarburantsByEntrepriseAction | GetAllCarburantsByEntrepriseActionSuccess| GetAllVehiculeByEntrepriseActionError
+  | GetAllCarburantsAction | GetAllCarburantsActionSuccess| GetAllCarburantsActionError
+  | GetAllCarburantsByVehiculeAction | GetAllCarburantsByVehiculeActionSuccess| GetAllCarburantsByVehiculeActionError
   | GetSelectedCarburantsAction| GetSelectedCarburantsActionSuccess | GetSeleCtedcarburantsActionError
   | SaveCarburantsAction| SaveCarburantsActionSuccess | SaveCarburantsActionError
   | DeleteCarburantsAction | DeleteCarburantsActionSuccess | DeleteCarburantsActionError

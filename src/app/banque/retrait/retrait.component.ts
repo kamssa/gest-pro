@@ -3,7 +3,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Operation} from '../../model/OperationBanque';
 import {OperationBanqueService} from '../../service/operationBanque.service';
 import {Location} from '@angular/common';
-import {SuccessDialogComponent} from '../../service/shared/dialogs/success-dialog/success-dialog.component';
 import {BanqueService} from '../../service/banque.service';
 
 @Component({
@@ -20,13 +19,14 @@ export class RetraitComponent implements OnInit {
   operationId: string;
   operation: Operation;
   picker1: any;
+  id: any;
   constructor(private fb: FormBuilder,
               private operationService: OperationBanqueService,
               private location: Location,
               private banqueService: BanqueService) { }
 
   ngOnInit(): void {
-    this.banqueService.getAllBanque().subscribe(data =>{
+    this.banqueService.getAllBanqueByIdEntreprise(this.id).subscribe(data =>{
       console.log(data.body);
     });
     this.operationForm = this.fb.group({

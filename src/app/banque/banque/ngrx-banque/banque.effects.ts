@@ -7,10 +7,9 @@ import {BanqueService} from '../../../service/banque.service';
 import {
   BanqueActions,
   BanqueActionsTypes,
-  GetAllBanqueActionSuccess,
-  GetAllBanqueError,
-  SaveBanqueActionError,
-  SaveBanqueActionSuccess
+  GetAllBanqueByEntrepriseActionSuccess,
+  GetAllBanqueByEntrepriseError, SaveBanqueByEntrepriseActionError,
+  SaveBanqueByEntrepriseActionSuccess,
 } from './banque.actions';
 
 
@@ -23,29 +22,29 @@ export class BanqueEffects {
 
   }
 
-  getAllanqueEffect: Observable<BanqueActions> = createEffect(
+  getAllBanqueByEntrepriseEffect: Observable<BanqueActions> = createEffect(
     () => this.effectActions.pipe(
-      ofType(BanqueActionsTypes.GET_ALL_BANQUE),
+      ofType(BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE),
       mergeMap((action: BanqueActions) => {
-        return this.banqueService.getAllBanque()
+        return this.banqueService.getAllBanqueByIdEntreprise(action.payload)
           .pipe(
             map((banques) =>
-              new GetAllBanqueActionSuccess(banques)),
-            catchError((err) => of(new GetAllBanqueError(err.message)))
+              new GetAllBanqueByEntrepriseActionSuccess(banques)),
+            catchError((err) => of(new GetAllBanqueByEntrepriseError(err.message)))
           );
       })
     )
   );
 
-    saveBanqueEffect: Observable<BanqueActions> = createEffect(
+    saveBanqueByEntrepriseEffect: Observable<BanqueActions> = createEffect(
     () => this.effectActions.pipe(
-      ofType(BanqueActionsTypes.SAVE_BANQUE),
+      ofType(BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE),
       mergeMap((action: BanqueActions) => {
         return this.banqueService.ajoutBanque(action.payload)
           .pipe(
             map((banque) =>
-              new SaveBanqueActionSuccess(banque)),
-            catchError((err) => of(new SaveBanqueActionError(err)))
+              new SaveBanqueByEntrepriseActionSuccess(banque)),
+            catchError((err) => of(new SaveBanqueByEntrepriseActionError(err)))
           );
       })
     )

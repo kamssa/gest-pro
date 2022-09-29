@@ -7,7 +7,6 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
-import {DetailAchatTravaux} from '../model/DtailAchat';
 
 @Injectable({
   providedIn: 'root'

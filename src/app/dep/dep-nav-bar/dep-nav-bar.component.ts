@@ -7,6 +7,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DepService} from '../../service/dep.service';
 import {AddDepComponent} from '../add-dep/add-dep.component';
 import {FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dep-nav-bar',
@@ -18,11 +19,12 @@ personne: any;
 id: number;
 entreprise: any;
   form: FormGroup;
-  constructor(private store: Store<any>,
-              private authService: AuthService,
-              private helper: JwtHelperService,
-              public dialog: MatDialog,
-              private depService: DepService) { }
+  constructor(  private router: Router,
+                private store: Store<any>,
+                private authService: AuthService,
+                private helper: JwtHelperService,
+                public dialog: MatDialog,
+                private depService: DepService) { }
 
   ngOnInit(): void {
     const currentUser = this.authService.currentUserValue;
@@ -34,12 +36,10 @@ entreprise: any;
         if (this.personne.type === 'ENTREPRISE') {
           this.id = this.personne.id;
           this.entreprise = this.personne;
-          this.store.dispatch(new GetAllDepartementByEntrepriseAction(this.id));
 
         }else if (this.personne.type === 'EMPLOYE'){
           this.id = this.personne.departement.entreprise.id;
-          this.entreprise = this.personne.entreprise;
-          this.store.dispatch(new GetAllDepartementByEntrepriseAction(this.id));
+          this.entreprise = this.personne.departement.entreprise;
 
         }
       });
@@ -47,7 +47,15 @@ entreprise: any;
 
   }
 
-  onCreate() {
+
+  onSearch(dataForm: any) {
+/*
+    this.store.dispatch(new SearchDepartementAction(dataForm.keyword, this.entreprise.nom));
+*/
+
+  }
+
+  addDep() {
     this.depService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -60,27 +68,11 @@ entreprise: any;
 
     });
 
-  }
-  addColumn() {
 
   }
 
-  removeColumn() {
-
-  }
-
-  shuffle() {
-
-  }
-
-  onSearch(dataForm: any) {
-/*
-    this.store.dispatch(new SearchDepartementAction(dataForm.keyword, this.entreprise.nom));
-*/
-
-  }
-
-  addDep() {
-
+  openListDep() {
+    this.store.dispatch(new GetAllDepartementByEntrepriseAction(this.id));
+    this.router.navigate(['dep/listDepartement']);
   }
 }

@@ -13,14 +13,6 @@ import {catchError, map, tap} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DepService {
-  private depCreerSource = new Subject<Resultat<Departement>>();
-  private depModifSource = new Subject<Resultat<Departement>>();
-  private depFiltreSource = new Subject<string>();
-
-
-// observables streams
-  depCreer$ = this.depCreerSource.asObservable();
-  depModif$ = this.depModifSource.asObservable();
 
 
   constructor(private  http: HttpClient, private messageService: MessageService) {
@@ -50,7 +42,6 @@ export class DepService {
       .pipe(
         tap(res => {
           this.log(`dep ajoute =${res.body}`);
-          this.depCreer(res);
         }),
         catchError(this.handleError)
       );
@@ -62,7 +53,6 @@ export class DepService {
       .pipe(
         tap(res => {
           this.log(`dep modifié =${res.body}`);
-          this.depModif(res);
         }),
         catchError(this.handleError)
       );
@@ -96,17 +86,7 @@ export class DepService {
   populateForm(id) {
     this.form.patchValue(id);
   }
-  depCreer(res: Resultat<Departement>) {
-    this.depCreerSource.next(res);
-  }
 
-  depModif(res: Resultat<Departement>) {
-    this.depModifSource.next(res);
-  }
-
-  filtreDep(text: string) {
-    this.depFiltreSource.next(text);
-  }
   private log(message: string) {
     this.messageService.add('clientService: ' + message);
 
@@ -122,7 +102,7 @@ export class DepService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
+        `Serveur distant ne repond pas  ${error.status}, body was: `, error.error);
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));

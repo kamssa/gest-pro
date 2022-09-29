@@ -5,8 +5,10 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../environments/environment';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {Carburant} from '../model/carburant';
+import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
+import {Vehicule} from '../model/vehicule';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,7 @@ export class CarburantService {
     id: new FormControl(null),
     version: new FormControl(null),
     date: new FormControl('',[Validators.required] ),
+    nomChauffeur: new FormControl('',[Validators.required] ),
     prixUnitaire: new FormControl(''),
     quantite: new FormControl(''),
   });
@@ -30,24 +33,26 @@ export class CarburantService {
       id: null,
       version: null,
       date: '',
+      nomChauffeur: '',
       prixUnitaire: '',
       quantite: ''
     });
   }
   getCarburantByIdEntreprise(id: number): Observable<Resultat<Carburant[]>> {
+
     return this.http.get<Resultat<Carburant[]>>
-    (`${environment.apiUrl}/api/getVehiculeByidEntreprise/${id}`);
+    (`${environment.apiUrl}/api/getCarburantByEntreprise/${id}`);
 
   }
   getCarburantByVehiculeByEntreprise(id: number): Observable<Resultat<Carburant[]>> {
     return this.http.get<Resultat<Carburant[]>>
-    (`${environment.apiUrl}/api/getVehiculeByidEntreprise/${id}`);
+    (`${environment.apiUrl}/api/getCarburantByVehicule/${id}`);
 
   }
 
-  ajoutCarburatByVehicule(vehicule: Carburant): Observable<Resultat<Carburant>> {
-    return this.http.post<Resultat<Carburant>>(`${environment.apiUrl}/api/vehicule`,
-      vehicule)
+  ajoutCarburatByVehicule(carburant: Carburant): Observable<Resultat<Carburant>> {
+    return this.http.post<Resultat<Carburant>>(`${environment.apiUrl}/api/carburant`,
+      carburant)
       .pipe(
         tap(res => {
           this.log(`dep ajoute =${res.body}`);
@@ -56,9 +61,9 @@ export class CarburantService {
       );
 
   }
-  modifCarburantByVehicule(vehicule: Carburant): Observable<Resultat<Carburant>> {
-    return this.http.put<Resultat<Carburant>>(`${environment.apiUrl}/api/vehicule`,
-      vehicule)
+  modifCarburantByVehicule(carburant: Carburant): Observable<Resultat<Carburant>> {
+    return this.http.put<Resultat<Carburant>>(`${environment.apiUrl}/api/carburant`,
+      carburant)
       .pipe(
         tap(res => {
           this.log(`dep modifié =${res.body}`);
@@ -67,10 +72,16 @@ export class CarburantService {
       );
   }
 
+// recuperer achat par id travaux
+  getCarburantByDateVehicule(id: number, dateDebut: string, dateFin: string): Observable<Carburant[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<Carburant[]>>(
+      `${environment.apiUrl}/api/carburantDateParVehicule?IdVehicule=${id}&dateDebut=${dateDebut}&dateFin=${dateFin}`);
 
+  }
 
   supprimerCarburantByVehicule(id: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/api/vehicule/${id}`);
+    return this.http.delete(`${environment.apiUrl}/api/carburant/${id}`);
 
   }
   /*rechercheDepartementParMc(mc: string, nom: string): Observable<Array<Departement>> {

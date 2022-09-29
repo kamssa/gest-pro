@@ -1,1 +1,19 @@
-<p>add-staion-essence works!</p>
+<mat-toolbar>
+  <span>{{staionEssenceService.form.controls['id'].value?"Modifier la station essence":"Nouvelle station essencce"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<mat-card>
+  <mat-card-header></mat-card-header>
+  <form class="example-form" [formGroup]="staionEssenceService.form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <input matInput  placeholder="Nom de la station essence" formControlName="nom">
+    </mat-form-field>
+    <button type="submit" class="btn btn-primary">Valider</button>
+  </form>
+</mat-card>
+
+
+
+
+

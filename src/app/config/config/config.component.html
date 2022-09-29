@@ -28,10 +28,23 @@
               </mat-accordion>
             </div>
             <div class="alert alert-info">
-              <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <i class="material-icons">close</i>
-              </button>
-              <span>This is a notification with close button.</span>
+                <mat-accordion>
+                  <mat-expansion-panel (opened)="panelOpenState = true"
+                                       (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <span>configuration des stations Essence </span>
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        {{panelOpenState ? 'Fermer' : 'Ouvrir'}}
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button mat-raised-button (click)="addStation()"> <mat-icon>add</mat-icon>Station</button>
+                    <br>
+                    <app-staion-essence></app-staion-essence>
+                  </mat-expansion-panel>
+                </mat-accordion>
+
             </div>
             <div class="alert alert-info alert-with-icon" data-notify="container">
               <i class="material-icons" data-notify="icon">add_alert</i>
@@ -55,7 +68,7 @@
                 <i class="material-icons">close</i>
               </button>
               <span>
-                              <b> Info - </b> This is a regular notification made with ".alert-info"</span>
+                <b> Info - </b> This is a regular notification made with ".alert-info"</span>
             </div>
             <div class="alert alert-success">
               <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">

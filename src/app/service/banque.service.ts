@@ -1,29 +1,20 @@
 import { Injectable } from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {Resultat} from '../model/resultat';
 import {Employe} from '../model/Employe';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {environment} from '../../environments/environment';
-import {Loyer} from '../model/Loyer';
-import {Banque} from '../model/Banque';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Banque} from '../model/Banque';
+import {Departement} from '../model/Departement';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BanqueService {
-  private travauxCreerSource = new Subject<Resultat<Banque>>();
-  private travauxModifSource = new Subject<Resultat<Banque>>();
-  private travauxFiltreSource = new Subject<string>();
-  private travauxSupprimeSource = new Subject<Resultat<boolean>>();
 
-
-// observables streams
-  travauxCreer$ = this.travauxCreerSource.asObservable();
-  travauxModif$ = this.travauxModifSource.asObservable();
-  travauxFiltre$ = this.travauxFiltreSource.asObservable();
-  travauxSupprime$ = this.travauxSupprimeSource.asObservable();
 
   form: FormGroup = new FormGroup({
     id: new FormControl(null),
@@ -43,19 +34,23 @@ export class BanqueService {
   populateForm(id) {
     this.form.patchValue(id);
   }
-  getAllBanque(): Observable<Resultat<Banque[]>> {
-    return this.http.get<Resultat<Banque[]>>(`${environment.apiUrl}/api/banque`);
+
+  getAllBanqueByIdEntreprise(id: number | Resultat<Banque[]> | string | Banque | Resultat<Banque>): Observable<Resultat<Banque[]>> {
+    return this.http.get<Resultat<Banque[]>>
+    (`${environment.apiUrl}/api/getBanqueByIdEntreprise/${id}`);
+
   }
 
-    ajoutBanque(banque: number | Resultat<Banque[]> | string | Banque | Resultat<Banque>): Observable<Resultat<Banque>> {
-    console.log('methode du service qui ajoute une banque', banque);
-    return this.http.post<Resultat<Banque>>(`${environment.apiUrl}/api/banque`, banque);
+  ajoutBanque(banque: number | Resultat<Banque[]> | string | Banque | Resultat<Banque>): Observable<Resultat<Banque>> {
+    return this.http.post<Resultat<Banque>>(`${environment.apiUrl}/api/banque`,
+      banque);
+
   }
-  modifEmploye(banque: Employe): Observable<Resultat<Banque>> {
+  modifEmploye(banque: Banque): Observable<Resultat<Banque>> {
     console.log('methode du service qui modifier Employe', banque);
     return this.http.put<Resultat<Banque>>(`${environment.apiUrl}/api/banque`, banque);
   }
-  getBanqueById(id: Banque): Observable<Resultat<Employe>> {
+  getBanqueById(id: number): Observable<Resultat<Employe>> {
     return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/banque/${id}`);
   }
   supprimerBanque(id: number): Observable<any> {
@@ -63,22 +58,6 @@ export class BanqueService {
 
   }
 
-  travauxCreer(res: Resultat<Banque>) {
-    console.log('Employe a ete  creer correctement essaie source');
-    this.travauxCreerSource.next(res);
-  }
-
-  abonnesModif(res: Resultat<Banque>) {
-    this.travauxModifSource.next(res);
-  }
-
-  filtreTravaux(text: string) {
-    this.travauxFiltreSource.next(text);
-  }
-
-  travauxsupprime(res: Resultat<boolean>) {
-    this.travauxSupprimeSource.next(res);
-  }
 
   private log(message: string) {
     this.messageService.add('BanqueService: ' + message);
@@ -86,20 +65,19 @@ export class BanqueService {
   }
 
   ///////////////////////////////////////////
+  ///////////////////////////////////////////
   // recuper les erreurs
-
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-
-      console.error(error);
-
-
-      this.log(`${operation} non disponible: ${error.message}`);
-
-
-      return of(result as T);
-    };
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 }

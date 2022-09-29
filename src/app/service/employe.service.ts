@@ -7,22 +7,13 @@ import {environment} from '../../environments/environment';
 import {Employe} from '../model/Employe';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError, map, tap} from 'rxjs/operators';
+import {Projet} from '../model/projet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService {
-  private employeCreerSource = new Subject<Resultat<Employe>>();
-  private employeModifSource = new Subject<Resultat<Employe>>();
-  private employeFiltreSource = new Subject<string>();
-  private employeSupprimeSource = new Subject<Resultat<boolean>>();
 
-
-// observables streams
-  employeCreer$ = this.employeCreerSource.asObservable();
-  employeModif$ = this.employeModifSource.asObservable();
-  employeFiltre$ = this.employeFiltreSource.asObservable();
-  employeSupprime$ = this.employeSupprimeSource.asObservable();
 
   constructor(private  http: HttpClient, private messageService: MessageService) {
   }
@@ -35,7 +26,8 @@ export class EmployeService {
     nom: new FormControl('', [Validators.required]),
     prenom: new FormControl('', [Validators.required]),
     fonction: new FormControl(''),
-    activated: new FormControl(''),
+    suspendu: new FormControl(''),
+    actevated: new FormControl(''),
   });
   initializeFormGroup() {
     this.form.setValue({
@@ -47,17 +39,19 @@ export class EmployeService {
       telephone: '',
       password: '',
       fonction: '',
-      activated: '',
+      suspendu: '',
+      actevated: '',
 
     });
   }
   populateForm(id) {
     this.form.patchValue(id);
   }
-  getAllEmploye(): Observable<Resultat<Employe[]>> {
-    return this.http.get<Resultat<Employe[]>>(`${environment.apiUrl}/api/employe`);
-  }
 
+  getEmployeByIdEntreprise(id: number): Observable<Resultat<Employe[]>> {
+    return this.http.get<Resultat<Employe[]>>
+    (`${environment.apiUrl}/api/listEmployeParEntreprise/${id}`);
+  }
   ajoutEmploye(employe: Employe): Observable<Resultat<Employe>> {
     console.log('methode du service qui ajoute un employe', employe);
     return this.http.post<Resultat<Employe>>
@@ -65,23 +59,37 @@ export class EmployeService {
       employe).pipe(
       tap(res => {
         this.log(`Client crée =${res.body}`);
-        this.employeCreer(res);
       }),
       catchError(this.handleError<Resultat<Employe>>('ajoutClient'))
     );
   }
   modifEmploye(employe: Employe): Observable<Resultat<Employe>> {
-    console.log('methode du service qui modifie un client', employe);
+    console.log('methode du service qui modifie un employe', employe);
     return this.http.put<Resultat<Employe>>
     (`${environment.apiUrl}/api/employe`,
       employe).pipe(
       tap(res => {
         this.log(`Client modifié =${res.body}`);
-        this.employeModif(res);
       }),
       catchError(this.handleError<Resultat<Employe>>('modifClient'))
     );
   }
+  /*public setEmployeActivated(employe: Employe): Observable<Resultat<Employe>>{
+    console.log(employe);
+    // @ts-ignore
+    return this.http.put<Resultat<Employe>>(`${environment.apiUrl}/api/employe/${employe}`);
+  }*/
+
+  rechercheEmployeParMc(mc: string, nom: string): Observable<Array<Employe>> {
+    return this.http.get<Resultat<Array<Employe>>>(`${environment.apiUrl}/api/rechercheEmployemc/?mc=${mc}&nom=${nom}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Array<Employe>>('rechercheTravauxParMc'))
+      );
+
+  }
+  // supp
   getEmployeById(id: number): Observable<Resultat<Employe>> {
     return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/employe/${id}`);
   }
@@ -89,27 +97,12 @@ export class EmployeService {
     return this.http.delete<Resultat<Employe>>(`${environment.apiUrl}/api/employe/${id}`);
   }
 
-  getEmployeByIdEntreprise(id: number): Observable<Resultat<Employe[]>> {
-    return this.http.get<Resultat<Employe[]>>(`${environment.apiUrl}/api/listEmployeParEntreprise/${id}`);
-  }
+
   addRoleToEmploye(idEmploye: number, idRole: number): Observable<Resultat<Employe>> {
-    console.log(idEmploye);
-    console.log(idRole);
+
     return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/addRoleToEmploye/?idEmploye=${idEmploye}&idRole=${idRole}`);
   }
 
-
-  employeCreer(res: Resultat<Employe>) {
-    console.log('Client a ete  creer correctement essaie source');
-    this.employeCreerSource.next(res);
-  }
-  employeModif(res: Resultat<Employe>) {
-    this.employeModifSource.next(res);
-  }
-
-  filtreEmploye(text: string) {
-    this.employeFiltreSource.next(text);
-  }
   private log(message: string) {
     this.messageService.add('employeService: ' + message);
 

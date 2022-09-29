@@ -214,4 +214,8 @@ export class AdminLayoutComponent implements OnInit {
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;
     }
   }
+
+  abonnement() {
+
+  }
 }

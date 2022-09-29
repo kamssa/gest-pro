@@ -19,7 +19,7 @@ export class Employe extends Personne{
               public adresse ?: Adresse,
               public  type?: string,
               public roles?: [],
-              public activated?: boolean,
+
               public  salaire?: Salaire) {
     super(id, version, nom, prenom, email, telephone, password, fonction, nomComplet, suspendu, actevated,  departement, adresse, type, roles);
   }

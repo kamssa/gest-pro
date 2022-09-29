@@ -93,7 +93,7 @@ export class SaveDepartementActionSuccess implements Action{
 
 export class SaveDepartementActionError implements Action{
   type: DepartementsActionsTypes = DepartementsActionsTypes.SAVE_DEPARTEMENTS_ERROR;
-  constructor(public payload: Resultat<Departement>) {
+  constructor(public payload: string) {
   }
 }
 /* Get Selected Products Actions*/

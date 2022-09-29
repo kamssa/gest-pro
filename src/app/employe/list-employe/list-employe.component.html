@@ -1,87 +1,71 @@
-<div class="main-content">
-  <div class="row">
-    <div class="col-md-8">
-
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Gestion des profils</a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-
-          </ul>
-          <form class="navbar-form">
-            <div class="input-group no-border">
-              <input type="text" value="" class="form-control" placeholder="Recherche...">
-              <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
-                <i class="material-icons">search</i>
-                <div class="ripple-container"></div>
-              </button>
-            </div>
-          </form>
-        </div>
-      </nav>
-    </div>
+<div *ngIf="state">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrer</mat-label>
+      <input matInput (keyup)="applyFilter($event)"  #input>
+    </mat-form-field>
   </div>
   <br>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-8" *ngIf="erreur">
-        <div class="search-div">
-          <button mat-raised-button  (click)="onCreate()">
-            <mat-icon>add</mat-icon>Employé
-          </button>
-          <mat-form-field appearance="standard">
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)"  #input>
-          </mat-form-field>
-        </div>
-        <div class="mat-elevation-z8">
-          <mat-table [dataSource]="listData"  matSort>
-            <ng-container matColumnDef="nomComplet">
-              <mat-header-cell *matHeaderCellDef  mat-sort-header>Nom et prenom</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element?.nomComplet}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="service">
-              <mat-header-cell *matHeaderCellDef  mat-sort-header>Departement</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element?.departement?.libelle}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let row">
-                <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
-                <button mat-icon-button color="warn" (click)="onPermit(row)"><mat-icon>launch</mat-icon></button>
+  <mat-table [dataSource]="listData"  matSort>
+    <ng-container matColumnDef="nomComplet">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Nom et prénom</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.nomComplet}}</mat-cell>
+    </ng-container>
 
-                <button mat-icon-button color="warn" (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
-              </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="loading">
-              <mat-footer-cell *matFooterCellDef colspan="6">
-                Patientez svp ! Chargement des données...
-              </mat-footer-cell>
-            </ng-container>
-            <ng-container matColumnDef="noData">
-              <mat-footer-cell *matFooterCellDef colspan="6">
-                Aucune donnée enregistrée.
-              </mat-footer-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
-            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
-          </mat-table>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                         showFirstLastButtons
-                         aria-label="Select page of periodic elements">
-          </mat-paginator>
-        </div>
-      </div>
-      <div *ngIf="error" class="btn btn-danger">{{error}}</div>
+    <ng-container matColumnDef="service">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Departement</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.departement.libelle}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="activer">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Activer
 
-    </div>
-  </div>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [checked]="row.actevated" (change)="onEmployeToggleActiver($event, row)"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="suspendu">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header>Suspendu</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [checked]="row.suspendu" (change)="onEmployeToggleSuspendu($event, row)"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row"  >
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item   (click)="onEdit(row)">Modifier</button>
+          <button mat-menu-item   (click)="onPermit(row)">Permission</button>
+          <button mat-menu-item    (click)="onDelete(row)">Supprimer</button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Patientez svp ! Chargement des données...
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Aucune donnée enregistrée.
+      </mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
+
+    </mat-footer-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
 </div>

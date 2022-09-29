@@ -75,7 +75,7 @@ export class VehiculeEffects {
       })
     )
   );
-  deleteDepartementsByEntrepriseEffect: Observable<VehiculeActions> = createEffect(
+  deleteVehiculeByEntrepriseEffect: Observable<VehiculeActions> = createEffect(
     () => this.effectActions.pipe(
       ofType(VehiculesActionsTypes.DELETE_VEHICULES),
       mergeMap((action: VehiculeActions) => {

@@ -15,55 +15,55 @@ export interface BanqueState{
   banques: Banque[];
   errorMessage: string;
   dataState: BanqueStateEnum;
-  currentDep: Banque;
+  currentBank: Banque;
 }
 
 const initState: BanqueState = {
   banques: [],
   errorMessage: '',
   dataState: BanqueStateEnum.INITIAL,
-  currentDep: null
+  currentBank: null
 };
 
 export function banqueReducer(state= initState, action: Action): BanqueState {
   switch (action.type) {
-    case BanqueActionsTypes.GET_ALL_BANQUE:
+    case BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE:
       return {...state, dataState: BanqueStateEnum.LOADING };
-    case BanqueActionsTypes.GET_ALL_BANQUE_SUCCESS:
+    case BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE_SUCCESS:
       return {...state, dataState: BanqueStateEnum.LOADED, banques: (action as BanqueActions).payload['body']};
-    case BanqueActionsTypes.GET_ALL_BANQUE_ERROR:
+    case BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE_ERROR:
       return {...state, dataState: BanqueStateEnum.ERROR, errorMessage: (action as BanqueActions).payload['message']};
 
     /* Save  Departement*/
-    case BanqueActionsTypes.SAVE_BANQUE:
+    case BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE:
       return {...state, dataState: BanqueStateEnum.LOADING };
-    case BanqueActionsTypes.SAVE_BANQUE_SUCCESS:
-      const deps: Banque[] = [...state.banques];
-      deps.push((action as BanqueActions).payload['body']);
-      return {...state, dataState: BanqueStateEnum.LOADED, banques: deps};
-    case BanqueActionsTypes.SAVE_BANQUE_ERROR:
+    case BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE_SUCCESS:
+      const bank: Banque[] = [...state.banques];
+      bank.push((action as BanqueActions).payload['body']);
+      return {...state, dataState: BanqueStateEnum.LOADED, banques: bank};
+    case BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE_ERROR:
       return {...state, dataState: BanqueStateEnum.ERROR, errorMessage: (action as BanqueActions).payload['messages']};
 
     /* Delete Products*/
-    case BanqueActionsTypes.DELETE_BANQUE:
+    case BanqueActionsTypes.DELETE_BANQUEBYENTREPRISE:
       return {...state, dataState: BanqueStateEnum.LOADING};
-    case BanqueActionsTypes.DELETE_BANQUE_SUCCESS:
+    case BanqueActionsTypes.DELETE_BANQUEBYENTREPRISE_SUCCESS:
       const dep: Banque = (action as BanqueActions).payload['body'];
       const index = state.banques.indexOf(dep);
       const depList = [...state.banques];
       depList.splice(index, 1);
       return {...state, dataState: BanqueStateEnum.LOADED, banques: depList};
-    case BanqueActionsTypes.DELETE_BANQUE_ERROR:
+    case BanqueActionsTypes.DELETE_BANQUEBYENTREPRISE_ERROR:
       return {...state, dataState: BanqueStateEnum.ERROR, errorMessage: (action as BanqueActions).payload['']};
 
     /* Update  Departement*/
-    case BanqueActionsTypes.UPDATE_BANQUE:
+    case BanqueActionsTypes.UPDATE_BANQUEBYENTREPRISE:
       return {...state, dataState: BanqueStateEnum.LOADING };
-    case BanqueActionsTypes.UPDATE_BANQUE_SUCCESS:
+    case BanqueActionsTypes.UPDATE_BANQUEBYENTREPRISE_SUCCESS:
       const updateDepartement: Banque = (action as BanqueActions).payload['body'];
       const updatedDepartements: Banque[] = state.banques.map(d => (d.id === updateDepartement.id) ? updateDepartement :d);
       return {...state, dataState: BanqueStateEnum.LOADED, banques: updatedDepartements};
-    case BanqueActionsTypes.UPDATE_BANQUE_ERROR:
+    case BanqueActionsTypes.UPDATE_BANQUEBYENTREPRISE_ERROR:
       return {...state, dataState: BanqueStateEnum.ERROR, errorMessage: (action as BanqueActions).payload['']};
       /* Search Products*/
    /* case DepartementsActionsTypes.SEARCH_DEPARTEMENTS:

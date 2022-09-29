@@ -29,8 +29,8 @@ export class StationEssenceEffects {
       mergeMap((action: StationEssenceActions) => {
         return this.staionEssenceService.getStationEssenceByIdEntreprise(action.payload)
           .pipe(
-            map((vehicules) =>
-              new GetAllStationEssenceActionSuccess(vehicules)),
+            map((stationEssence) =>
+              new GetAllStationEssenceActionSuccess(stationEssence)),
             catchError((err) => of(new GetAllStationEssenceActionError(err)))
           );
       })
@@ -43,8 +43,8 @@ export class StationEssenceEffects {
       mergeMap((action: StationEssenceActions) => {
         return this.staionEssenceService.ajoutStationEssence(action.payload)
           .pipe(
-            map((vehicule) =>
-              new SaveStationEssenceActionSuccess(vehicule)),
+            map((stationEssence) =>
+              new SaveStationEssenceActionSuccess(stationEssence)),
             catchError((err) => of(new SaveStationEssenceActionError(err.message)))
           );
       })
@@ -57,8 +57,8 @@ export class StationEssenceEffects {
       mergeMap((action: StationEssenceActions) => {
         return this.staionEssenceService.modifStationEssence(action.payload)
           .pipe(
-            map((vehicule) =>
-              new UpdateStationEssenceActionSuccess(vehicule)),
+            map((stationEssence) =>
+              new UpdateStationEssenceActionSuccess(stationEssence)),
             catchError((err) => of(new UpdateStationEssenceActionError(err.message)))
           );
       })

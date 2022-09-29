@@ -34,12 +34,7 @@ export function departementReducer(state= initState, action: Action): Departemen
     case DepartementsActionsTypes.GET_ALL_DEPARTEMENTSBYENTREPRISE_ERROR:
       return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};
     /* New  Departement*/
-   /* case DepartementsActionsTypes.NEW_DEPARTEMENTS:
-      return {...state, dataState: DepartementStateEnum.LOADING };
-    case DepartementsActionsTypes. NEW_DEPARTEMENTS_SUCCESS:
-      return {...state, dataState: DepartementStateEnum.NEW};
-    case DepartementsActionsTypes.NEW_DEPARTEMENTS_ERROR:
-      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};*/
+
     /* Save  Departement*/
     case DepartementsActionsTypes.SAVE_DEPARTEMENTS:
       return {...state, dataState: DepartementStateEnum.LOADING };
@@ -48,7 +43,7 @@ export function departementReducer(state= initState, action: Action): Departemen
       deps.push((action as DepartementActions).payload['body']);
       return {...state, dataState: DepartementStateEnum.LOADED, departements: deps};
     case DepartementsActionsTypes.SAVE_DEPARTEMENTS_ERROR:
-      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload['messages']};
+      return {...state, dataState: DepartementStateEnum.ERROR, errorMessage: (action as DepartementActions).payload};
       /* Get Selected Products*/
     case DepartementsActionsTypes.GET_SELECTED_DEPARTEMENTS:
       return {...state, dataState: DepartementStateEnum.LOADING };

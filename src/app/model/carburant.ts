@@ -8,6 +8,7 @@ export class Carburant {
     public id?: number,
     public version?: number,
     public date?: Date,
+    public nomChauffeur?: string,
     public   prixUnitaire?: number,
     public  quantite?: boolean,
     public vehicule?: Vehicule,

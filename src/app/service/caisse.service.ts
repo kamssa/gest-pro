@@ -4,10 +4,8 @@ import {Resultat} from '../model/resultat';
 import {Caisse} from '../model/Caisse';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {catchError, map, tap} from 'rxjs/operators';
-import {Categorie} from '../model/Categorie';
 
 @Injectable({
   providedIn: 'root'

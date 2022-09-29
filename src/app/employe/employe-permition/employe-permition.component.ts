@@ -56,16 +56,11 @@ export class EmployePermitionComponent implements OnInit {
       console.log(decoded.sub);
       this.authService.getPersonneById(decoded.sub).subscribe(result => {
         this.personne = result.body;
-        console.log(this.personne);
         this.roleService.getAllRole().subscribe(res => {
-          console.log(res);
           this.roles = res.body;
-          console.log(this.roles);
         }, error => {
-          console.log(error.message);
         });
       }, error => {
-        console.log(error.message);
       } );
 
     }
@@ -77,10 +72,9 @@ export class EmployePermitionComponent implements OnInit {
 
     if (this.employeService.form.get('id').value){
    this.employeService.getEmployeById(this.employeService.form.get('id').value)
-  .subscribe(data =>{
+  .subscribe(data => {
     if(data.status === 0){
       this.departement = data.body.departement;
-      console.log('getemploye ', this.departement);
       this.employe = {
         id: data.body.id,
         version: data.body.version,
@@ -88,7 +82,7 @@ export class EmployePermitionComponent implements OnInit {
         prenom: data.body.prenom,
         email: data.body.email,
         password: data.body.password,
-        activated: data.body.activated,
+        actevated: data.body.actevated,
         departement: this.departement,
         type:'EMPLOYE'
       };

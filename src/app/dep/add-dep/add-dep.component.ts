@@ -43,6 +43,10 @@ export class AddDepComponent implements OnInit {
         description: this.departementService.form.value.description,
         entreprise: this.data['entreprise']
       };
+      console.log(this.departement);
+      console.log(this.data['entreprise']);
+
+
        this.store.dispatch(new SaveDepartementAction(this.departement));
        this.notificationService.success('Département ajouté avec succès');
        this.onClose();

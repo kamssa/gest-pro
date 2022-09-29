@@ -37,7 +37,7 @@ export class AddEmployeComponent implements OnInit {
   departements: Departement[];
   departement: Departement;
   userRoles: string [] = [];
-
+  hide: boolean;
   constructor(public fb: FormBuilder,
               public  employeService: EmployeService,
               public authService: AuthService,
@@ -67,13 +67,13 @@ export class AddEmployeComponent implements OnInit {
         });
         if (this.userRoles.includes('ROLE_ENTREPRISE')){
           this.departementService.getDepByIdEntreprise(this.personne.id).subscribe(res => {
-            console.log(res);
+            console.log(res.body);
             this.departements = res.body;
           }, error => {
           });
-        }else if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
+        }else if (this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
           this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id).subscribe(res => {
-            console.log(res);
+            console.log(res.body);
             this.departements = res.body;
             console.log(this.departements);
           }, error => {
@@ -95,13 +95,14 @@ export class AddEmployeComponent implements OnInit {
   onSubmit(): void{
 
     if (!this.employeService.form.get('id').value){
+      this.hide = false;
       this.employe = {
         nom: this.employeService.form.value.nom,
         prenom: this.employeService.form.value.prenom,
         email: this.employeService.form.value.email,
         telephone: this.employeService.form.value.telephone,
         password: this.employeService.form.value.password,
-        activated: this.employeService.form.value.activated,
+        actevated: this.employeService.form.value.actevated,
         departement: this.departement,
         type:'EMPLOYE'
       };
@@ -114,7 +115,8 @@ export class AddEmployeComponent implements OnInit {
         }
       });
     } else {
-      console.log('retour modif', this.employeService.form.value);
+      this.hide = true;
+
       this.employeService.getEmployeById(this.employeService.form.value.id)
         .subscribe(data => {
           console.log(data.body);
@@ -124,11 +126,10 @@ export class AddEmployeComponent implements OnInit {
               version:  this.employeService.form.value.version,
               email: this.employeService.form.value.email,
               telephone: data.body.telephone,
-              password: '',
               nom: this.employeService.form.value.nom,
               prenom: this.employeService.form.value.prenom,
               fonction: this.employeService.form.value.fonction,
-              activated: this.employeService.form.value.activated,
+              actevated: this.employeService.form.value.actevated,
               departement: data.body.departement,
               type:'EMPLOYE'
             };
@@ -143,7 +144,7 @@ export class AddEmployeComponent implements OnInit {
               email: this.employeService.form.value.email,
               telephone: data.body.telephone,
               password: '',
-              activated: this.employeService.form.value.activated,
+              actevated: this.employeService.form.value.actevated,
               departement: data.body.departement,
               type:'EMPLOYE'
             };

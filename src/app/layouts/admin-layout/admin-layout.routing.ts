@@ -34,32 +34,50 @@ import {RouteGuardService} from '../../helper/route-guard.service';
 import {ConfigComponent} from '../../config/config/config.component';
 import {FactureComponent} from '../../facture/facture/facture.component';
 import {VehiculeComponent} from '../../vehicule/vehicule/vehicule.component';
-import {FournisseurComponent} from '../../fournisseur/fournisseur/fournisseur.component';
-import {ListVehiculeComponent} from '../../vehicule/list-vehicule/list-vehicule.component';
-import {CarburantComponent} from '../../comptabilite/carburant/carburant.component';
-import {AppVehiculeComponent} from '../../vehicule/app-vehicule/app-vehicule.component';
 import {LayoutsVehiculeComponent} from '../../vehicule/layouts-vehicule/layouts-vehicule.component';
-import {ListCarburantComponent} from '../../comptabilite/carburant/list-carburant/list-carburant.component';
-import {MissionComponent} from '../../comptabilite/mission/mission.component';
-import {PrevisionTresorerieComponent} from '../../comptabilite/prevision-tresorerie/prevision-tresorerie.component';
 import {ListTresorerieComponent} from '../../comptabilite/prevision-tresorerie/list-tresorerie/list-tresorerie.component';
 import {ListMissionComponent} from '../../comptabilite/mission/list-mission/list-mission.component';
+import {ModifPasswordComponent} from '../../modif-password/modif-password.component';
+import {LayoutEmployeComponent} from '../../employe/layout-employe/layout-employe.component';
+import {EntreEmailComponent} from '../../modif-password/entre-email/entre-email.component';
+import {ListCarburantComponent} from '../../comptabilite/carburant/list-carburant/list-carburant.component';
+import {CarburantLayoutComponent} from '../../comptabilite/carburant/carburant-layout/carburant-layout.component';
+import {CarburantComponent} from '../../comptabilite/carburant/carburant.component';
+import {LayoutFourniseurComponent} from '../../comptabilite/fournisseur/layout-fourniseur/layout-fourniseur.component';
+import {LayoutTresorerieComponent} from '../../comptabilite/prevision-tresorerie/layout-tresorerie/layout-tresorerie.component';
+import {LayoutMissionComponent} from '../../comptabilite/mission/layout-mission/layout-mission.component';
+import {FournisseurComponent} from '../../comptabilite/fournisseur/fournisseur.component';
+import {CarburantParVehiculeComponent} from '../../comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
+import {EmployeComponent} from '../../employe/employe/employe.component';
 
 
 export const AdminLayoutRoutes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'user-profile',   component: ListEmployeComponent },
   { path: 'config',   component: ConfigComponent },
-  { path: 'dep' ,
-    canActivate: [RouteGuardService],
-    component: DepartementComponent},
   { path: 'facture' ,
     canActivate: [RouteGuardService],
     component: FactureComponent},
+  { path: 'modifPassword' ,
+    canActivate: [RouteGuardService],
+    component: ModifPasswordComponent},
+  { path: 'entreEmail' ,
+    canActivate: [RouteGuardService],
+    component: EntreEmailComponent},
   { path: 'fournisseur' ,
     canActivate: [RouteGuardService],
-    component: FournisseurComponent},
+    component: LayoutFourniseurComponent,
+    children: [
+      {
+        path: 'listFournisseur',
+        component: FournisseurComponent,
+      },
+      {
+        path: 'listCarburant',
+        component: CarburantComponent,
+      },
+
+    ]},
   { path: 'vehicule' ,
     canActivate: [RouteGuardService],
     component: LayoutsVehiculeComponent,
@@ -68,25 +86,44 @@ export const AdminLayoutRoutes: Routes = [
       path: 'listVehicule',
       component: VehiculeComponent,
     },
+      {
+        path: 'listCarburant',
+        component: CarburantComponent,
+      },
+      {
+        path: 'listCarburantParVehicule',
+        component: CarburantParVehiculeComponent
+      },
 
   ]},
   { path: 'carburant' ,
     canActivate: [RouteGuardService],
-    component: CarburantComponent,
+    component: CarburantLayoutComponent,
     children: [
+      {
+        path: 'listCarburant',
+        component: CarburantComponent,
+      },
       {
         path: 'listCarburant',
         component: ListCarburantComponent,
       },
+
+    ]},
+  { path: 'userProfile' ,
+    canActivate: [RouteGuardService],
+    component: LayoutEmployeComponent,
+    children: [
       {
-        path: 'listVehiculeCarburant',
-        component: VehiculeComponent,
+        path: 'listEmploye',
+        component: EmployeComponent,
       },
 
     ]},
+
   { path: 'tresorerie' ,
     canActivate: [RouteGuardService],
-    component: PrevisionTresorerieComponent,
+    component: LayoutTresorerieComponent,
     children: [
       {
         path: 'listTresorerie',
@@ -96,7 +133,7 @@ export const AdminLayoutRoutes: Routes = [
     ]},
   { path: 'mission' ,
     canActivate: [RouteGuardService],
-    component: MissionComponent,
+    component: LayoutMissionComponent,
     children: [
       {
         path: 'listMission',

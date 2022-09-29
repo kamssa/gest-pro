@@ -1,1 +1,16 @@
-<p>staion-essence works!</p>
+<ng-container *ngIf="stationServiceState$ | async as state" [ngSwitch]="state.dataState">
+  <ng-container *ngSwitchCase="stationEssenceStateEnum.INITIAL">
+    <div class="p-2"> Initialisation</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="stationEssenceStateEnum.LOADING">
+    <div class="p-2"> Chargement...</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="stationEssenceStateEnum.ERROR">
+    <div class="p-2 text-danger"> {{state.errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="stationEssenceStateEnum.LOADED" class="p-4">
+    <app-list-staion-essence [state]="state"></app-list-staion-essence>
+  </ng-container>
+</ng-container>
+
+

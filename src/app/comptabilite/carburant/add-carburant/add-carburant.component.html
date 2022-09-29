@@ -1,17 +1,23 @@
 <div class="addV">
   <mat-toolbar>
-    <span>{{carburantService.form.controls['id'].value?"Modifier le carburant":"Ajouter un nouveau carburant"}}</span>
+    <span>{{carburantService.form.controls['id'].value?"Modifier le carburant":"Nouveau carburant"}}</span>
     <span class="fill-remaining-space"></span>
     <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
   </mat-toolbar>
   <br>
   <form [formGroup]="carburantService.form" class="normal-form" (submit)="onSubmit()">
-    <mat-grid-list cols="1" rowHeight="200px">
+    <mat-grid-list cols="1">
       <mat-grid-tile>
         <div class="controles-container">
           <input type="hidden" formControlName="id">
+          <mat-form-field class="example-full-width">
+            <input #dat matInput [matDatepicker]="picker" placeholder="Date" formControlName="date" id="date"
+                   readonly (click)="picker.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
           <mat-form-field>
-            <input  matInput formControlName="date"  placeholder="Date">
+            <input matInput formControlName="nomChauffeur"  placeholder="Nom du conducteur">
             <mat-error>Ce champ est obligatoire.</mat-error>
           </mat-form-field>
           <mat-form-field>
@@ -21,7 +27,16 @@
           <mat-form-field>
             <input matInput formControlName="quantite"  placeholder="Quantite">
           </mat-form-field>
-
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Station Essence</mat-label>
+            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                              (optionSelected)="OnHumanSelected($event.option)">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.nom}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
       </mat-grid-tile>
       <mat-grid-tile>

@@ -81,12 +81,6 @@ export class EditAutredepenseTravauxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.employeService.getAllEmploye().subscribe(res => {
-      console.log(res);
-      this.employes = res.body;
-    }, error => {
-      console.log(error.message);
-    });
     if (localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');
       const decoded = this.helper.decodeToken(token);

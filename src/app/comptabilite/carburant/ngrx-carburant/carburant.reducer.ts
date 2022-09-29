@@ -27,14 +27,23 @@ const initState: CarburantState = {
 
 export function carburantReducer(state= initState, action: Action): CarburantState {
   switch (action.type) {
-    case CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE:
+    /*  GetAll carburant by entreprise */
+    case CarburantsActionsTypes.GET_ALL_CARUBURANTS:
       return {...state, dataState: CarburantStateEnum.LOADING };
-    case CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE_SUCCESS:
+    case CarburantsActionsTypes.GET_ALL_CARUBURANTS_SUCCESS:
       return {...state, dataState: CarburantStateEnum.LOADED, carburants: (action as CarburantActions).payload['body']};
-    case CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE_ERROR:
+    case CarburantsActionsTypes.GET_ALL_CARUBURANTS_ERROR:
       return {...state, dataState: CarburantStateEnum.ERROR, errorMessage: (action as CarburantActions).payload};
 
-    /* Save  Departement*/
+    /*  GetAll carburant by vehicule */
+    case CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE:
+       return {...state, dataState: CarburantStateEnum.LOADING };
+     case CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE_SUCCESS:
+       return {...state, dataState: CarburantStateEnum.LOADED, carburants: (action as CarburantActions).payload['body']};
+     case CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE_ERROR:
+       return {...state, dataState: CarburantStateEnum.ERROR, errorMessage: (action as CarburantActions).payload};
+
+     /* Save  carburant*/
     case CarburantsActionsTypes.SAVE_CARUBURANTS:
       return {...state, dataState: CarburantStateEnum.LOADING };
     case CarburantsActionsTypes.SAVE_CARUBURANTS_SUCCESS:

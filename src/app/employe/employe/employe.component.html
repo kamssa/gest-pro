@@ -1,0 +1,14 @@
+<ng-container *ngIf="employeState$ | async as state" [ngSwitch]="state.dataState">
+  <ng-container *ngSwitchCase="employeStateEnum.INITIAL">
+    <div class="p-2"> Initialisation</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="employeStateEnum.LOADING">
+    <div class="p-2"> Chargement...</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="employeStateEnum.ERROR">
+    <div class="p-2 text-danger"> {{state.errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="employeStateEnum.LOADED" class="p-4">
+    <app-list-employe [state]="state"></app-list-employe>
+  </ng-container>
+</ng-container>

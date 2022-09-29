@@ -5,32 +5,53 @@ import {Observable, of} from 'rxjs';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {
   CarburantActions,
-  CarburantsActionsTypes, DeleteCarburantsActionError, DeleteCarburantsActionSuccess,
-  GetAllCarburantsByEntrepriseActionSuccess, SaveCarburantsActionError,
-  SaveCarburantsActionSuccess, UpdateCarburantsActionError, UpdateCarburantsActionSuccess
+  CarburantsActionsTypes,
+  DeleteCarburantsActionError,
+  DeleteCarburantsActionSuccess, GetAllCarburantsActionError, GetAllCarburantsActionSuccess,
+  GetAllCarburantsByVehiculeActionError,
+  GetAllCarburantsByVehiculeActionSuccess,
+  SaveCarburantsActionError,
+  SaveCarburantsActionSuccess,
+  UpdateCarburantsActionError,
+  UpdateCarburantsActionSuccess
 } from './carburant.actions';
 import {CarburantService} from '../../../service/carburant.service';
-import {GetAllVehiculeByEntrepriseActionError} from '../../../vehicule/ngrx-vehicule/vehicule.actions';
 
 
 @Injectable()
-export class DepartementEffects {
+export class CarburantEffects {
   id: number;
   personne: any;
   constructor(private carburantService: CarburantService,
               private effectActions: Actions) {
 
   }
+  /*  get All carburant by entreprise */
 
-  getAllCarburantsByEntrepriseEffect: Observable<CarburantActions> = createEffect(
+  getAllCarburantsEffect: Observable<CarburantActions> = createEffect(
     () => this.effectActions.pipe(
-      ofType(CarburantsActionsTypes.GET_ALL_CARUBURANTSBYENTREPRISE),
+      ofType(CarburantsActionsTypes.GET_ALL_CARUBURANTS),
       mergeMap((action: CarburantActions) => {
         return this.carburantService.getCarburantByIdEntreprise(action.payload)
           .pipe(
             map((deparments) =>
-              new GetAllCarburantsByEntrepriseActionSuccess(deparments)),
-            catchError((err) => of(new GetAllVehiculeByEntrepriseActionError(err)))
+              new GetAllCarburantsActionSuccess(deparments)),
+            catchError((err) => of(new GetAllCarburantsActionError(err)))
+          );
+      })
+    )
+  );
+  /*  get All carburant by vehicule */
+
+  getAllCarburantsByVehiculeEffect: Observable<CarburantActions> = createEffect(
+    () => this.effectActions.pipe(
+      ofType(CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE),
+      mergeMap((action: CarburantActions) => {
+        return this.carburantService.getCarburantByVehiculeByEntreprise(action.payload)
+          .pipe(
+            map((deparments) =>
+              new GetAllCarburantsByVehiculeActionSuccess(deparments)),
+            catchError((err) => of(new GetAllCarburantsByVehiculeActionError(err)))
           );
       })
     )

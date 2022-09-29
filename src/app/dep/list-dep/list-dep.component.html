@@ -6,7 +6,7 @@
         </mat-form-field>
 </div>
 <br>
-<mat-table [dataSource]="listData"  matSort>
+<mat-table [dataSource]="listData"  matSort  matSort (matSortChange)="announceSortChange($event)">
   <ng-container matColumnDef="libelle">
     <mat-header-cell *matHeaderCellDef  mat-sort-header>Libelle</mat-header-cell>
     <mat-cell *matCellDef="let element">{{element.libelle}}</mat-cell>
@@ -16,12 +16,19 @@
     <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
+
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
-      <button mat-icon-button color="warn" (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
+    <mat-cell *matCellDef="let row"  >
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item   (click)="onEdit(row)">Modifier</button>
+        <button mat-menu-item    (click)="onDelete(row)">Supprimer</button>
+      </mat-menu>
     </mat-cell>
   </ng-container>
+
   <ng-container matColumnDef="loading">
     <mat-footer-cell *matFooterCellDef colspan="6">
       Patientez svp ! Chargement des données...
@@ -36,10 +43,10 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
   <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
-
   </mat-footer-row>
+
 </mat-table>
-<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+<mat-paginator [length]="listData.data.length" [pageSizeOptions]="[5, 10, 20]"
                showFirstLastButtons
                aria-label="Select page of periodic elements">
 </mat-paginator>

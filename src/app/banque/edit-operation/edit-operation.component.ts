@@ -20,6 +20,7 @@ export class EditOperationComponent implements OnInit {
   private dialogConfig;
   editMode: any;
   operation: Operation;
+  id: number;
   @ViewChild(MatDatepicker) picker: MatDatepicker<Date>;
   constructor(private fb: FormBuilder,
               private operationService: OperationBanqueService,
@@ -28,7 +29,7 @@ export class EditOperationComponent implements OnInit {
               private  banqueService: BanqueService) { }
 
   ngOnInit(): void {
-    this.banqueService.getAllBanque().subscribe(data => {
+    this.banqueService.getAllBanqueByIdEntreprise(this.id).subscribe(data => {
       console.log(data);
       this.banques = data.body;
     });

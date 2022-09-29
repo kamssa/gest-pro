@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Departement} from '../../model/Departement';
 import {DepartementState} from '../ngrx-dep/dep.reducer';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, Sort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {Store} from '@ngrx/store';
 import {DeleteDepartementAction} from '../ngrx-dep/dep.actions';
@@ -13,6 +13,8 @@ import {AddDepComponent} from '../add-dep/add-dep.component';
 import {AuthService} from '../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {DepService} from '../../service/dep.service';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+
 
 @Component({
   selector: 'app-list-dep',
@@ -35,7 +37,8 @@ export class ListDepComponent implements OnInit, AfterViewInit {
               private helper: JwtHelperService,
               public dialog: MatDialog,
               private depService: DepService,
-              private notificationService: NotificationService)
+              private notificationService: NotificationService,
+              private cdr: ChangeDetectorRef)
   {
 
   }
@@ -65,9 +68,12 @@ export class ListDepComponent implements OnInit, AfterViewInit {
     this.listData = new MatTableDataSource(this.array);
     this.listData.sort = this.sort;
     this.listData.paginator = this.paginator;
+    this.cdr.detectChanges();
+
   }
   ngAfterViewInit() {
     this.listData.paginator = this.paginator;
+    this.listData.sort = this.sort;
 
   }
 
@@ -103,5 +109,14 @@ export class ListDepComponent implements OnInit, AfterViewInit {
     }
 
 
+  }
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
+
+   /* if (sortState.direction) {
+      this.liv.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }*/
   }
 }

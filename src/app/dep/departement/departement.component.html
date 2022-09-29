@@ -1,10 +1,4 @@
-<div class="main-content" >
-  <div class="row">
-    <div class="col-md-8">
-      <app-dep-nav-bar></app-dep-nav-bar>
-  <br>
-  <div class="container-fluid">
-      <div class="mat-elevation-z10" >
+
         <ng-container *ngIf="departementsState$ | async as state" [ngSwitch]="state.dataState">
           <ng-container *ngSwitchCase="departementStateEnum.INITIAL">
             <div class="p-2"> Initialisation</div>
@@ -19,9 +13,5 @@
             <app-list-dep [state]="state"></app-list-dep>
           </ng-container>
         </ng-container>
-      </div>
-</div>
-</div>
-  </div>
-</div>
+
 

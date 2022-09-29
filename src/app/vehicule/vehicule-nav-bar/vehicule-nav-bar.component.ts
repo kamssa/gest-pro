@@ -7,6 +7,8 @@ import {Store} from '@ngrx/store';
 import {GetAllVehiculeByEntrepriseAction} from '../ngrx-vehicule/vehicule.actions';
 import {Router} from '@angular/router';
 import {VehiculeService} from '../../service/vehicule.service';
+import {RechercheCarburantParDateComponent} from '../../comptabilite/carburant/recherche-carburant-par-date/recherche-carburant-par-date.component';
+import {GetAllCarburantsAction} from '../../comptabilite/carburant/ngrx-carburant/carburant.actions';
 
 @Component({
   selector: 'app-vehicule-nav-bar',
@@ -32,12 +34,10 @@ export class VehiculeNavBarComponent implements OnInit {
         this.personne = resultat.body;
         if (this.personne.type === 'ENTREPRISE') {
           this.entreprise = this.personne;
-          this.store.dispatch(new GetAllVehiculeByEntrepriseAction(this.entreprise.id));
 
 
         } else if (this.personne.type === 'EMPLOYE'){
           this.entreprise = this.personne.departement.entreprise;
-          this.store.dispatch(new GetAllVehiculeByEntrepriseAction(this.entreprise.id));
 
 
         }
@@ -59,6 +59,7 @@ export class VehiculeNavBarComponent implements OnInit {
 
   }
   openListVehicule() {
+    this.store.dispatch(new GetAllVehiculeByEntrepriseAction(this.entreprise.id));
     this.router.navigate(['vehicule/listVehicule']);
 
 
@@ -85,10 +86,18 @@ export class VehiculeNavBarComponent implements OnInit {
   }
 
   openConsoVehicule() {
+    this.vehiculeService.initializeFormGroup();
+    const dialogRef = this.dialog.open(RechercheCarburantParDateComponent,{
+      data: {
+        entreprise: this.entreprise
+      }
 
+    });
   }
 
   onpenConsoEntreprise() {
+    this.store.dispatch(new GetAllCarburantsAction(this.entreprise.id));
+    this.router.navigate(['vehicule/listCarburant']);
 
   }
 }

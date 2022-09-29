@@ -6,84 +6,84 @@ import {Banque} from '../../../model/Banque';
 
 export enum BanqueActionsTypes{
   /* Get All Banque*/
-  GET_ALL_BANQUE= '[Banque] Get All Banque ',
-  GET_ALL_BANQUE_SUCCESS= '[Banque] Get All Banque  Success',
-  GET_ALL_BANQUE_ERROR= '[Banque] Get All Banque  Error',
+  GET_ALL_BANQUEBYENTREPRISE= '[Banque] Get All Banque by entreprise',
+  GET_ALL_BANQUEBYENTREPRISE_SUCCESS= '[Banque] Get All Banque  by entreprise Success',
+  GET_ALL_BANQUEBYENTREPRISE_ERROR= '[Banque] Get All Banque  by entreprise Error',
 
   /* save   Banque*/
-  SAVE_BANQUE = '[Banque] Save Banque',
-  SAVE_BANQUE_SUCCESS= '[Banque] Save Banque Success',
-  SAVE_BANQUE_ERROR= '[Banque] Save Banque Error',
+  SAVE_BANQUEBYENTREPRISE = '[Banque] Save Banque  by entreprise',
+  SAVE_BANQUEBYENTREPRISE_SUCCESS= '[Banque] Save Banque  by entreprise Success',
+  SAVE_BANQUEBYENTREPRISE_ERROR= '[Banque] Save Banque  by entreprise Error',
 
   /* Delete  Banque*/
-  DELETE_BANQUE = '[Banque] Delete Banque',
-  DELETE_BANQUE_SUCCESS= '[Banque] Delete Banque Success',
-  DELETE_BANQUE_ERROR= '[Banque] Delete Banque Error',
+  DELETE_BANQUEBYENTREPRISE = '[Banque] Delete Banque  by entreprise',
+  DELETE_BANQUEBYENTREPRISE_SUCCESS= '[Banque] Delete Banque  by entreprise Success',
+  DELETE_BANQUEBYENTREPRISE_ERROR= '[Banque] Delete Banque  by entreprise Error',
 
   /* Update  departements*/
-  UPDATE_BANQUE = '[Banque] Update Banque',
-  UPDATE_BANQUE_SUCCESS= '[Banque] Update Banque Success',
-  UPDATE_BANQUE_ERROR= '[Banque] Update Banque Error',
+  UPDATE_BANQUEBYENTREPRISE = '[Banque] Update Banque  by entreprise',
+  UPDATE_BANQUEBYENTREPRISE_SUCCESS= '[Banque] Update Banque  by entreprise Success',
+  UPDATE_BANQUEBYENTREPRISE_ERROR= '[Banque] Update Banque  by entreprise Error',
 }
 /* Get All Products Actions*/
 
-export class GetAllBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUE;
+export class GetAllBanqueByEntrepriseAction implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE;
   constructor(public payload: number) {
   }
 }
 
-export class GetAllBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUE_SUCCESS;
+export class GetAllBanqueByEntrepriseActionSuccess implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE_SUCCESS;
 
   constructor(public payload: Resultat<Banque[]>) {
   }
 }
 
-export class GetAllBanqueError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUE_ERROR;
+export class GetAllBanqueByEntrepriseError implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.GET_ALL_BANQUEBYENTREPRISE_ERROR;
   constructor(public payload: string) {
   }
 }
 
 /* Save Products Actions*/
 
-export class SaveBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUE;
+export class SaveBanqueByEntrepriseAction implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE;
   constructor(public payload: Banque) {
   }
 }
 
-export class SaveBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUE_SUCCESS;
+export class SaveBanqueByEntrepriseActionSuccess implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE_SUCCESS;
 
   constructor(public payload: Resultat<Banque>) {
   }
 }
 
-export class SaveBanqueActionError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUE_ERROR;
+export class SaveBanqueByEntrepriseActionError implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.SAVE_BANQUEBYENTREPRISE_ERROR;
   constructor(public payload: Resultat<Banque>) {
   }
 }
 
 /* Delete Products Actions*/
 
-export class DeleteBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUE;
+export class DeleteBanqueByEntrepriseAction implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUEBYENTREPRISE;
   constructor(public payload: Banque) {
   }
 }
 
-export class DeleteBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUE_SUCCESS;
+export class DeleteBanqueByEntrepriseActionSuccess implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUEBYENTREPRISE_SUCCESS;
 
   constructor(public payload: Resultat<Banque>) {
   }
 }
 
-export class DeleteBanqueActionError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUE_ERROR;
+export class DeleteBanqueByEntrepriseActionError implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.DELETE_BANQUEBYENTREPRISE_ERROR;
   constructor(public payload: string) {
   }
 }
@@ -93,27 +93,27 @@ export class DeleteBanqueActionError implements Action{
 
 /* Update Products Actions*/
 
-export class UpdateBanqueAction implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUE;
+export class UpdateBanqueByEntrepriseAction implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUEBYENTREPRISE;
   constructor(public payload: Banque) {
   }
 }
 
-export class UpdateBanqueActionSuccess implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUE_SUCCESS;
+export class UpdateBanqueByEntrepriseActionSuccess implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUEBYENTREPRISE_SUCCESS;
 
   constructor(public payload: Resultat<Banque>) {
   }
 }
 
-export class UpdateBanqueActionError implements Action{
-  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUE_ERROR;
+export class UpdateBanqueByEntrepriseActionError implements Action{
+  type: BanqueActionsTypes = BanqueActionsTypes.UPDATE_BANQUEBYENTREPRISE_ERROR;
   constructor(public payload: Resultat<Banque>) {
   }
 }
 export type BanqueActions =
-  GetAllBanqueAction | GetAllBanqueActionSuccess | GetAllBanqueError
-  | SaveBanqueAction | SaveBanqueActionSuccess | SaveBanqueActionError
-  | DeleteBanqueAction | DeleteBanqueActionSuccess | DeleteBanqueActionError
-  | UpdateBanqueAction | UpdateBanqueActionSuccess | UpdateBanqueActionError
+  GetAllBanqueByEntrepriseAction | GetAllBanqueByEntrepriseActionSuccess | GetAllBanqueByEntrepriseError
+  | SaveBanqueByEntrepriseAction | SaveBanqueByEntrepriseActionSuccess | SaveBanqueByEntrepriseActionError
+  | DeleteBanqueByEntrepriseAction | DeleteBanqueByEntrepriseActionSuccess | DeleteBanqueByEntrepriseActionError
+  | UpdateBanqueByEntrepriseAction | UpdateBanqueByEntrepriseActionSuccess | UpdateBanqueByEntrepriseActionError
   ;

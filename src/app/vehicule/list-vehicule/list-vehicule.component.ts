@@ -15,6 +15,7 @@ import {VehiculeState} from '../ngrx-vehicule/vehicule.reducer';
 import {DeleteVehiculeAction} from '../ngrx-vehicule/vehicule.actions';
 import {Entreprise} from '../../model/Entreprise';
 import {AddCarburantComponent} from '../../comptabilite/carburant/add-carburant/add-carburant.component';
+import {CarburantParVehiculeMoisComponent} from '../../comptabilite/carburant/carburant-par-vehicule-mois/carburant-par-vehicule-mois.component';
 
 @Component({
   selector: 'app-list-vehicule',
@@ -32,6 +33,7 @@ export class ListVehiculeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() state: VehiculeState | null = null;
+  clickedRows: any;
   constructor(private store: Store,
               private authService: AuthService,
               private helper: JwtHelperService,
@@ -127,6 +129,21 @@ export class ListVehiculeComponent implements OnInit, AfterViewInit {
   }
 
   addPanne(row: any) {
+
+  }
+
+  test(row: any) {
+    console.log('test', row);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "60%";
+    const dialogRef = this.dialog.open(CarburantParVehiculeMoisComponent, {
+      data: {
+        vehicule: row
+      }
+
+    });
 
   }
 }

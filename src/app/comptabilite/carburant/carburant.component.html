@@ -1,13 +1,14 @@
-<div class="main-content" >
-  <div class="row">
-    <div class="col-md-8">
-      <app-carburant-nav-bar></app-carburant-nav-bar>
-      <br>
-      <div class="container-fluid">
-        <div class="mat-elevation-z10" >
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<ng-container *ngIf="carburantState$ | async as state" [ngSwitch]="state.dataState">
+  <ng-container *ngSwitchCase="carburantStateEnum.INITIAL">
+    <div class="p-2"> Initialisation</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="carburantStateEnum.LOADING">
+    <div class="p-2"> Chargement...</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="carburantStateEnum.ERROR">
+    <div class="p-2 text-danger"> {{state.errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="carburantStateEnum.LOADED" class="p-4">
+    <app-list-carburant [state]="state"></app-list-carburant>
+  </ng-container>
+</ng-container>

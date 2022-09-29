@@ -12,7 +12,6 @@ import {MaterialModule} from '../../material/material.module';
 import {AddEmployeComponent} from '../../employe/add-employe/add-employe.component';
 import {ListEmployeComponent} from '../../employe/list-employe/list-employe.component';
 import {ListDepComponent} from '../../dep/list-dep/list-dep.component';
-import {AddDepComponent} from '../../dep/add-dep/add-dep.component';
 import {MatConfirmDialogComponent} from '../../service/shared/mat-confirm-dialog/mat-confirm-dialog.component';
 import {AddStockComponent} from '../../stock/add-stock/add-stock.component';
 import {ListStockComponent} from '../../stock/list-stock/list-stock.component';
@@ -49,15 +48,12 @@ import {NgxGalleryModule} from 'ngx-gallery-9';
 import {DepNavBarComponent} from '../../dep/dep-nav-bar/dep-nav-bar.component';
 import {DepartementComponent} from '../../dep/departement/departement.component';
 import {ListDepItemComponent} from '../../dep/list-dep/list-dep-item/list-dep-item.component';
-import {FournisseurComponent} from '../../fournisseur/fournisseur/fournisseur.component';
 import {CarburantComponent} from '../../comptabilite/carburant/carburant.component';
 import {ClientComponent} from '../../comptabilite/client/client.component';
 import {MissionComponent} from '../../comptabilite/mission/mission.component';
 import {PrevisionTresorerieComponent} from '../../comptabilite/prevision-tresorerie/prevision-tresorerie.component';
 import {AllProjetComponent} from '../../administration/all-projet/all-projet.component';
 import {ConfigComponent} from '../../config/config/config.component';
-import {AddFournisseurComponent} from '../../fournisseur/add-fournisseur/add-fournisseur.component';
-import {ListFournisseurComponent} from '../../fournisseur/list-fournisseur/list-fournisseur.component';
 import {VehiculeComponent} from '../../vehicule/vehicule/vehicule.component';
 import {AddVehiculeComponent} from '../../vehicule/add-vehicule/add-vehicule.component';
 import {ListVehiculeComponent} from '../../vehicule/list-vehicule/list-vehicule.component';
@@ -65,7 +61,6 @@ import {FactureComponent} from '../../facture/facture/facture.component';
 import {AddFactureComponent} from '../../facture/add-facture/add-facture.component';
 import {ListFactureComponent} from '../../facture/list-facture/list-facture.component';
 import {VehiculeNavBarComponent} from '../../vehicule/vehicule-nav-bar/vehicule-nav-bar.component';
-import {FournisseurNavBarComponent} from '../../fournisseur/fournisseur-nav-bar/fournisseur-nav-bar.component';
 import {BanqueModule} from '../../banque/banque.module';
 import {FactureNavBarComponent} from '../../facture/facture-nav-bar/facture-nav-bar.component';
 import {AddCarburantComponent} from '../../comptabilite/carburant/add-carburant/add-carburant.component';
@@ -81,6 +76,25 @@ import {RechercheCarburantParDateComponent} from '../../comptabilite/carburant/r
 import {AddStaionEssenceComponent} from '../../stationEssence/add-staion-essence/add-staion-essence.component';
 import {StaionEssenceComponent} from '../../stationEssence/staion-essence/staion-essence.component';
 import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essence/list-staion-essence.component';
+import {EmployeComponent} from '../../employe/employe/employe.component';
+import {EmployeNavBarComponent} from '../../employe/employe-nav-bar/employe-nav-bar.component';
+import {CaisseNavBarComponent} from '../../caisse/caisse-nav-bar/caisse-nav-bar.component';
+import {LayoutEmployeComponent} from '../../employe/layout-employe/layout-employe.component';
+import {LayoutDepartementComponent} from '../../dep/layout-departement/layout-departement.component';
+import {EntreEmailComponent} from '../../modif-password/entre-email/entre-email.component';
+import {CarburantLayoutComponent} from '../../comptabilite/carburant/carburant-layout/carburant-layout.component';
+import {LayoutMissionComponent} from '../../comptabilite/mission/layout-mission/layout-mission.component';
+import {MissionNavBarComponent} from '../../comptabilite/mission/mission-nav-bar/mission-nav-bar.component';
+import {TresorerieNavbarComponent} from '../../comptabilite/prevision-tresorerie/tresorerie-navbar/tresorerie-navbar.component';
+import {LayoutTresorerieComponent} from '../../comptabilite/prevision-tresorerie/layout-tresorerie/layout-tresorerie.component';
+import {FournisseurComponent} from '../../comptabilite/fournisseur/fournisseur.component';
+import {AddFournisseurComponent} from '../../comptabilite/fournisseur/add-fournisseur/add-fournisseur.component';
+import {ListFournisseurComponent} from '../../comptabilite/fournisseur/list-fournisseur/list-fournisseur.component';
+import {FourniseurNavBarComponent} from '../../comptabilite/fournisseur/fourniseur-nav-bar/fourniseur-nav-bar.component';
+import {LayoutFourniseurComponent} from '../../comptabilite/fournisseur/layout-fourniseur/layout-fourniseur.component';
+import {CarburantParVehiculeComponent} from '../../comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
+import {CarburantParVehiculeMoisComponent} from '../../comptabilite/carburant/carburant-par-vehicule-mois/carburant-par-vehicule-mois.component';
+import {DepartementModule} from '../../dep/departement.module';
 
 
 
@@ -93,7 +107,6 @@ import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essen
         AddEmployeComponent,
         ListEmployeComponent,
         ListDepComponent,
-        AddDepComponent,
         MatConfirmDialogComponent,
         AddStockComponent,
         ListStockComponent,
@@ -128,8 +141,7 @@ import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essen
         DepartementComponent,
         ListDepItemComponent,
         FournisseurComponent,
-      CarburantComponent,
-      FournisseurComponent,
+       CarburantComponent,
       ClientComponent,
       MissionComponent,
       PrevisionTresorerieComponent,
@@ -144,7 +156,6 @@ import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essen
       AddFactureComponent,
       ListFactureComponent,
       VehiculeNavBarComponent,
-      FournisseurNavBarComponent,
       FactureNavBarComponent,
       AddCarburantComponent,
       ModifPasswordComponent,
@@ -160,13 +171,26 @@ import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essen
       ListStaionEssenceComponent,
       AddStaionEssenceComponent,
       StaionEssenceComponent,
-
+      EmployeComponent,
+      EmployeNavBarComponent,
+      CaisseNavBarComponent,
+      LayoutEmployeComponent,
+      LayoutDepartementComponent,
+      EntreEmailComponent,
+      CarburantLayoutComponent,
+      LayoutMissionComponent,
+      MissionNavBarComponent,
+      TresorerieNavbarComponent,
+      LayoutTresorerieComponent,
+      AddFournisseurComponent,
+      FourniseurNavBarComponent,
+      LayoutFourniseurComponent,
+      CarburantParVehiculeComponent,
+      CarburantParVehiculeMoisComponent,
 
 
     ],
-    exports: [
-        ListDepComponent
-    ],
+
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
@@ -180,6 +204,7 @@ import {ListStaionEssenceComponent} from '../../stationEssence/list-staion-essen
     FinanceModule,
     NgxGalleryModule,
     BanqueModule,
+    DepartementModule
   ]
 
 })

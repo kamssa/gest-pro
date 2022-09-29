@@ -10,8 +10,8 @@ import {NotificationService} from '../../../helper/notification.service';
 import {BanqueState} from '../ngrx-banque/banque.reducer';
 import {BanqueService} from '../../../service/banque.service';
 import {AddBanqueComponent} from '../add-banque/add-banque.component';
-import {DeleteBanqueAction} from '../ngrx-banque/banque.actions';
 import {Banque} from '../../../model/Banque';
+import {DeleteBanqueByEntrepriseAction} from '../ngrx-banque/banque.actions';
 
 @Component({
   selector: 'app-list-banque',
@@ -23,6 +23,7 @@ export class ListBanqueComponent implements OnInit {
   listData: MatTableDataSource<Resultat<Banque[]>>;
   dataSource: any;
   array: any;
+  banques: any;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,14 +37,14 @@ export class ListBanqueComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.array = this.state.banques.map(item => {
+    this.banques = this.state.banques.map(item => {
       console.log(item);
       return {
         id: item.id,
         ...item
       };
     });
-    this.listData = new MatTableDataSource(this.array);
+    this.listData = new MatTableDataSource(this.banques);
     this.listData.sort = this.sort;
     this.listData.paginator = this.paginator;
   }
@@ -74,14 +75,12 @@ export class ListBanqueComponent implements OnInit {
 
   onDelete(row){
     if(confirm('Voulez-vous vraiment supprimer la banque ?')){
-      this.store.dispatch(new DeleteBanqueAction(row));
+      this.store.dispatch(new DeleteBanqueByEntrepriseAction(row));
       this.notificationService.warn('Suppression avec succès');
     }
 
 
   }
 
-  addBanque() {
 
-  }
 }
