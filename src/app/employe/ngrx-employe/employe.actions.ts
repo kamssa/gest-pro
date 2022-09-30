@@ -81,7 +81,7 @@ export class SaveEmpoyesActionError implements Action{
 
 export class GetSelectedEmpoyesAction implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.GET_SELECTED_EMPLOYES;
-  constructor(public payload: Employe) {
+  constructor(public payload: any) {
   }
 }
 
@@ -93,11 +93,11 @@ export class GetSelectedEmpoyesActionSuccess implements Action{
 
 export class GetSelectedEmpoyesActionError implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.GET_SELECTED_EMPLOYES_ERROR;
-  constructor(public payload: Resultat<Employe>) {
+  constructor(public payload: string) {
   }
 }
 /* Get suspendu employe Actions*/
-/*
+
 export class GetSuspenuEmpoyesAction implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.GET_SUSPENDU_EMPLOYES;
   constructor(public payload: Employe) {
@@ -106,31 +106,31 @@ export class GetSuspenuEmpoyesAction implements Action{
 
 export class GetSuspenudEmpoyesActionSuccess implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.GET_SUSPEND_EMPLOYES_SUCCESS;
-  constructor(public payload: Resultat<Employe[]>) {
+  constructor(public payload: Resultat<Employe>) {
   }
 }
 
 export class GetSuspenuEmpoyesActionError implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.GET_SUSPEND_EMPLOYES_ERROR;
-  constructor(public payload: Resultat<Employe>) {
+  constructor(public payload: string) {
   }
-}*/
+}
 /* Delete Products Actions*/
 
-export class DeleteEmpoyesAction implements Action{
+export class DeleteEmployesAction implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.DELETE_EMPLOYES;
-  constructor(public payload: Employe) {
+  constructor(public payload: any) {
   }
 }
 
-export class DeleteEmpoyesActionSuccess implements Action{
+export class DeleteEmployesActionSuccess implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.DELETE_EMPLOYES_SUCCESS;
 
   constructor(public payload: Resultat<Employe>) {
   }
 }
 
-export class DeleteEmpoyesActionError implements Action{
+export class DeleteEmployesActionError implements Action{
   type: EmployeActionsTypes = EmployeActionsTypes.DELETE_EMPLOYES_ERROR;
   constructor(public payload: string) {
   }
@@ -179,7 +179,8 @@ export class UpdateEmpoyesActionError implements Action{
 export type EmployesActions =
   GetAllEmpoyesByEntrepriseAction | GetAllEmpoyesByEntrepriseActionSuccess | GetAllEmpoyesByEntrepriseActionError
   | GetSelectedEmpoyesAction | GetSelectedEmpoyesActionSuccess | GetSelectedEmpoyesActionError
+  | GetSuspenuEmpoyesAction | GetSuspenudEmpoyesActionSuccess | GetSuspenuEmpoyesActionError
   | SaveEmpoyesAction | SaveEmpoyesActionSuccess | SaveEmpoyesActionError
-  | DeleteEmpoyesAction | DeleteEmpoyesActionSuccess | DeleteEmpoyesActionError
+  | DeleteEmployesAction | DeleteEmployesActionSuccess | DeleteEmployesActionError
   | UpdateEmpoyesAction | UpdateEmpoyesActionSuccess | UpdateEmpoyesActionError
   ;

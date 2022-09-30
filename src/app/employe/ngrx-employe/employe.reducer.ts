@@ -52,7 +52,7 @@ export function employeReducer(state= initState, action: Action): EmployesState 
       const updatedEmployes: Employe[] = state.employes.map(d => (d.id === updateEmploye.id) ? updateEmploye :d);
       return {...state, dataState: EmployeStateEnum.LOADED, employes: updatedEmployes};
     case EmployeActionsTypes.GET_SELECTED_EMPLOYES_ERROR:
-      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload['messages']};
+      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload};
 
     /* Get suspendu employé*/
     case EmployeActionsTypes.GET_SUSPENDU_EMPLOYES:
@@ -62,7 +62,7 @@ export function employeReducer(state= initState, action: Action): EmployesState 
       const suspenduEmployes: Employe[] = state.employes.map(d => (d.id === suspenduEmploye.id) ? suspenduEmploye : d);
       return {...state, dataState: EmployeStateEnum.LOADED, employes: suspenduEmployes};
     case EmployeActionsTypes.GET_SUSPEND_EMPLOYES_ERROR:
-      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload['messages']};
+      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload};
       /* Delete employé*/
     case EmployeActionsTypes.DELETE_EMPLOYES:
       return {...state, dataState: EmployeStateEnum.LOADING};
@@ -73,17 +73,17 @@ export function employeReducer(state= initState, action: Action): EmployesState 
       depList.splice(index, 1);
       return {...state, dataState: EmployeStateEnum.LOADED, employes: depList};
     case EmployeActionsTypes.DELETE_EMPLOYES_ERROR:
-      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload['messages']};
+      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload};
 
     /* Update  employé*/
     case EmployeActionsTypes.UPDATE_EMPLOYES:
       return {...state, dataState: EmployeStateEnum.LOADING };
     case EmployeActionsTypes.UPDATE_EMPLOYES_SUCCESS:
-      const updateDepartement: Employe = (action as EmployesActions).payload['body'];
+      const updateDepartement: Employe = (action as EmployesActions).payload;
       const updatedDepartements: Employe[] = state.employes.map(d => (d.id === updateDepartement.id) ? updateDepartement : d);
       return {...state, dataState: EmployeStateEnum.LOADED, employes: updatedDepartements};
     case EmployeActionsTypes.UPDATE_EMPLOYES_ERROR:
-      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload['messages']};
+      return {...state, dataState: EmployeStateEnum.ERROR, errorMessage: (action as EmployesActions).payload};
      /*  Search employé*/
     case EmployeActionsTypes.SEARCH_EMPLOYESBYENTREPRISE:
       return {...state, dataState: EmployeStateEnum.LOADING };

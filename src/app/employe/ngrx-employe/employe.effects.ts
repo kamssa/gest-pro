@@ -5,12 +5,16 @@ import {Observable, of} from 'rxjs';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {EmployeService} from '../../service/employe.service';
 import {
-  DeleteEmpoyesActionError,
-  DeleteEmpoyesActionSuccess,
+  DeleteEmployesActionError,
+  DeleteEmployesActionSuccess,
   EmployeActionsTypes,
   EmployesActions,
   GetAllEmpoyesByEntrepriseActionError,
-  GetAllEmpoyesByEntrepriseActionSuccess, GetSelectedEmpoyesActionError,
+  GetAllEmpoyesByEntrepriseActionSuccess,
+  GetSelectedEmpoyesActionError,
+  GetSelectedEmpoyesActionSuccess,
+  GetSuspenudEmpoyesActionSuccess,
+  GetSuspenuEmpoyesActionError,
   SaveEmpoyesActionError,
   SaveEmpoyesActionSuccess,
   UpdateEmpoyesActionError,
@@ -46,7 +50,7 @@ export class EmployeEffects {
     () => this.effectActions.pipe(
       ofType(EmployeActionsTypes.SAVE_EMPLOYES),
       mergeMap((action: EmployesActions) => {
-        return this.employeService.ajoutEmploye(action.payload['body'])
+        return this.employeService.ajoutEmploye(action.payload)
           .pipe(
             map((employe) =>
               new SaveEmpoyesActionSuccess(employe)),
@@ -77,8 +81,9 @@ export class EmployeEffects {
       mergeMap((action: EmployesActions) => {
         return this.employeService.deleteEmployeById(action.payload['body'])
           .pipe(
-            map(() => new DeleteEmpoyesActionSuccess(action.payload['body'])),
-            catchError((err) => of(new DeleteEmpoyesActionError(err.message)))
+            map((employe) =>
+              new DeleteEmployesActionSuccess(employe)),
+            catchError((err) => of(new DeleteEmployesActionError(err.message)))
           );
       })
     )
@@ -88,26 +93,28 @@ export class EmployeEffects {
     () => this.effectActions.pipe(
       ofType(EmployeActionsTypes.GET_SELECTED_EMPLOYES),
       mergeMap((action: EmployesActions) => {
-        return this.employeService.modifEmploye(action.payload['body'])
+        return this.employeService.modifEmploye(action.payload)
           .pipe(
-            map(() => new GetAllEmpoyesByEntrepriseActionSuccess(action.payload['body'])),
+            map((employe) =>
+              new GetSelectedEmpoyesActionSuccess(employe)),
             catchError((err) => of(new GetSelectedEmpoyesActionError(err.message)))
           );
       })
     )
   );
   /* Get suspendu employe*/
-  /*getSuspenduEmployeByEntrepriseEffect: Observable<EmployesActions> = createEffect(
+  getSuspenduEmployeByEntrepriseEffect: Observable<EmployesActions> = createEffect(
     () => this.effectActions.pipe(
       ofType(EmployeActionsTypes.GET_SUSPENDU_EMPLOYES),
       mergeMap((action: EmployesActions) => {
-        return this.employeService.modifEmploye(action.payload['body'])
+        return this.employeService.modifEmploye(action.payload)
           .pipe(
-            map(() => new GetSuspenudEmpoyesActionSuccess(action.payload['body'])),
+            map((employe) =>
+              new GetSuspenudEmpoyesActionSuccess(employe)),
             catchError((err) => of(new GetSuspenuEmpoyesActionError(err.message)))
           );
       })
     )
   );
-*/
+
 }

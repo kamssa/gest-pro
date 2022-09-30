@@ -16,7 +16,11 @@ import {NotificationService} from '../../helper/notification.service';
 import {EmployePermitionComponent} from '../employe-permition/employe-permition.component';
 import {EmployesState} from '../ngrx-employe/employe.reducer';
 import {Store} from '@ngrx/store';
-import {DeleteEmpoyesAction, GetSelectedEmpoyesAction} from '../ngrx-employe/employe.actions';
+import {
+  DeleteEmployesAction,
+  GetSelectedEmpoyesAction,
+  GetSuspenuEmpoyesAction
+} from '../ngrx-employe/employe.actions';
 import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
@@ -96,7 +100,7 @@ export class ListEmployeComponent implements OnInit, AfterViewInit{
       this.listData.paginator.firstPage();
     }
   }
- /* onEdit(row){
+  onEdit(row){
     this.employeService.initializeFormGroup();
     this.employeService.populateForm(row);
     const dialogConfig = new MatDialogConfig();
@@ -112,21 +116,15 @@ export class ListEmployeComponent implements OnInit, AfterViewInit{
 
 
   }
-*/
+
   onDelete(row){
     if(confirm('Voulez-vous vraiment supprimer l\'employe ?')){
-      this.store.dispatch(new DeleteEmpoyesAction(row));
+      this.store.dispatch(new DeleteEmployesAction(row.id));
       this.notificationService.warn('Suppression avec succès');
     }
 
 
   }
-
-
-  onEdit(row: any) {
-
-  }
-
   onEmployeToggleActiver($event, row) {
     if ($event.checked === true) {
       row.actevated = true;
@@ -152,13 +150,13 @@ export class ListEmployeComponent implements OnInit, AfterViewInit{
     if ($event.checked === true) {
       row.suspendu = true;
       if(confirm('Voulez-vous vraiment Activation l\'employe ?')){
-      //  this.store.dispatch(new GetSuspenuEmpoyesAction(row));
+        this.store.dispatch(new GetSuspenuEmpoyesAction(row));
         this.notificationService.warn('Activation avec succès');
       }
     }else {
       row.suspendu = false;
       if(confirm('Voulez-vous vraiment Activation l\'employe ?')){
-       // this.store.dispatch(new GetSuspenuEmpoyesAction(row));
+        this.store.dispatch(new GetSuspenuEmpoyesAction(row));
         this.notificationService.warn('Activation avec succès');
       }
     }

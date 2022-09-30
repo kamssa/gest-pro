@@ -50,12 +50,7 @@ export class EmployeNavBarComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-    const dialogRef = this.dialog.open(AddEmployeComponent, {
-      data: {
-        entreprise: this.entreprise
-      }
-
-    });
+    const dialogRef = this.dialog.open(AddEmployeComponent);
   }
 
   openListEmploye() {

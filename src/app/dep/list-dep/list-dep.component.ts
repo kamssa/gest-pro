@@ -105,7 +105,7 @@ export class ListDepComponent implements OnInit, AfterViewInit {
 
   onDelete(row){
     if(confirm('Voulez-vous vraiment supprimer le département ?')){
-      this.store.dispatch(new DeleteDepartementAction(row));
+      this.store.dispatch(new DeleteDepartementAction(row.id));
       this.notificationService.warn('Suppression avec succès');
     }
 

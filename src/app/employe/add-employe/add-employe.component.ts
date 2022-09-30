@@ -10,6 +10,9 @@ import {AuthService} from '../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {DepService} from '../../service/dep.service';
 import {Departement} from '../../model/Departement';
+import {UpdateDepartementAction} from '../../dep/ngrx-dep/dep.actions';
+import {Store} from '@ngrx/store';
+import {SaveEmpoyesAction, UpdateEmpoyesAction} from '../ngrx-employe/employe.actions';
 
 @Component({
   selector: 'app-add-employe',
@@ -45,7 +48,8 @@ export class AddEmployeComponent implements OnInit {
               private notificationService: NotificationService,
               public dialogRef: MatDialogRef<AddEmployeComponent>,
               private  router: Router, private _snackBar: MatSnackBar,
-              private  helper: JwtHelperService) {
+              private  helper: JwtHelperService,
+              private store: Store<any>) {
 
 
   }
@@ -57,7 +61,6 @@ export class AddEmployeComponent implements OnInit {
       console.log(decoded.sub);
       this.authService.getPersonneById(decoded.sub).subscribe(result => {
         this.personne = result.body;
-        console.log(this.personne);
         this.roles = result.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée
         this.roles.forEach(val => {
@@ -73,18 +76,14 @@ export class AddEmployeComponent implements OnInit {
           });
         }else if (this.userRoles.includes('ROLE_EMPLOYE') || this.userRoles.includes('ROLE_ADMINISTRATION')) {
           this.departementService.getDepByIdEntreprise(this.personne.departement.entreprise.id).subscribe(res => {
-            console.log(res.body);
             this.departements = res.body;
-            console.log(this.departements);
           }, error => {
-            console.log(error.message);
           });
         }else {
           this.error ='Vous n\'etes pas autorisé';
 
         }
         }, error => {
-        console.log(error.message);
       } );
 
     }
@@ -106,14 +105,8 @@ export class AddEmployeComponent implements OnInit {
         departement: this.departement,
         type:'EMPLOYE'
       };
-      this.employeService.ajoutEmploye(this.employe).subscribe(res => {
-        if(res.status === 0){
-          this.notificationService.success('Employé ajouté avec succès');
-        }else {
-          this.notificationService.success(res.messages);
-
-        }
-      });
+      this.store.dispatch(new SaveEmpoyesAction(this.employe));
+      this.notificationService.success('Employé enregistré avec succès');
     } else {
       this.hide = true;
 
@@ -150,15 +143,9 @@ export class AddEmployeComponent implements OnInit {
             };
 
           }
-          this.employeService.modifEmploye(this.employe).subscribe(result => {
-            console.log(result.status);
-            if (result.status === 0){
-              this.notificationService.success('Employé modifié avec succès');
-            }else {
-              this.notificationService.success(result.messages);
-
-            }
-          });
+          console.log(this.employe);
+          this.store.dispatch(new UpdateEmpoyesAction(this.employe));
+          this.notificationService.success('Employé modifié avec succès');
           this.employeService.form.reset();
           this.employeService.initializeFormGroup();
         });
