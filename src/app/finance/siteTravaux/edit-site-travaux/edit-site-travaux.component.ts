@@ -84,7 +84,7 @@ export class EditSiteTravauxComponent implements OnInit {
                  numeroBon: new FormControl('', [Validators.required]),
                  montantFacture: new FormControl(''),
                  accompte: new FormControl(''),
-                 budget: new FormControl('', [Validators.required]),
+                 budget: new FormControl(''),
                  date: new FormControl('' ),
                  dateLivraison: new FormControl('' ),
                  entreprise: this.entreprise,
