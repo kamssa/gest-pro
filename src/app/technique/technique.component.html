@@ -36,7 +36,7 @@
 
                             </div>
                           </div>
-                          <div >
+                          <div>
                             <ul  *ngFor="let tr of oTravaux | async"  class="list-group">
                               <a class="list-group-item  clearfix"
                                  [routerLink]="[tr.id]"
@@ -78,7 +78,7 @@
                       </div>
                       <div class="action-3">
                         <div class="" matTooltip="modifier un projet" matTooltipPosition="right">
-                          <a mat-mini-fab routerLink="creer" color="warn">
+                          <a mat-mini-fab (click)="modifier()" color="warn">
                             <mat-icon>add</mat-icon>
                           </a>
                         </div>

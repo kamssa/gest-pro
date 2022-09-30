@@ -10,6 +10,7 @@ export class Projet {
               public  description?: string,
               public  numeroBon?: string,
               public  numeroPojet?: string,
+              public  montantFacture?: number,
               public  accompte?: number,
               public  budget?: number,
               public  reste?: number,

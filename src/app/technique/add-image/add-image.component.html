@@ -1,3 +1,4 @@
+<div class="main-div">
 <div *ngIf="projet">
   <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true"
@@ -12,13 +13,16 @@
       </mat-expansion-panel-header>
       <h3 class="site">Site : {{projet.libelle}}</h3>
       <h3 class="site">Numero du bon  : {{projet.numeroBon}}</h3>
-      <h3 class="site">Budget : {{projet.budget | number}} CFA</h3>
+      <h3 class="site">Budget : {{projet.montantFacture | number}} CFA</h3>
       <h3 class="site">Acompte : {{projet.accompte | number}} CFFA</h3>
       <h3 class="site"> Solde : {{projet.reste | number}} CFA</h3>
       <h3 class="site">Dépense : {{projet.total | number}} CFA</h3>
       <h3 class="site">Debut des travaux : {{projet.date | date: 'dd/MM/yyyy'}}</h3>
       <h3 class="site">Date de livraison : {{projet.dateLivraison | date: 'dd/MM/yyyy'}}</h3>
     </mat-expansion-panel>
+    <button (click)="submit(projet)" class="btn btn-success">
+      Modifier
+    </button>
   </mat-accordion>
 
   <div style="text-align:center; margin-top: 100px; ">
@@ -40,4 +44,5 @@
   </mat-card>
   <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*"
          style="display:none;"/>
+</div>
 </div>

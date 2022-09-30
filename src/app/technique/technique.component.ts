@@ -59,7 +59,6 @@ export class TechniqueComponent implements OnInit {
       const decoded = this.helper.decodeToken(token);
       this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
         this.personne = resultat.body;
-        console.log('Voir la personne ', this.personne);
         this.roles = resultat.body.roles;
         // Vérifie si le tableau contient le droit de la personne retournnée
         this.roles.forEach(val => {
@@ -69,7 +68,6 @@ export class TechniqueComponent implements OnInit {
         if (this.userRoles.includes('ROLE_MANAGER') || this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_TECHNICIEN') ){
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.employe = result.body;
-            console.log('Voir employe retournée', this.employe);
             this.nav = true;
             this.oTravaux = this.searchProjetSource
               .pipe(
@@ -150,7 +148,6 @@ export class TechniqueComponent implements OnInit {
 
   onSelect(projet: Projet) {
     this.selectedProjet = projet;
-    console.log(this.selectedProjet.id);
     this.router.navigate(['technique/addImage', this.selectedProjet.id]);
   }
 
@@ -162,5 +159,9 @@ export class TechniqueComponent implements OnInit {
 
   onImages(id: number) {
     this.router.navigate(['technique/edite', id]);
+  }
+
+  modifier() {
+
   }
 }

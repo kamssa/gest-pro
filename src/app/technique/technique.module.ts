@@ -16,6 +16,7 @@ import {NgxGalleryModule} from 'ngx-gallery-9';
 
 import * as Hammer from 'hammerjs';
 import {HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
+import { EditeProjetComponent } from './edite-projet/edite-projet.component';
 
 export class CustomHammerConfig extends HammerGestureConfig {
   overrides = {
@@ -45,7 +46,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     TechniqueComponent,
     AddImageComponent,
     EditTecniqueComponent,
-    DetailTechComponent
+    DetailTechComponent,
+    EditeProjetComponent
   ],
   exports: [
     TechniqueComponent,

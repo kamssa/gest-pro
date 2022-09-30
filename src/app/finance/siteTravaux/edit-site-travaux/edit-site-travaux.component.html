@@ -14,8 +14,8 @@
             <input type="text" id="libelle" placeholder="Enter le nom du chantier" formControlName="nomChantier">
           </li>
           <li>
-            <label for="budget" class="lelabel">Le budget</label>
-            <input type="text" id="budget" placeholder="Enter le budget" formControlName="budget">
+            <label for="budget" class="lelabel">Le montant de la facture</label>
+            <input type="text" id="budget" placeholder="Enter le budget" formControlName="montantFacture">
           </li>
           <li>
             <label for="accompte" class="lelabel">L'accompte</label>
@@ -65,7 +65,7 @@
               <mat-error *ngIf="hasError('numeroBon', 'required')">Champ obligatoire</mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
-              <input matInput type="number" placeholder="Budget" formControlName="budget" id="budget">
+              <input matInput type="number" placeholder="montant de la facture" formControlName="montantFacture" id="montantFacture">
               <mat-hint align="end">Vous devez remplir ce champs!</mat-hint>
               <mat-error *ngIf="hasError('budget', 'required')">Champ obligatoire</mat-error>
             </mat-form-field>

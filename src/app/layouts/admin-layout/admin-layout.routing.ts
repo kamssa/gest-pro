@@ -12,7 +12,6 @@ import {EditSiteTravauxComponent} from '../../finance/siteTravaux/edit-site-trav
 import {TechniqueComponent} from '../../technique/technique.component';
 import {EditTecniqueComponent} from '../../technique/edit-tecnique/edit-tecnique.component';
 import {AddImageComponent} from '../../technique/add-image/add-image.component';
-import {ListEmployeComponent} from '../../employe/list-employe/list-employe.component';
 import {AuthGuardService} from '../../helper/auth-guard.service';
 import {ListStockComponent} from '../../stock/list-stock/list-stock.component';
 import {ListCategorieComponent} from '../../categorie/list-categorie/list-categorie.component';
@@ -29,7 +28,6 @@ import {EditAutreAchatTravauxComponent} from '../../finance/operationsTravaux/au
 import {ListClientComponent} from '../../client/list-client/list-client.component';
 import {BanqueComponent} from '../../banque/banque.component';
 import {RetraitComponent} from '../../banque/retrait/retrait.component';
-import {DepartementComponent} from '../../dep/departement/departement.component';
 import {RouteGuardService} from '../../helper/route-guard.service';
 import {ConfigComponent} from '../../config/config/config.component';
 import {FactureComponent} from '../../facture/facture/facture.component';
@@ -49,6 +47,7 @@ import {LayoutMissionComponent} from '../../comptabilite/mission/layout-mission/
 import {FournisseurComponent} from '../../comptabilite/fournisseur/fournisseur.component';
 import {CarburantParVehiculeComponent} from '../../comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
 import {EmployeComponent} from '../../employe/employe/employe.component';
+import {EditeProjetComponent} from '../../technique/edite-projet/edite-projet.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -210,7 +209,7 @@ export const AdminLayoutRoutes: Routes = [
         component: TechniqueComponent,
         children: [
           {path: 'addImage/:id', component: AddImageComponent},
-          {path: 'edite/:id', component: EditTecniqueComponent}
+          {path: 'edite/:id', component: EditTecniqueComponent},
         ]},
 
     ]},

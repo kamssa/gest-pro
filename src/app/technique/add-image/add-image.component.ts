@@ -5,6 +5,9 @@ import {HttpErrorResponse, HttpEventType} from "@angular/common/http";
 import {of} from 'rxjs';
 import {Projet} from '../../model/projet';
 import {ProjetService} from '../../service/projet.service';
+import {AddDepComponent} from '../../dep/add-dep/add-dep.component';
+import {MatDialog} from '@angular/material/dialog';
+import {EditeProjetComponent} from '../edite-projet/edite-projet.component';
 
 @Component({
   selector: 'app-add-image',
@@ -22,6 +25,7 @@ export class AddImageComponent implements OnInit {
 
   constructor(private uploadService: ProjetService,
               private router: Router,
+              public dialog: MatDialog,
               private route: ActivatedRoute) {
   }
 
@@ -80,5 +84,14 @@ export class AddImageComponent implements OnInit {
       this.uploadFiles();
     };
     fileUpload.click();
+  }
+
+  submit(projet: Projet) {
+    const dialogRef = this.dialog.open(EditeProjetComponent, {
+      data: {
+        projet: projet.id
+      }
+
+    });
   }
 }

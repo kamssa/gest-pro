@@ -82,6 +82,7 @@ export class EditSiteTravauxComponent implements OnInit {
                  libelle: new FormControl('', [Validators.required]),
                  description: new FormControl('', [Validators.required]),
                  numeroBon: new FormControl('', [Validators.required]),
+                 montantFacture: new FormControl(''),
                  accompte: new FormControl(''),
                  budget: new FormControl('', [Validators.required]),
                  date: new FormControl('' ),
