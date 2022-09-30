@@ -6,7 +6,6 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {AuthService} from '../../../service/auth.service';
 import {NotificationService} from '../../../helper/notification.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {SaveVehiculeAction, UpdateVehiculeAction} from '../../../vehicule/ngrx-vehicule/vehicule.actions';
 import {Carburant} from '../../../model/carburant';
 import {CarburantService} from '../../../service/carburant.service';
 import {Router} from '@angular/router';
@@ -125,4 +124,7 @@ export class AddCarburantComponent implements OnInit {
     this.notificationService.success('Champs réinitialisés!');
   }
 
+  onCancel() {
+
+  }
 }

@@ -138,7 +138,7 @@ export class ListVehiculeComponent implements OnInit, AfterViewInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-    const dialogRef = this.dialog.open(CarburantParVehiculeMoisComponent, {
+    const dialogRef = this.dialog.open(AddCarburantComponent, {
       data: {
         vehicule: row
       }
