@@ -11,9 +11,8 @@
       </mat-expansion-panel-header>
       <h3><span class="titre">Les informations sur le chantier : {{projet.libelle}}</span></h3>
       <h3 class="site">Numero du bon  : {{projet.numeroBon}}</h3>
-     <!-- <h3 class="site">Budget : {{projet.montantFacture | number}} CFA</h3>
-      <h3 class="site">Acompte : {{projet.accompte | number}} CFFA</h3>
-      <h3 class="site"> Solde : {{projet.reste | number}} CFA</h3>-->
+      <h3 class="site">Dépense : {{projet.total| number}} CFA</h3>
+      <h3 class="site"> Solde : {{projet.reste | number}} CFA</h3>
       <h3 class="site">Deboussé sec : {{projet.debousserSec | number}} CFA</h3>
       <h3 class="site">Debut des travaux : {{projet.date | date: 'dd/MM/yyyy'}}</h3>
       <h3 class="site">Date de livraison : {{projet.dateLivraison | date: 'dd/MM/yyyy'}}</h3>
