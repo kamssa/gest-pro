@@ -304,4 +304,8 @@ export class EditStockComponent implements OnInit {
   archiver() {
     localStorage.setItem('stock', JSON.stringify(this.stockForm.value));
   }
+
+  retour() {
+ this.router.navigate(['/listDetailStock', this.personne.departement.entreprise.id]);
+  }
 }

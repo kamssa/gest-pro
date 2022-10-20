@@ -47,7 +47,6 @@ import {LayoutMissionComponent} from '../../comptabilite/mission/layout-mission/
 import {FournisseurComponent} from '../../comptabilite/fournisseur/fournisseur.component';
 import {CarburantParVehiculeComponent} from '../../comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
 import {EmployeComponent} from '../../employe/employe/employe.component';
-import {EditeProjetComponent} from '../../technique/edite-projet/edite-projet.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -230,6 +229,9 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: 'detailStockHistory/:id', component: DetailHistoryComponent
+  },
+  {
+    path: 'listDetailStock', component: ListStockComponent
   },
   {
     path: 'listDetailStock/:id', component: ListStockComponent

@@ -80,14 +80,15 @@ export class ListStockComponent implements OnInit {
         this.personne = resultat.body;
 
         if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.departement.entreprise.id).subscribe( result => {
+          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
+            console.log(this.personne);
             this.nav = true;
             this.route.params.subscribe(params => {
               this.id = +params['id'];
               this.stockService.getStockentreByIdEntreprise(this.id).subscribe(list => {
-
-                if (list.body.length === 0){
+              console.log(list.status);
+                if (list.status === 1){
                   this.notificationService.warn('Pas d\'articles enregistrés !') ;
 
                 }else if (list.body.length > 0){
@@ -115,9 +116,10 @@ export class ListStockComponent implements OnInit {
 
           });
         }else if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.departement.entreprise.id).subscribe(
+          this.employeService.getEmployeById(this.personne.id).subscribe(
             rest => {
               this.personne = rest.body;
+              console.log(this.personne);
               this.nav = false;
               this.detailStockService.getAllDetailStock().subscribe(list => {
                 this.array = list.body.map(item => {
@@ -172,16 +174,9 @@ export class ListStockComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
   onCreate(ev) {
-    console.log(this.personne.departement);
-  if(ev){
+
     ev = this.personne.departement.entreprise.id;
     this.router.navigate(['/detailStock', ev]);
-  }else {
-    console.log('probleme');
-  }
-
-
-
   }
 
   onEdit(row){
