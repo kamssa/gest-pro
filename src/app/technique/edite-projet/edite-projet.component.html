@@ -53,11 +53,11 @@
             <mat-form-field class="example-full-width">
               <input matInput type="text" placeholder="Numero du bon" formControlName="numeroBon" id="numeroBon">
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <!--<mat-form-field class="example-full-width">
               <input matInput type="number" placeholder="montant de la facture" formControlName="montantFacture" id="montantFacture">
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <input matInput type="number" placeholder="Acompte" formControlName="accompte" id="accompte">
+            </mat-form-field>-->
+            <mat-form-field>
+              <input matInput type="text" placeholder="Déboursé Sec" formControlName="debousserSec"/>
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <input matInput [matDatepicker]="picker" placeholder="Choisir la date de debut du chantier" formControlName="date" id="date"
@@ -74,8 +74,7 @@
 
             <div>
               <mat-form-field class="example-full-width" formGroupName="client">
-                <input matInput type="text" placeholder="Client" formControlName="nom" id="nom">
-
+                <input matInput type="text" placeholder="Client" formControlName="libelle">
               </mat-form-field>
             </div>
             <br>

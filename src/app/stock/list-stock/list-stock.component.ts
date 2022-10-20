@@ -81,7 +81,7 @@ export class ListStockComponent implements OnInit {
         this.personne = resultat.body;
 
         if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.id).subscribe( result => {
+          this.employeService.getEmployeById(this.personne.departement.entreprise.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
             this.route.params.subscribe(params => {
@@ -116,7 +116,7 @@ export class ListStockComponent implements OnInit {
 
           });
         }else if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.id).subscribe(
+          this.employeService.getEmployeById(this.personne.departement.entreprise.id).subscribe(
             rest => {
               this.personne = rest.body;
               this.nav = false;
@@ -175,12 +175,9 @@ export class ListStockComponent implements OnInit {
   }
   onCreate(ev) {
 
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
-      ev = this.personne.entreprise.id;
+      ev = this.personne.departement.entreprise.id;
       this.router.navigate(['/detailStock', ev]);
-    }else if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
-      this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
+
 
   }
 

@@ -71,7 +71,7 @@ export class ListCategorieComponent implements OnInit {
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
             this.nav = true;
-            this.categorieService.getCatByIdEntreprise(this.personne.entreprise.id).subscribe(list => {
+            this.categorieService.getCatByIdEntreprise(this.personne.departement.entreprise.id).subscribe(list => {
 
               this.array = list.body.map(item => {
                 return {

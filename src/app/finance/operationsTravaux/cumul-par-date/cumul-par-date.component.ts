@@ -25,6 +25,7 @@ import {MainoeuvreService} from '../../../service/mainoeuvre.service';
 import html2canvas from 'html2canvas';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
+import {AutreAchatTravaux} from '../../../model/AutreAchatTravaux';
 
 @Component({
   selector: 'app-cumul-par-date',
@@ -35,6 +36,7 @@ export class CumulParDateComponent implements OnInit {
   @Output() submitClicked = new EventEmitter<any>();
   detailMainOeuvre: DetailMainOeuvre[] = [];
   detailAutreAchatTravaux: DetailAutreAchatTravaux[];
+  autreAchatTravaux: AutreAchatTravaux[];
   detailAchatTravaux: DetailAchatTravaux[] = [];
   detailLoyeTravaux: DetailLoyer[] = [];
   detailTransport: DetailAutres[] = [];
@@ -87,6 +89,7 @@ export class CumulParDateComponent implements OnInit {
     this.projetService.getProjetById(this.data.id)
       .subscribe(res => {
         this.projet = res.body;
+        this.total = this.projet.total;
         console.log("Voir travaux", this.projet);
       });
     const id = this.data.id;
@@ -95,12 +98,12 @@ export class CumulParDateComponent implements OnInit {
     console.log( id );
     console.log(dateDebut );
     console.log( dateFin );
-    this.autreAchatTravauxService.getDetailAutreAchatTravauxByDateTravaux(dateDebut, dateFin, id)
+    this.autreAchatTravauxService.getAutreAchatTravauxByDateTravaux(dateDebut, dateFin, id)
       .subscribe(result => {
-      console.log('detail detail autre par id travaux', result);
+      console.log('autre par id travaux', result);
       if (result.length !== 0){
-        this.detailAutreAchatTravaux = result;
-        this.detailAutreAchatTravaux.forEach( v => {
+        this.autreAchatTravaux = result;
+        this.autreAchatTravaux.forEach( v => {
           const m = v.montant;
           this.array.push(v.montant);
 
@@ -186,7 +189,7 @@ export class CumulParDateComponent implements OnInit {
         console.log('pas de detailLAutre');
       }
     });
-    this.achatTravauxService.getDetailAchatTravauxByDateTravaux(dateDebut, dateFin, id).subscribe(result => {
+   /* this.achatTravauxService.getDetailAchatTravauxByDateTravaux(dateDebut, dateFin, id).subscribe(result => {
       if (result.length !== 0){
         this.detailAchatTravaux = result;
         this.detailAchatTravaux.forEach( v => {
@@ -199,7 +202,7 @@ export class CumulParDateComponent implements OnInit {
       }
 
       console.log('lenght6', this.detailTransport.length);
-    });
+    });*/
     this.total = this.somme + this.somme1 + this.somme2 + this.somme3 + this.somme4 + this.somme5 + this.somme6 ;
     if(localStorage.getItem('currentUser')) {
       const token = localStorage.getItem('currentUser');

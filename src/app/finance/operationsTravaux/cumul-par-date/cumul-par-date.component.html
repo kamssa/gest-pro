@@ -11,7 +11,7 @@
               <button mat-raised-button	 *ngIf="projet">Dépense totale</button>
               <button mat-raised-button	>{{total || "0"}}</button>
             </div>
-            <div  *ngIf="detailAutreAchatTravaux?.length > 0">
+            <div  *ngIf="autreAchatTravaux?.length > 0">
               <table class="table table-striped" style="font-size: 12px">
                 <thead >
                 <h3>Achat de materiel</h3>
@@ -19,19 +19,17 @@
                 <thead>
                 <tr>
                   <th>Date</th>
+                  <th >Numero Facture</th>
                   <th >Désignation</th>
-                  <th >Prix unitaire</th>
-                  <th>Quantité</th>
                   <th >Montant</th>
                 </tr>
                 </thead>
-                <tbody  *ngFor="let autre of detailAutreAchatTravaux">
+                <tbody  *ngFor="let achat of autreAchatTravaux">
                 <tr>
-                  <td >{{autre?.date | date: 'dd/MM/yyyy'}}</td>
-                  <td >{{autre?.libelleMateriaux}}</td>
-                  <td >{{autre?.prixUnitaire}}</td>
-                  <td >{{autre?.quantite}}</td>
-                  <td >{{autre?.montant }}</td>
+                  <td >{{achat?.date | date: 'dd/MM/yyyy'}}</td>
+                  <td >{{achat?.numeroFacture}}</td>
+                  <td >{{achat?.libelle}}</td>
+                  <td >{{achat?.montant }}</td>
                 </tr>
                 </tbody>
 

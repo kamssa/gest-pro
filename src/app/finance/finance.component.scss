@@ -20,8 +20,6 @@ md-chip {
 }
 .item{
   margin: 5px;
-
-
 }
 
 .item:nth-child(1){
@@ -81,4 +79,12 @@ md-chip {
 .active {
   background-color: yellow;
 }
-
+.edit-1{
+  width: 400px;
+}
+button:active hover {
+  color: red;
+}
+button:hover {
+  color: red;
+}

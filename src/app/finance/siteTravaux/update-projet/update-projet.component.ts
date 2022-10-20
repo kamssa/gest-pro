@@ -56,7 +56,7 @@ export class UpdateProjetComponent implements OnInit {
                   libelle: this.projet.libelle,
                   description: this.projet.description,
                   numeroBon: this.projet.numeroBon,
-                  budget: this.projet.budget,
+                  montantFacture: this.projet.montantFacture,
                   accompte: this.projet.accompte,
                   reste: this.projet.reste,
                   total: this.projet.total,
@@ -68,7 +68,9 @@ export class UpdateProjetComponent implements OnInit {
                   client: this.fb.group({
                    id: this.projet.client.id,
                     version: this.projet.client.version,
+                    libelle: this.projet.client.libelle,
                     nom: this.projet.client.nom,
+                    prenom: this.projet.client.prenom,
                     type: 'CLIENT'
                   }),
                 });

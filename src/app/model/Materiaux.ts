@@ -6,6 +6,7 @@ export class Materiaux {
               public  libelle?: string,
               public  description?: string,
               public unite?: string,
+              public selected?: boolean,
               public categorie?: Categorie) {
   }
 }

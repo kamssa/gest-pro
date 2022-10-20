@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {Observable} from 'rxjs';
 import {Resultat} from '../model/resultat';
-import {Departement} from '../model/Departement';
 import {environment} from '../../environments/environment';
 import {Role} from '../model/Role';
 

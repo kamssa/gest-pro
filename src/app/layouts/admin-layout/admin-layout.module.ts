@@ -95,6 +95,7 @@ import {LayoutFourniseurComponent} from '../../comptabilite/fournisseur/layout-f
 import {CarburantParVehiculeComponent} from '../../comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
 import {CarburantParVehiculeMoisComponent} from '../../comptabilite/carburant/carburant-par-vehicule-mois/carburant-par-vehicule-mois.component';
 import {DepartementModule} from '../../dep/departement.module';
+import {EditDetailAutreAchatComponent} from '../../finance/operationsTravaux/autreAchatTravaux/edit-detail-autre-achat/edit-detail-autre-achat.component';
 
 
 
@@ -187,6 +188,7 @@ import {DepartementModule} from '../../dep/departement.module';
       LayoutFourniseurComponent,
       CarburantParVehiculeComponent,
       CarburantParVehiculeMoisComponent,
+
 
 
     ],

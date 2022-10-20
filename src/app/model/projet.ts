@@ -12,7 +12,6 @@ export class Projet {
               public  numeroPojet?: string,
               public  montantFacture?: number,
               public  accompte?: number,
-              public  budget?: number,
               public  reste?: number,
               public  total?: number,
               public  debousserSec?: number,

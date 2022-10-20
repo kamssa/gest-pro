@@ -67,7 +67,7 @@ export class AddCategorieComponent implements OnInit {
       this.categorie = {
         libelle: this.categorieService.form.value.libelle,
         description: this.categorieService.form.value.description,
-        idEntreprise: this.personne.entreprise.id
+        idEntreprise: this.personne.departement.entreprise.id
       };
       this.categorieService.ajoutCategorie(this.categorie).subscribe(res =>{
         if(res.status === 0){

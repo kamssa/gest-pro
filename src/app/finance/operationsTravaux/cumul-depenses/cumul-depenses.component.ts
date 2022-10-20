@@ -29,6 +29,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import html2canvas from 'html2canvas';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
+import {AutreAchatTravaux} from '../../../model/AutreAchatTravaux';
 
 @Component({
   selector: 'app-cumul-depenses',
@@ -39,6 +40,7 @@ export class CumulDepensesComponent implements OnInit {
   displayedColumns: string[] = ['date', 'nom',  'salaire', 'nombreJour', 'montantVerser' ];
   dataSource: MatTableDataSource<DetailMainOeuvre>;
   receptacle: any = [];
+  autreAchatTravaux: AutreAchatTravaux[] = [];
   detailMainOeuvre: DetailMainOeuvre[] = [];
   detailAutreAchatTravaux: DetailAutreAchatTravaux[];
   detailAchatTravaux: DetailAchatTravaux[] = [];
@@ -95,14 +97,25 @@ this.projetService.getProjetById(this.data['projet'])
   }
 
   ngOnInit(): void {
+    this.autreAchatTravauxService.getAutreAchatTravauxByTravaux(this.data['projet'])
+      .subscribe(data => {
+        this.autreAchatTravaux = data;
+
+        this.autreAchatTravauxService.getAutreAchatTravauxMontantByTravaux(this.data['projet'])
+          .subscribe(res => {
+            console.log(res);
+            this.somme = res;
+            //console.log(this.somme);
+          });
+      });
     this.autreAchatTravauxService.getDetailAutreAchatByTravaux(this.data['projet']).subscribe(result => {
       console.log('detail autre achat travaux par id travaux', result);
       this.detailAutreAchatTravaux = result;
       this.autreAchatTravauxService.getAutreDetailAchatTravauxMontantByTravaux(this.data['projet'])
         .subscribe(res => {
           console.log(res);
-          this.somme = res;
-          console.log(this.somme);
+          //this.somme = res;
+          //console.log(this.somme);
         });
 
     });

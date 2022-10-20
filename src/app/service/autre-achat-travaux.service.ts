@@ -7,6 +7,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
+import {Projet} from '../model/projet';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,16 @@ export class AutreAchatTravauxService {
         catchError(this.handleError<Resultat<AutreAchatTravaux>>('ajoutAchatTravaux'))
       );
   }
+
+  getAutreAchatTravauxMontantByTravaux(id: number): Observable<any> {
+    // @ts-ignore
+    return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantAutreAchatTravaux/${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<any>('getAchatTravauxByTravaux'))
+      );
+  }
   getAutreDetailAchatTravauxMontantByTravaux(id: number): Observable<any> {
     // @ts-ignore
     return this.http.get<Resultat<any>>(`${environment.apiUrl}/api/montantAutreAchat/${id}`)
@@ -63,6 +74,17 @@ export class AutreAchatTravauxService {
         tap(res =>
           this.log(`travaux trouve =${res}`))),
         catchError(this.handleError<Resultat<DetailAutreAchatTravaux[]>>('getAchatTravauxByTravaux'))
+      );
+  }
+  // recuperer achat par id travaux
+  getAutreAchatTravauxByDateTravaux( dateDebut: string, dateFin: string, travauxId: number): Observable<AutreAchatTravaux[]> {
+    // @ts-ignore
+    return this.http.get<Resultat<AutreAchatTravaux[]>>(
+      `${environment.apiUrl}/api/autreAchatTravauxDate?dateDebut=${dateDebut}&dateFin=${dateFin}&travauxId=${travauxId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<Resultat<AutreAchatTravaux[]>>('getAchatTravauxByTravaux'))
       );
   }
   modifAchatTravaux(achatTravaux: AutreAchatTravaux): Observable<Resultat<AutreAchatTravaux>> {
@@ -102,6 +124,15 @@ export class AutreAchatTravauxService {
           this.log(`travaux trouve =${res}`))),
         catchError(this.handleError<Resultat<DetailAutreAchatTravaux[]>>('getAchatTravauxByTravaux'))
       );
+  }
+  rechercheAutreAchatParMc(numFacture: string, projetId: number): Observable<AutreAchatTravaux> {
+    return this.http.get<Resultat<AutreAchatTravaux>>(`${environment.apiUrl}/api/rechercheAutreAchatTravauxParNum/?numeroFacture=${numFacture}&projetId=${projetId}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`travaux trouve =${res}`))),
+        catchError(this.handleError<AutreAchatTravaux>('rechercheTravauxParMc'))
+      );
+
   }
   supprimerDetail(id: number, idDetail: number): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/api/autreAchatTravaux/${id}/${idDetail}`);

@@ -88,7 +88,6 @@ export class EditeProjetComponent implements OnInit {
                       description: this.projet.description,
                       numeroBon: this.projet.numeroBon,
                       montantFacture: this.projet.montantFacture,
-                      budget: this.projet.budget,
                       accompte: this.projet.accompte,
                       reste: this.projet.reste,
                       total: this.projet.total,
@@ -100,7 +99,9 @@ export class EditeProjetComponent implements OnInit {
                       client: this.fb.group({
                         id: this.projet.client.id,
                         version: this.projet.client.version,
+                        libelle: this.projet.client.libelle,
                         nom: this.projet.client.nom,
+                        prenom: this.projet.client.prenom,
                         type: 'CLIENT'
                       }),
                     });

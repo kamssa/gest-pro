@@ -24,6 +24,7 @@ clientForm: FormGroup;
           this.clientForm = this.fb.group({
             id: this.client.id,
             version: this.client.version,
+            libelle: this.client.libelle,
             nom: this.client.nom,
             prenom: this.client.prenom,
             email: this.client.email,

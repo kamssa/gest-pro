@@ -210,6 +210,9 @@ export const AdminLayoutRoutes: Routes = [
         children: [
           {path: 'addImage/:id', component: AddImageComponent},
           {path: 'edite/:id', component: EditTecniqueComponent},
+          {
+            path: 'creer', component: EditSiteTravauxComponent,
+          }
         ]},
 
     ]},

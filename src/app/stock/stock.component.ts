@@ -127,11 +127,8 @@ export class StockComponent implements OnInit {
   applyFilter() {
   }
   onCreate() {
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
       this.router.navigate(['/detailStock']);
-    }else if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
-      this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
+
 
   }
 
@@ -148,7 +145,7 @@ export class StockComponent implements OnInit {
   }
 
   onCategorie(ev) {
-    ev = this.personne.entreprise.id;
+    ev = this.personne.departement.entreprise.id;
     this.router.navigate(['/listDetailStock', ev]);
   }
 }

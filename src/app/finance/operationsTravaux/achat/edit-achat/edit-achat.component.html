@@ -4,20 +4,17 @@
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <p>Les informations sur le chantier : {{projet.libelle}}</p>
         </mat-panel-title>
         <mat-panel-description>
           {{panelOpenState ? 'Fermer' : 'Ouvrir'}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <h3 class="site">Site : {{projet.libelle}}</h3>
+      <h3><span class="titre">Les informations sur le chantier : {{projet.libelle}}</span></h3>
       <h3 class="site">Numero du bon  : {{projet.numeroBon}}</h3>
       <h3 class="site">Nom du chantier : {{projet.libelle }}</h3>
-      <h3 class="site">Budget : {{projet.budget | number}}</h3>
-      <h3 class="site"> Solde : {{projet.reste| number}}</h3>
       <h3 class="site">Dépense : {{projet.total | number}}</h3>
       <h3 class="site">Debut des travaux : {{projet.date | date: 'dd/MM/yyyy'}}</h3>
-      <h3 class="site">Date de livraison : </h3>
+      <h3 class="site">Date de livraison : {{projet.dateLivraison | date: 'dd/MM/yyyy'}}</h3>
     </mat-expansion-panel>
   </mat-accordion>
 

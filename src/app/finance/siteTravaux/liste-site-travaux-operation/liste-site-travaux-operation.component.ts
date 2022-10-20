@@ -90,6 +90,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
   autreachat() {
     this.edit = 7;
   }
+
   montantChange($event) {
     if ($event){
       this.achatTravauxService.travauxCreer$.subscribe(
@@ -140,7 +141,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
 
       data: {
         dialogConfig,
-        travaux: id
+        projet: id
       }
     });
     this.projetService.projetModif$
@@ -189,5 +190,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
       }
     });
   }
+
+
 }
 

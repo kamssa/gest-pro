@@ -36,8 +36,9 @@
 
                             </div>
                           </div>
-                          <div>
-                            <ul  *ngFor="let tr of oTravaux | async"  class="list-group">
+                          <div class="rech">
+                          <div *ngFor="let tr of oTravaux | async">
+                            <ul    class="list-group">
                               <a class="list-group-item  clearfix"
                                  [routerLink]="[tr.id]"
                                  (click)="onSelect(tr)">
@@ -46,15 +47,16 @@
                                     <p> {{tr.budget | number}}</p>
                                   </span>
                               </a>
+                            </ul>
                               <div fxLayout="row" fxLayoutAlign="space-around center">
                                 <button  mat-button color="primary" (click)="onImages(tr.id)">Voir les images</button>
                               </div>
 
                               <mat-divider></mat-divider>
-                            </ul>
+
                           </div>
                         </div>
-
+                        </div>
 
                       </div>
                       <div>
@@ -65,7 +67,7 @@
                   <div class="item">
                     <div class="action">
                       <div class="action-1">
-                        <a mat-mini-fab matTooltip="Accueil appli" routerLink="/finance"
+                        <a mat-mini-fab matTooltip="Accueil appli" routerLink="/technique"
                            matTooltipPosition="before" color="primary">
                           <mat-icon>home</mat-icon>
                         </a>
@@ -73,17 +75,13 @@
 
                       <div class="action-2">
                         <div>
-
+                          <div class="" matTooltip="créer un nouvau projet" matTooltipPosition="right">
+                            <a mat-mini-fab routerLink="creer" color="warn">
+                              <mat-icon>add</mat-icon>
+                            </a>
+                          </div>
                         </div>
                       </div>
-                      <div class="action-3">
-                        <div class="" matTooltip="modifier un projet" matTooltipPosition="right">
-                          <a mat-mini-fab (click)="modifier()" color="warn">
-                            <mat-icon>add</mat-icon>
-                          </a>
-                        </div>
-                      </div>
-
                     </div>
                   </div>
                   <div class="item">
