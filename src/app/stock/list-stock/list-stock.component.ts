@@ -72,7 +72,6 @@ export class ListStockComponent implements OnInit {
         this.personne = resultat.body;
         this.roles = resultat.body.roles;
         this.roles.forEach(val => {
-          console.log(val.name);
           this.ROLE_NAME = val.name;
           if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
             this.ROLE_MANAGER = this.ROLE_NAME;
@@ -152,7 +151,6 @@ export class ListStockComponent implements OnInit {
         this.personne = res.body;
         this.roles = res.body.roles;
         this.roles.forEach(val => {
-          console.log(val.name);
           this.ROLE_NAME = val.name;
           if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
             this.ROLE_MANAGER = this.ROLE_NAME;
@@ -174,9 +172,14 @@ export class ListStockComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
   onCreate(ev) {
+    console.log(this.personne.departement);
+  if(ev){
+    ev = this.personne.departement.entreprise.id;
+    this.router.navigate(['/detailStock', ev]);
+  }else {
+    console.log('probleme');
+  }
 
-      ev = this.personne.departement.entreprise.id;
-      this.router.navigate(['/detailStock', ev]);
 
 
   }
