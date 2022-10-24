@@ -111,33 +111,7 @@ export class ListStockComponent implements OnInit {
 
 
           });
-        }else if (this.personne.type === 'EMPLOYE'){
-          this.employeService.getEmployeById(this.personne.id).subscribe(
-            rest => {
-              this.personne = rest.body;
-              console.log(this.personne);
-              this.nav = false;
-              this.detailStockService.getAllDetailStock().subscribe(list => {
-                this.array = list.body.map(item => {
-                  return {
-                    id: item.id,
-                    ...item
-                  };
-                });
-                this.listData = new MatTableDataSource(this.array);
-                this.listData.sort = this.sort;
-                this.listData.paginator = this.paginator;
-                this.listData.filterPredicate = (data, filter) => {
-                  return this.displayedColumns.some(ele => {
-                    return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
-                  });
-                };
-
-              });
-            });
-
         }
-
       });
 
     }
