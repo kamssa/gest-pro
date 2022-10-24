@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Departement} from '../../model/Departement';
 import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {Employe} from '../../model/Employe';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {NotificationService} from '../../helper/notification.service';
@@ -14,6 +14,7 @@ import {EmployeService} from '../../service/employe.service';
 import {CategorieService} from '../../service/categorie.service';
 import {AddCategorieComponent} from '../add-categorie/add-categorie.component';
 import {AuthService} from '../../service/auth.service';
+import {Entreprise} from '../../model/Entreprise';
 
 @Component({
   selector: 'app-list-categorie',
@@ -47,6 +48,7 @@ export class ListCategorieComponent implements OnInit {
               private _snackBar: MatSnackBar,
               private helper: JwtHelperService,
               private authService: AuthService,
+              @Inject(MAT_DIALOG_DATA) public data: Entreprise,
               private employeService: EmployeService)
   {
 

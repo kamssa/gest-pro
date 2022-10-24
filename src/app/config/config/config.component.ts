@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddStaionEssenceComponent} from '../../stationEssence/add-staion-essence/add-staion-essence.component';
 import {AuthService} from '../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {ListCategorieComponent} from '../../categorie/list-categorie/list-categorie.component';
 
 @Component({
   selector: 'app-config',
@@ -18,6 +19,7 @@ export class ConfigComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private authService: AuthService,
+
               private helper: JwtHelperService) { }
 
   ngOnInit(): void {
@@ -63,6 +65,21 @@ export class ConfigComponent implements OnInit {
         entreprise: this.entreprise
       }
 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
+
+  listCategorie() {
+    console.log('Dans config', this.entreprise);
+    const dialogRef = this.dialog.open(ListCategorieComponent,{
+      /*data: {
+        entreprise: this.entreprise
+      }
+*/
     });
 
     dialogRef.afterClosed().subscribe(result => {

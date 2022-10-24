@@ -25,7 +25,6 @@ export const ROUTES: RouteInfo[] = [
   { path: '/client', title: 'Recrouvement',  icon: 'person', class: ''  },
   { path: '/userProfile', title: 'Gestion Employés',  icon: 'person', class: ''  },
   { path: '/dep', title: 'Gestion Departement',  icon: 'domain', class: '' },
-  { path: '/categorie', title: 'Gestion Categories',  icon: 'domain', class: '' },
 ];
 @Component({
   selector: 'app-sidebar',

@@ -46,12 +46,23 @@
                 </mat-accordion>
 
             </div>
-            <div class="alert alert-info alert-with-icon" data-notify="container">
-              <i class="material-icons" data-notify="icon">add_alert</i>
-              <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <i class="material-icons">close</i>
-              </button>
-              <span data-notify="message">This is a notification with close button and icon.</span>
+            <div class="alert alert-info">
+
+                <mat-accordion>
+                <mat-expansion-panel  (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span>configuration categories </span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      {{panelOpenState ? 'Fermer' : 'Ouvrir'}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <app-list-categorie></app-list-categorie>
+                </mat-expansion-panel>
+              </mat-accordion>
+
             </div>
             <div class="alert alert-info alert-with-icon" data-notify="container">
               <i class="material-icons" data-notify="icon">add_alert</i>
