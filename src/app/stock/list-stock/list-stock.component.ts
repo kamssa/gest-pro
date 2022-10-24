@@ -189,7 +189,7 @@ export class ListStockComponent implements OnInit {
 
   }
   onEdit(row){
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
@@ -200,14 +200,13 @@ export class ListStockComponent implements OnInit {
         }
 
       });
-    }else if (this.ROLE_NAME === 'ROLE_EMPLOYE') {
-      this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
+
   }
   onDelete(row){
 
       if (confirm('Voulez-vous vraiment supprimer un élément du stock ?')){
         this.stockService.supprimerStock(row.id).subscribe(result => {
+
         if(result.status === 0){
           this.notificationService.warn('Suppression avec succès');
           const index: number = this.array.indexOf(row);
