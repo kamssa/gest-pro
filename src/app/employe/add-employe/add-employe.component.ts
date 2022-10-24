@@ -113,12 +113,12 @@ export class AddEmployeComponent implements OnInit {
       this.employeService.getEmployeById(this.employeService.form.value.id)
         .subscribe(data => {
           console.log(data.body);
-          if(this.code === null || this.code === undefined){
+
             this.employe = {
               id:  this.employeService.form.value.id,
               version:  this.employeService.form.value.version,
               email: this.employeService.form.value.email,
-              telephone: data.body.telephone,
+              telephone: this.employeService.form.value.telephone,
               nom: this.employeService.form.value.nom,
               prenom: this.employeService.form.value.prenom,
               fonction: this.employeService.form.value.fonction,
@@ -127,23 +127,7 @@ export class AddEmployeComponent implements OnInit {
               type:'EMPLOYE'
             };
 
-          }else{
-
-            this.employe = {
-              id:  this.employeService.form.value.id,
-              version:  this.employeService.form.value.version,
-              nom: this.employeService.form.value.nom,
-              prenom: this.employeService.form.value.prenom,
-              email: this.employeService.form.value.email,
-              telephone: data.body.telephone,
-              password: '',
-              actevated: this.employeService.form.value.actevated,
-              departement: data.body.departement,
-              type:'EMPLOYE'
-            };
-
-          }
-          console.log(this.employe);
+            console.log(this.employe);
           this.store.dispatch(new UpdateEmpoyesAction(this.employe));
           this.notificationService.success('Employé modifié avec succès');
           this.employeService.form.reset();

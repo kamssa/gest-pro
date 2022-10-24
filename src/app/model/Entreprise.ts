@@ -1,10 +1,10 @@
 import {Adresse} from './Adresse';
 import {Personne} from './Personne';
-import {Departement} from './Departement';
 
 export class Entreprise extends Personne{
   constructor(public id ?: number,
               public version?: number,
+              public libelle ?: string,
               public description ?: string,
               public logo ?: string,
               public nom ?: string,

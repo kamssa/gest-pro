@@ -11,6 +11,8 @@
           <a class="btn-dialog-close" mat-stroked-button routerLink="/stock">
             <mat-icon>undo</mat-icon></a>
           <span style="color: blue">{{array?.length}} ligne(s)</span>
+
+
           <mat-form-field class="search-form-field" floatLabel="never">
             <input matInput [(ngModel)]="searchKey" placeholder="Recherche..." autocomplete="off" (keyup)="applyFilter()">
             <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"  (click)="onSearchClear()">
@@ -34,12 +36,19 @@
               <mat-cell *matCellDef="let element">{{element?.montant | number}} F CFA</mat-cell>
             </ng-container>
             <ng-container matColumnDef="actions">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let row">
-                <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
-                <button mat-icon-button color="warn" (click)="onArticle(row)"
-                        matTooltip="Voir les articles"><mat-icon>reorder</mat-icon></button>
-                <button mat-icon-button color="warn" (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
+
+              <th mat-header-cell *matHeaderCellDef></th>
+              <mat-cell *matCellDef="let row"  >
+                <button mat-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item   (click)="onEdit(row)">Modifier</button>
+                  <button mat-menu-item   (click)="retraitStock(row)">Retirer du stock</button>
+                  <button mat-menu-item   (click)="onArticle(row)"
+                          matTooltip="Voir les articles">Voir les articles</button>
+                  <button mat-menu-item    (click)="onDelete(row)">Supprimer</button>
+                </mat-menu>
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="loading">

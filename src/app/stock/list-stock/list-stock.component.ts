@@ -20,6 +20,7 @@ import {DetailStockHistory} from '../../model/DetailStockHistory';
 import {AddMaterielComponent} from '../../materiel/add-materiel/add-materiel.component';
 import {EditStockComponent} from '../edit-stock/edit-stock.component';
 import {AuthService} from '../../service/auth.service';
+import {RetraitStockComponent} from '../retrait-stock/retrait-stock.component';
 
 @Component({
   selector: 'app-list-stock',
@@ -48,7 +49,6 @@ export class ListStockComponent implements OnInit {
   error = '';
   ROLE_MANAGER: any;
   id: number;
-  detailStockHistory: DetailStockHistory[];
   constructor(private detailStockService: DetailStockService,
               private stockService: StockService,
               private detailHistoryService: DetailHistoryService,
@@ -82,12 +82,8 @@ export class ListStockComponent implements OnInit {
         if (this.personne.type === 'EMPLOYE'){
           this.employeService.getEmployeById(this.personne.id).subscribe( result => {
             this.personne = result.body;
-            console.log(this.personne);
             this.nav = true;
-            this.route.params.subscribe(params => {
-              this.id = +params['id'];
-              this.stockService.getStockentreByIdEntreprise(this.id).subscribe(list => {
-              console.log(list.status);
+            this.stockService.getStockentreByIdEntreprise(this.personne.departement.entreprise.id).subscribe(list => {
                 if (list.status === 1){
                   this.notificationService.warn('Pas d\'articles enregistrés !') ;
 
@@ -112,7 +108,7 @@ export class ListStockComponent implements OnInit {
 
                 }
               });
-            });
+
 
           });
         }else if (this.personne.type === 'EMPLOYE'){
@@ -179,6 +175,19 @@ export class ListStockComponent implements OnInit {
     this.router.navigate(['/detailStock', ev]);
   }
 
+  retraitStock(row){
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '60%';
+      const dialogRef = this.dialog.open(RetraitStockComponent, {
+        data: {
+          stock: row.id
+        }
+
+      });
+
+  }
   onEdit(row){
     if (this.ROLE_NAME === 'ROLE_MANAGER'){
       const dialogConfig = new MatDialogConfig();
@@ -195,9 +204,7 @@ export class ListStockComponent implements OnInit {
       this.notificationService.warn('vous n\'êtes pas autorisé !') ;
     }
   }
-
   onDelete(row){
-    if (this.ROLE_NAME === 'ROLE_MANAGER') {
 
       if (confirm('Voulez-vous vraiment supprimer un élément du stock ?')){
         this.stockService.supprimerStock(row.id).subscribe(result => {
@@ -221,9 +228,6 @@ export class ListStockComponent implements OnInit {
 
       }
 
-    }else {
-      this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
 
   }
 

@@ -5,7 +5,7 @@
         <p *ngIf="personne">{{personne?.nom}}. Bienvenue {{personne?.email}}.</p>
       </span>
       <span *ngIf="!nav">
-        <p *ngIf="personne">{{personne?.departement?.libelle}}. Bienvenue {{personne?.nomComplet}}.</p>
+        <p *ngIf="personne">{{personne?.departement?.libelle}}.{{personne?.fonction}}. Bienvenue {{personne?.nomComplet}}.</p>
       </span>
     </div>
 

@@ -64,7 +64,7 @@ export class EmployeEffects {
     () => this.effectActions.pipe(
       ofType(EmployeActionsTypes.UPDATE_EMPLOYES),
       mergeMap((action: EmployesActions) => {
-        return this.employeService.modifEmploye(action.payload['body'])
+        return this.employeService.modifEmploye(action.payload)
           .pipe(
             map((employe) =>
               new UpdateEmpoyesActionSuccess(employe)),
@@ -79,7 +79,7 @@ export class EmployeEffects {
     () => this.effectActions.pipe(
       ofType(EmployeActionsTypes.DELETE_EMPLOYES),
       mergeMap((action: EmployesActions) => {
-        return this.employeService.deleteEmployeById(action.payload['body'])
+        return this.employeService.deleteEmployeById(action.payload)
           .pipe(
             map((employe) =>
               new DeleteEmployesActionSuccess(employe)),

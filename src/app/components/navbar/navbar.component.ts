@@ -173,6 +173,6 @@ export class NavbarComponent implements OnInit {
   }
 
   onPasowork() {
-    this.router.navigate(['entreEmail']);
+    this.router.navigate(['modifPassword']);
   }
 }

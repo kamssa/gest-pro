@@ -7,6 +7,7 @@ import {environment} from '../../environments/environment';
 import {Employe} from '../model/Employe';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError, map, tap} from 'rxjs/operators';
+import {Personne} from '../model/Personne';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,17 @@ export class EmployeService {
         this.log(`Client modifié =${res.body}`);
       }),
       catchError(this.handleError<Resultat<Employe>>('modifClient'))
+    );
+  }
+  updateInfo(employe: Employe): Observable<Resultat<Employe>> {
+    console.log('methode du service qui modifie un employe', employe);
+    return this.http.put<Resultat<Employe>>
+    (`${environment.apiUrl}/api/updateInfoEmploye`,
+      employe).pipe(
+      tap(res => {
+        this.log(`Client modifié =${res.body}`);
+      }),
+      catchError(this.handleError<Resultat<Employe>>('updateInfo'))
     );
   }
   /*public setEmployeActivated(employe: Employe): Observable<Resultat<Employe>>{

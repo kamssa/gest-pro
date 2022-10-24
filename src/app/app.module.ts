@@ -40,6 +40,7 @@ import {CarburantEffects} from './comptabilite/carburant/ngrx-carburant/carburan
 import {carburantReducer} from './comptabilite/carburant/ngrx-carburant/carburant.reducer';
 import { CarburantParVehiculeComponent } from './comptabilite/carburant/carburant-par-vehicule/carburant-par-vehicule.component';
 import { CarburantParVehiculeMoisComponent } from './comptabilite/carburant/carburant-par-vehicule-mois/carburant-par-vehicule-mois.component';
+import { RetraitStockComponent } from './stock/retrait-stock/retrait-stock.component';
 
 
 
@@ -50,6 +51,7 @@ registerLocaleData(localeFr);
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [

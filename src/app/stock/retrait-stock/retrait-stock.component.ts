@@ -1,28 +1,28 @@
 import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Stock} from '../../model/Stock';
-import {ActivatedRoute, Router} from '@angular/router';
-import {StockService} from '../../service/stock.service';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {MaterielService} from '../../service/materiel.service';
 import {Materiaux} from '../../model/Materiaux';
 import {Employe} from '../../model/Employe';
-import {EmployeService} from '../../service/employe.service';
+import {Observable} from 'rxjs';
+import {StockService} from '../../service/stock.service';
+import {CategorieService} from '../../service/categorie.service';
+import {MaterielService} from '../../service/materiel.service';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../service/auth.service';
 import {DialogConfirmService} from '../../helper/dialog-confirm.service';
 import {NotificationService} from '../../helper/notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {EmployeService} from '../../service/employe.service';
 import {DetailStockService} from '../../service/detail-stock.service';
-import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {CategorieService} from '../../service/categorie.service';
-import {AuthService} from '../../service/auth.service';
 
 @Component({
-  selector: 'app-edit-stock',
-  templateUrl: './edit-stock.component.html',
-  styleUrls: ['./edit-stock.component.scss']
+  selector: 'app-retrait-stock',
+  templateUrl: './retrait-stock.component.html',
+  styleUrls: ['./retrait-stock.component.scss']
 })
-export class EditStockComponent implements OnInit {
+export class RetraitStockComponent implements OnInit {
   stockForm: FormGroup;
   editMode = false;
   stock: Stock;
@@ -93,26 +93,26 @@ export class EditStockComponent implements OnInit {
             this.personne = res.body;
             console.log( this.personne);
             this.nav = true;
-            this.route.params.subscribe(params => {
-              this.id = +params['id'];
-              this.categorieService.getMatByIdEntreprise(this.id).subscribe(data => {
+            this.categorieService.getMatByIdEntreprise(this.personne.departement.entreprise.id).subscribe(data => {
 
-             this.materiaux = data.body;
-             this.filteredOptions = this.myControl.valueChanges.pipe(
+                this.materiaux = data.body;
+                this.filteredOptions = this.myControl.valueChanges.pipe(
 
-               startWith(''),
+                  startWith(''),
                   map(value => (typeof value === 'string' ? value : value.libelle)),
                   map(libelle => (libelle ? this.filter(libelle) : this.materiaux.slice())),
                 );
               });
-            });
+
 
             if (this.data['stock']){
               this.editMode = true;
+
               this.stockService.getStockById(this.data['stock'])
                 .subscribe(result => {
 
                   this.stock = result.body;
+                  console.log('Voir le stock', this.stock);
                   this.detailStockInit = new FormArray([]);
                   if (this.stock.detailStock.length !== 0) {
                     for (const detailStock of this.stock.detailStock) {
@@ -161,7 +161,7 @@ export class EditStockComponent implements OnInit {
 
     return this.materiaux.filter(option => option.libelle.toLowerCase().includes(filterValue));
   }
-   displayFn(mat: Materiaux): string {
+  displayFn(mat: Materiaux): string {
     this.selected = mat && mat.libelle ? mat.libelle : '';
     this.materiau = mat;
     localStorage.setItem('materiau', JSON.stringify(mat));
@@ -214,37 +214,37 @@ export class EditStockComponent implements OnInit {
       this.materiau = JSON.parse(localStorage.getItem('materiau'));
 
       this.stock = {
-          libelle: this.materiau.categorie.libelle,
-          entreprise: this.personne.departement.entreprise,
-          detailStock: [
-            {
-              libelleMateriaux: this.materiau.libelle,
-              unite: this.materiau.unite,
-              prixUnitaire: parseInt(this.valueInput.nativeElement.value),
-              quantite: parseInt(this.quantiteInput.nativeElement.value),
-              frais: parseInt(this.fraisInput.nativeElement.value),
-              categorie: this.materiau.categorie,
-              fournisseur: {
-                id: null,
-                version: null,
-                libelle: this.fournisseurInput.nativeElement.value
-              },
-            }
-          ]
-        };
+        libelle: this.materiau.categorie.libelle,
+        entreprise: this.personne.departement.entreprise,
+        detailStock: [
+          {
+            libelleMateriaux: this.materiau.libelle,
+            unite: this.materiau.unite,
+            prixUnitaire: parseInt(this.valueInput.nativeElement.value),
+            quantite: parseInt(this.quantiteInput.nativeElement.value),
+            frais: parseInt(this.fraisInput.nativeElement.value),
+            categorie: this.materiau.categorie,
+            fournisseur: {
+              id: null,
+              version: null,
+              libelle: this.fournisseurInput.nativeElement.value
+            },
+          }
+        ]
+      };
       console.log('Voir stock retourne', this.stock);
 
 
       localStorage.removeItem('materiau');
       this.stockService.ajoutStock(this.stock)
-             .subscribe(data => {
-               if (data.status === 0){
-                localStorage.removeItem('materiau');
-                 this.stock = data.body;
-                 this.notificationService.warn('Enregistrement effectué avec succès');
-                 this.router.navigate(['/listDetailStock', this.personne.departement.entreprise.id]);
-               }
-             });
+        .subscribe(data => {
+          if (data.status === 0){
+            localStorage.removeItem('materiau');
+            this.stock = data.body;
+            this.notificationService.warn('Enregistrement effectué avec succès');
+            this.router.navigate(['/listDetailStock', this.personne.departement.entreprise.id]);
+          }
+        });
 
     }else {
       this.materiau = JSON.parse(localStorage.getItem('materiau'));
@@ -291,6 +291,6 @@ export class EditStockComponent implements OnInit {
   }
 
   retour() {
- this.router.navigate(['/listDetailStock', this.personne.departement.entreprise.id]);
+    this.router.navigate(['/listDetailStock', this.personne.departement.entreprise.id]);
   }
 }

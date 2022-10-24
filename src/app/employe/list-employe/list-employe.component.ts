@@ -119,6 +119,7 @@ export class ListEmployeComponent implements OnInit, AfterViewInit{
 
   onDelete(row){
     if(confirm('Voulez-vous vraiment supprimer l\'employe ?')){
+      console.log(row);
       this.store.dispatch(new DeleteEmployesAction(row.id));
       this.notificationService.warn('Suppression avec succès');
     }
