@@ -16,8 +16,6 @@ import {StockService} from '../../service/stock.service';
 import {DetailStockService} from '../../service/detail-stock.service';
 import {DetailStock} from '../../model/DetailStock';
 import {DetailHistoryService} from '../../service/detail-history.service';
-import {DetailStockHistory} from '../../model/DetailStockHistory';
-import {AddMaterielComponent} from '../../materiel/add-materiel/add-materiel.component';
 import {EditStockComponent} from '../edit-stock/edit-stock.component';
 import {AuthService} from '../../service/auth.service';
 import {RetraitStockComponent} from '../retrait-stock/retrait-stock.component';

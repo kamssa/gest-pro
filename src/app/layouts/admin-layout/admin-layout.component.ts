@@ -9,6 +9,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotificationService} from '../../helper/notification.service';
 import {UpdateEvolutionService} from '../../service/update-evolution.service';
 import {EmployeService} from '../../service/employe.service';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -26,10 +27,12 @@ export class AdminLayoutComponent implements OnInit {
   error = '';
   ROLE_MANAGER: any;
   personne: any;
+  userRoles: string [] = [];
   constructor(public location: Location, private router: Router,
               private notificationService: NotificationService,
               private helper: JwtHelperService,
               private employeService: EmployeService,
+              private authService: AuthService,
               private updateEvolutionService: UpdateEvolutionService) {
   }
 
@@ -76,9 +79,9 @@ export class AdminLayoutComponent implements OnInit {
     }
 
     const window_width = $(window).width();
-    let $sidebar = $('.sidebar');
-    let $sidebar_responsive = $('body > .navbar-collapse');
-    let $sidebar_img_container = $sidebar.find('.sidebar-background');
+    const $sidebar = $('.sidebar');
+    const $sidebar_responsive = $('body > .navbar-collapse');
+    const $sidebar_img_container = $sidebar.find('.sidebar-background');
 
 
     if (window_width > 767) {
@@ -100,13 +103,13 @@ export class AdminLayoutComponent implements OnInit {
     });
 
     $('.fixed-plugin .badge').click(function() {
-      let $full_page_background = $('.full-page-background');
+      const $full_page_background = $('.full-page-background');
 
 
       $(this).siblings().removeClass('active');
       $(this).addClass('active');
 
-      var new_color = $(this).data('color');
+      const new_color = $(this).data('color');
 
       if ($sidebar.length !== 0) {
         $sidebar.attr('data-color', new_color);
@@ -118,13 +121,13 @@ export class AdminLayoutComponent implements OnInit {
     });
 
     $('.fixed-plugin .img-holder').click(function() {
-      let $full_page_background = $('.full-page-background');
+      const $full_page_background = $('.full-page-background');
 
       $(this).parent('li').siblings().removeClass('active');
       $(this).parent('li').addClass('active');
 
 
-      var new_image = $(this).find('img').attr('src');
+      const new_image = $(this).find('img').attr('src');
 
       if ($sidebar_img_container.length != 0) {
         $sidebar_img_container.fadeOut('fast', function() {
@@ -145,6 +148,22 @@ export class AdminLayoutComponent implements OnInit {
         $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
       }
     });
+    if (localStorage.getItem('currentUser')) {
+      const token = localStorage.getItem('currentUser');
+      const decoded = this.helper.decodeToken(token);
+      this.authService.getPersonneById(decoded.sub).subscribe(resultat => {
+
+        this.personne = resultat.body;
+        this.roles = resultat.body.roles;
+        // Vérifie si le tableau contient le droit de la personne retournnée
+        this.roles.forEach(val => {
+          this.ROLE_NAME = val.name;
+          this.userRoles.push(this.ROLE_NAME);
+        });
+
+      });
+    }
+
   }
 
   ngAfterViewInit() {
@@ -152,7 +171,7 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   isMaps(path) {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
+    let titlee = this.location.prepareExternalUrl(this.location.path());
     titlee = titlee.slice(1);
     if (path == titlee) {
       return false;
@@ -199,8 +218,11 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   stock() {
+    if (this.userRoles.includes('ROLE_ADMINISTRATION') || this.userRoles.includes('ROLE_GESTIONNAIRE_STOCK')) {
       this.router.navigate(['/stock']);
-    //  this.notificationService.warn('vous êtes autorisé !') ;
+    }else {
+      this.notificationService.warn('Vous n\'êtes pas autorisé !') ;
+    }
 
   }
 
