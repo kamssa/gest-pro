@@ -6,7 +6,7 @@
   </mat-toolbar>
   <br>
   <form [formGroup]="carburantService.form" class="normal-form" (submit)="onSubmit()">
-    <mat-card-subtitle>	MODIFIER PROJET</mat-card-subtitle>
+    <mat-card class="mat-card-cvr"> {{vehicule.marque}} - {{vehicule.matriculation}}</mat-card>
     <mat-card-content>
         <div class="controles-container">
           <input type="hidden" formControlName="id">
@@ -26,6 +26,9 @@
           </mat-form-field>
           <mat-form-field>
             <input matInput formControlName="quantite"  placeholder="Quantite">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="quantite"  placeholder="Total">
           </mat-form-field>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Station Essence</mat-label>

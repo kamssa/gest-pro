@@ -23,26 +23,15 @@
       <mat-header-cell *matHeaderCellDef  mat-sort-header>Marque</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.marque}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="carburant">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Carburant</mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-mini-fab  color="warn" (click)="addCarburant(row)"><mat-icon>add</mat-icon></button>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="panne">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Panne</mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-mini-fab  color="warn" (click)="addPanne(row)"><mat-icon>add</mat-icon></button>
-      </mat-cell>
-    </ng-container>
     <ng-container matColumnDef="actions">
-
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row"  >
+      <mat-cell *matCellDef="let row">
         <button mat-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button mat-menu-item   (click)="addCarburant(row)">Carburant</button>
+          <button mat-menu-item   (click)="addPanne(row)">Panne</button>
           <button mat-menu-item   (click)="onEdit(row)">Modifier</button>
           <button mat-menu-item    (click)="onDelete(row)">Supprimer</button>
         </mat-menu>

@@ -1,7 +1,12 @@
 .fill-remaining-space {
   flex: 1 1 auto;
 }
-.addV{
-  height: 500px;
+.container{
+  height: 400px;
   width: 400px;
+}
+.mat-card-cvr{
+  width: 100%;
+  text-align:center;
+  font-size: large;
 }

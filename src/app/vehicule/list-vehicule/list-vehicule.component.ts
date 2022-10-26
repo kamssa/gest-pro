@@ -15,7 +15,6 @@ import {VehiculeState} from '../ngrx-vehicule/vehicule.reducer';
 import {DeleteVehiculeAction} from '../ngrx-vehicule/vehicule.actions';
 import {Entreprise} from '../../model/Entreprise';
 import {AddCarburantComponent} from '../../comptabilite/carburant/add-carburant/add-carburant.component';
-import {CarburantParVehiculeMoisComponent} from '../../comptabilite/carburant/carburant-par-vehicule-mois/carburant-par-vehicule-mois.component';
 
 @Component({
   selector: 'app-list-vehicule',
@@ -23,7 +22,7 @@ import {CarburantParVehiculeMoisComponent} from '../../comptabilite/carburant/ca
   styleUrls: ['./list-vehicule.component.scss']
 })
 export class ListVehiculeComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['chauffeur', 'matriculation', 'couleur', 'marque', 'carburant', 'panne', 'actions'];
+  displayedColumns: string[] = ['chauffeur', 'matriculation', 'couleur', 'marque', 'actions'];
   listData: MatTableDataSource<Resultat<Vehicule[]>>;
   dataSource: any;
   array: any;
@@ -133,17 +132,7 @@ export class ListVehiculeComponent implements OnInit, AfterViewInit {
   }
 
   test(row: any) {
-    console.log('test', row);
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    const dialogRef = this.dialog.open(AddCarburantComponent, {
-      data: {
-        vehicule: row
-      }
 
-    });
 
   }
 }
