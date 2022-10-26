@@ -101,7 +101,8 @@ export class AddCarburantComponent implements OnInit {
         nomChauffeur:  this.carburantService.form.value.nomChauffeur,
         prixUnitaire: this.carburantService.form.value.prixUnitaire,
         quantite: this.carburantService.form.value.quantite,
-        vehicule: this.data['vehicule']
+        vehicule: this.data['vehicule'],
+        entreprise: this.vehicule.entreprise
       };
       this.store.dispatch(new UpdateCarburantsAction(this.carburant));
       this.notificationService.success('Carburant modifié avec succès');

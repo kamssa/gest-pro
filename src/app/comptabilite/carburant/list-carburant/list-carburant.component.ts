@@ -8,13 +8,10 @@ import {VehiculeState} from '../../../vehicule/ngrx-vehicule/vehicule.reducer';
 import {Store} from '@ngrx/store';
 import {AuthService} from '../../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
-import {VehiculeService} from '../../../service/vehicule.service';
+import {MAT_DIALOG_DATA, MatDialog, } from '@angular/material/dialog';
 import {NotificationService} from '../../../helper/notification.service';
-import {AddVehiculeComponent} from '../../../vehicule/add-vehicule/add-vehicule.component';
 import {Entreprise} from '../../../model/Entreprise';
-import {DeleteVehiculeAction} from '../../../vehicule/ngrx-vehicule/vehicule.actions';
-import {AddCarburantComponent} from '../add-carburant/add-carburant.component';
+
 import {Carburant} from '../../../model/carburant';
 import {CarburantState} from '../ngrx-carburant/carburant.reducer';
 import {DeleteCarburantsAction} from '../ngrx-carburant/carburant.actions';
