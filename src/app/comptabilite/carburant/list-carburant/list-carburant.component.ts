@@ -28,7 +28,7 @@ export class ListCarburantComponent implements OnInit, AfterViewInit {
   array: any;
   entreprise: any;
   personne: any;
-
+  transactions: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() state: CarburantState | null = null;
@@ -64,6 +64,7 @@ export class ListCarburantComponent implements OnInit, AfterViewInit {
         ...item
       };
     });
+
     this.listData = new MatTableDataSource(this.array);
     this.listData.sort = this.sort;
     this.listData.paginator = this.paginator;
@@ -92,5 +93,10 @@ export class ListCarburantComponent implements OnInit, AfterViewInit {
       this.notificationService.warn('Suppression avec succès');
     }
 
+  }
+
+  /** Gets the total cost of all transactions. */
+  getTotalCost() {
+    //return this.listData.map(t => t.).reduce((acc, value) => acc + value, 0);
   }
 }

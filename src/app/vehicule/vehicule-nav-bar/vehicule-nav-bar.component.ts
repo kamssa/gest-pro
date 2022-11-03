@@ -100,4 +100,8 @@ export class VehiculeNavBarComponent implements OnInit {
     this.router.navigate(['vehicule/listCarburant']);
 
   }
+
+  onpenConsoEntrepriseParDate() {
+
+  }
 }

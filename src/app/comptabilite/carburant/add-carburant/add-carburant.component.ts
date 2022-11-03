@@ -29,6 +29,7 @@ export class AddCarburantComponent implements OnInit {
   myControl = new FormControl<string | StationEssence>('');
   filteredOptions: Observable<StationEssence[]>;
   stationEssenceSelected: StationEssence;
+  stationEssenceSelectedType: StationEssence;
 
   constructor( private store: Store<any>,
                private fb: FormBuilder,
@@ -77,13 +78,20 @@ export class AddCarburantComponent implements OnInit {
     this.stationEssenceSelected = option.value;
     console.log(this.stationEssenceSelected);
   }
+
+  OnHumanSelectedService(option: HTMLOptionElement) {
+    //this.stationEssenceSelectedType= option.value;
+    console.log(this.stationEssenceSelectedType);
+  }
+  OnHumanSelectedType(option: MatOption) {
+
+  }
   onSubmit(): void{
     if (!this.carburantService.form.get('id').value){
       this.carburant = {
         date: this.carburantService.form.value.date,
         nomChauffeur:  this.carburantService.form.value.nomChauffeur,
-        prixUnitaire: this.carburantService.form.value.prixUnitaire,
-        quantite: this.carburantService.form.value.quantite,
+        total: this.carburantService.form.value.total,
         vehicule: this.data['vehicule'],
         stationEssence: this.stationEssenceSelected,
         entreprise: this.vehicule.entreprise
@@ -128,4 +136,6 @@ export class AddCarburantComponent implements OnInit {
   onCancel() {
 
   }
+
+
 }

@@ -60,7 +60,7 @@ export class ListDepComponent implements OnInit, AfterViewInit {
     }
 
     this.array = this.state.departements.map(item => {
-      console.log(item);
+
       return {
         id: item.id,
         ...item

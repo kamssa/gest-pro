@@ -12,10 +12,7 @@ import {StaionEssenceService} from '../../service/staion-essence.service';
 import {AddStaionEssenceComponent} from '../add-staion-essence/add-staion-essence.component';
 import {StationEssenceState} from '../ngrx-station/stationEssence.reducer';
 import {DeleteStationEssenceAction} from '../ngrx-station/stationEssence.actions';
-import {Entreprise} from '../../model/Entreprise';
-import {GetAllDepartementByEntrepriseAction} from '../../dep/ngrx-dep/dep.actions';
 import {AuthService} from '../../service/auth.service';
-import {Personne} from '../../model/Personne';
 
 @Component({
   selector: 'app-list-staion-essence',
@@ -23,7 +20,7 @@ import {Personne} from '../../model/Personne';
   styleUrls: ['./list-staion-essence.component.scss']
 })
 export class ListStaionEssenceComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['nom', 'actions'];
+  displayedColumns: string[] = ['nom', 'prixSuper', 'prixGazoil', 'prixhuileMoteur', 'vidange', 'actions'];
   listData: MatTableDataSource<Resultat<StationEssence[]>>;
   dataSource: any;
   stationEssences: any;
@@ -55,13 +52,13 @@ export class ListStaionEssenceComponent implements OnInit, AfterViewInit {
 
         }else if (this.personne.type === 'EMPLOYE'){
           this.id = this.personne.departement.entreprise.id;
-          this.entreprise = this.personne.entreprise;
+          this.entreprise = this.personne.departement.entreprise;
 
         }
       });
     }
     this.stationEssences = this.state.stationEssences.map(item => {
-      console.log('voir la liste de retour', item.nom);
+      console.log('voir la liste de retour', item);
       return {
         id: item.id,
         ...item

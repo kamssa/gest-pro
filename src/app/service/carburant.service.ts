@@ -7,8 +7,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {catchError, map, tap} from 'rxjs/operators';
 import {Carburant} from '../model/carburant';
-import {DetailAutreAchatTravaux} from '../model/DetailAutreAchatTravaux';
-import {Vehicule} from '../model/vehicule';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +23,7 @@ export class CarburantService {
     version: new FormControl(null),
     date: new FormControl('',[Validators.required] ),
     nomChauffeur: new FormControl('',[Validators.required] ),
-    prixUnitaire: new FormControl(''),
-    quantite: new FormControl(''),
+    total: new FormControl(''),
   });
   initializeFormGroup() {
     this.form.setValue({
@@ -34,8 +31,7 @@ export class CarburantService {
       version: null,
       date: '',
       nomChauffeur: '',
-      prixUnitaire: '',
-      quantite: ''
+      total: ''
     });
   }
   getCarburantByIdEntreprise(id: number): Observable<Resultat<Carburant[]>> {

@@ -4,31 +4,6 @@
 table {
   width: 100%;
 }
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-  background-color: #ffffff;
-}
-
 td, th {
   width: 25%;
-}
-.demo-row-is-clicked {
-  font-weight: bold;
-}
-.mat-row:nth-child(4n-1),
-.mat-row:nth-child(4n) {
-  background-color: #eee;
-}
-
-.mat-row {
-  background-color: white;
-}
-tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
 }

@@ -5,6 +5,9 @@ import {AddStaionEssenceComponent} from '../../stationEssence/add-staion-essence
 import {AuthService} from '../../service/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ListCategorieComponent} from '../../categorie/list-categorie/list-categorie.component';
+import {GetAllCarburantsAction} from '../../comptabilite/carburant/ngrx-carburant/carburant.actions';
+import {GetAllStationEssenceAction} from '../../stationEssence/ngrx-station/stationEssence.actions';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-config',
@@ -19,7 +22,7 @@ export class ConfigComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private authService: AuthService,
-
+              private store: Store<any>,
               private helper: JwtHelperService) { }
 
   ngOnInit(): void {
@@ -59,7 +62,6 @@ export class ConfigComponent implements OnInit {
   }
 
   addStation() {
-    console.log('Dans config', this.entreprise);
     const dialogRef = this.dialog.open(AddStaionEssenceComponent,{
       data: {
         entreprise: this.entreprise
@@ -71,6 +73,10 @@ export class ConfigComponent implements OnInit {
       console.log('The dialog was closed');
 
     });
+  }
+  ListstStation() {
+    this.store.dispatch(new GetAllStationEssenceAction(this.entreprise.id));
+
   }
 
   listCategorie() {
@@ -87,4 +93,6 @@ export class ConfigComponent implements OnInit {
 
     });
   }
+
+
 }

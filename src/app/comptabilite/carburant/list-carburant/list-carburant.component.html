@@ -1,77 +1,79 @@
 <div *ngIf="state">
-  <div>
-    <mat-form-field appearance="outline">
-      <mat-label>Filtrer</mat-label>
-      <input matInput (keyup)="applyFilter($event)"  #input>
-    </mat-form-field>
-  </div>
-  <br>
-  <mat-table [dataSource]="listData"  matSort>
+
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="listData" matSort>
+
+    <!-- ID Column -->
     <ng-container matColumnDef="date">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Date</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.date}}</mat-cell>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
     </ng-container>
+
+    <!-- Progress Column -->
     <ng-container matColumnDef="conducteur">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Conducteur</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.nomChauffeur}}</mat-cell>
-
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Conducteur </th>
+      <td mat-cell *matCellDef="let element"> {{element.nomChauffeur }} </td>
     </ng-container>
+
+    <!-- Name Column -->
     <ng-container matColumnDef="matriculation">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Matriculation</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.vehicule.matriculation}}</mat-cell>
-
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Matriculation </th>
+      <td mat-cell *matCellDef="let element"> {{element.vehicule.matriculation}} </td>
     </ng-container>
 
+    <!-- Fruit Column -->
     <ng-container matColumnDef="prixUnitaire">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Prix</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.prixUnitaire}}</mat-cell>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prix Unitaire </th>
+      <td mat-cell *matCellDef="let element"> {{element.prixUnitaire}} </td>
     </ng-container>
+    <!-- Fruit Column -->
     <ng-container matColumnDef="quantite">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>quantité</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.quantite}}</mat-cell>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantite </th>
+      <td mat-cell *matCellDef="let element"> {{element.quantite}} </td>
     </ng-container>
+    <!-- Fruit Column -->
     <ng-container matColumnDef="total">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Total</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.total}}</mat-cell>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+      <td mat-cell *matCellDef="let element"> {{element.total}} </td>
     </ng-container>
-
     <ng-container matColumnDef="stationEssence">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Station</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.stationEssence.nom}}</mat-cell>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Station Essence </th>
+      <td mat-cell *matCellDef="let element"> {{element.stationEssence.nom}} </td>
     </ng-container>
     <ng-container matColumnDef="actions">
-
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row"  >
+      <mat-cell *matCellDef="let row">
         <button mat-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item   (click)="onEdit(row)">Modifier</button>
-          <button mat-menu-item    (click)="onDelete(row)">Supprimer</button>
+          <button mat-menu-item   (click)="onEdit(row)">Modifier </button>
+          <button mat-menu-item    (click)="onDelete(row)">Supprimer </button>
         </mat-menu>
       </mat-cell>
     </ng-container>
+   <!-- <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef> Cost </th>
+      <td mat-cell *matCellDef="let transaction"> {{transaction.total}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotalCost()}} </td>
+    </ng-container>-->
 
-    <ng-container matColumnDef="loading">
-      <mat-footer-cell *matFooterCellDef colspan="6">
-        Patientez svp ! Chargement des données...
-      </mat-footer-cell>
-    </ng-container>
-    <ng-container matColumnDef="noData">
-      <mat-footer-cell *matFooterCellDef colspan="6">
-        Aucune donnée enregistrée.
-      </mat-footer-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
-    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    </mat-footer-row>
-  </mat-table>
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Pas de donnée "{{input.value}}"</td>
+    </tr>
+  </table>
+
   <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                  showFirstLastButtons
                  aria-label="Select page of periodic elements">
-  </mat-paginator>
+  </mat-paginator></div>
 </div>

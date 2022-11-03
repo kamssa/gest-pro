@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angul
 import {MatTableDataSource} from '@angular/material/table';
 import {Resultat} from '../../model/resultat';
 import {Vehicule} from '../../model/vehicule';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, Sort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {Store} from '@ngrx/store';
 import {AuthService} from '../../service/auth.service';
@@ -73,7 +73,7 @@ export class ListVehiculeComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.listData.paginator = this.paginator;
-
+    this.listData.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -135,4 +135,10 @@ export class ListVehiculeComponent implements OnInit, AfterViewInit {
 
 
   }
+
+  announceSortChange($event: any) {
+
+  }
+
+
 }

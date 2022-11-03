@@ -14,20 +14,26 @@ import {StationEssence} from '../model/stationEssence';
 export class StaionEssenceService {
   constructor(private  http: HttpClient, private messageService: MessageService) {
   }
-
-
   form: FormGroup = new FormGroup({
     id: new FormControl(null),
     version: new FormControl(null),
-    nom: new FormControl('',[Validators.required] ),
+    nom: new FormControl(''),
+    vidange: new FormControl('' ),
+    prixSuper: new FormControl('' ),
+    prixGazoil: new FormControl('' ),
+    prixHuileMoteur: new FormControl('' ),
 
 
   });
   initializeFormGroup() {
     this.form.setValue({
-      id: null,
-      version: null,
+      id: '',
+      version: '' ,
       nom: '',
+      vidange: '',
+      prixSuper: '',
+      prixGazoil: '',
+      prixHuileMoteur: '',
 
     });
   }
