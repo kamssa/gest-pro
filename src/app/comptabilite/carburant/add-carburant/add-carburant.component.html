@@ -24,7 +24,7 @@
             <input matInput formControlName="total"  placeholder="Montant remis">
           </mat-form-field>
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Station Essence</mat-label>
+            <mat-label>Prestation</mat-label>
             <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
                               (optionSelected)="OnHumanSelectedService($event.option)">
