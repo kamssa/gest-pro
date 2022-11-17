@@ -12,6 +12,7 @@ import {CumulDepensesComponent} from '../../operationsTravaux/cumul-depenses/cum
 import {RechercheParDateComponent} from '../../operationsTravaux/cumul-depenses/recherche-par-date/recherche-par-date.component';
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
+import {ListTransportComponent} from '../../operationsTravaux/transport/list-transport/list-transport.component';
 
 @Component({
   selector: 'app-liste-site-travaux-operation',
@@ -192,5 +193,63 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
   }
 
 
+  onAchat(id: number) {
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+  }
+  onAutreAchat(id: number) {
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+  }
+  onLocation(id: number) {
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+
+  }
+
+
+  onLoyer(id: number) {
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+
+  }
+
+  onOeuvre(id: number) {
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+  }
+
+  onTransport(id: number) {
+    console.log(id);
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+
+  }
+
+  onAutres(id: number) {
+    this.dialog.open(ListTransportComponent,{
+      data: {
+        projet: id
+      }
+    });
+  }
 }
 

@@ -6,7 +6,7 @@ import {MessageService} from './message.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {catchError, map, tap} from 'rxjs/operators';
-import {Carburant} from '../model/carburant';
+import {Prestation} from '../model/prestation';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,8 @@ export class CarburantService {
     id: new FormControl(null),
     version: new FormControl(null),
     date: new FormControl('',[Validators.required] ),
-    nomChauffeur: new FormControl('',[Validators.required] ),
+    libelle: new FormControl('',[Validators.required] ),
+    nomChauffeur: new FormControl(''),
     total: new FormControl(''),
   });
   initializeFormGroup() {
@@ -30,24 +31,25 @@ export class CarburantService {
       id: null,
       version: null,
       date: '',
+      libelle: '',
       nomChauffeur: '',
       total: ''
     });
   }
-  getCarburantByIdEntreprise(id: number): Observable<Resultat<Carburant[]>> {
+  getCarburantByIdEntreprise(id: number): Observable<Resultat<Prestation[]>> {
 
-    return this.http.get<Resultat<Carburant[]>>
+    return this.http.get<Resultat<Prestation[]>>
     (`${environment.apiUrl}/api/getCarburantByEntreprise/${id}`);
 
   }
-  getCarburantByVehiculeByEntreprise(id: number): Observable<Resultat<Carburant[]>> {
-    return this.http.get<Resultat<Carburant[]>>
+  getCarburantByVehiculeByEntreprise(id: number): Observable<Resultat<Prestation[]>> {
+    return this.http.get<Resultat<Prestation[]>>
     (`${environment.apiUrl}/api/getCarburantByVehicule/${id}`);
 
   }
 
-  ajoutCarburatByVehicule(carburant: Carburant): Observable<Resultat<Carburant>> {
-    return this.http.post<Resultat<Carburant>>(`${environment.apiUrl}/api/carburant`,
+  ajoutCarburatByVehicule(carburant: Prestation): Observable<Resultat<Prestation>> {
+    return this.http.post<Resultat<Prestation>>(`${environment.apiUrl}/api/carburant`,
       carburant)
       .pipe(
         tap(res => {
@@ -57,8 +59,8 @@ export class CarburantService {
       );
 
   }
-  modifCarburantByVehicule(carburant: Carburant): Observable<Resultat<Carburant>> {
-    return this.http.put<Resultat<Carburant>>(`${environment.apiUrl}/api/carburant`,
+  modifCarburantByVehicule(carburant: Prestation): Observable<Resultat<Prestation>> {
+    return this.http.put<Resultat<Prestation>>(`${environment.apiUrl}/api/carburant`,
       carburant)
       .pipe(
         tap(res => {
@@ -69,9 +71,9 @@ export class CarburantService {
   }
 
 // recuperer achat par id travaux
-  getCarburantByDateVehicule(id: number, dateDebut: string, dateFin: string): Observable<Carburant[]> {
+  getCarburantByDateVehicule(id: number, dateDebut: string, dateFin: string): Observable<Prestation[]> {
     // @ts-ignore
-    return this.http.get<Resultat<Carburant[]>>(
+    return this.http.get<Resultat<Prestation[]>>(
       `${environment.apiUrl}/api/carburantDateParVehicule?IdVehicule=${id}&dateDebut=${dateDebut}&dateFin=${dateFin}`);
 
   }

@@ -1,15 +1,14 @@
 import {Entreprise} from './Entreprise';
-import {CaisseDetail} from './CaisseDetail';
 import {Vehicule} from './vehicule';
 import {StationEssence} from './stationEssence';
 
-export class Carburant {
+export class Prestation {
   constructor(
     public id?: number,
     public version?: number,
     public date?: Date,
+    public libelle?: string,
     public nomChauffeur?: string,
-    public typeCarburant?: string,
     public   prixUnitaire?: number,
     public  quantite?: number,
     public  total?: number,

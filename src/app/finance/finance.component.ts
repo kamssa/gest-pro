@@ -148,14 +148,13 @@ export class FinanceComponent implements OnInit{
   }
 
   search(mc: string) {
-    console.log(mc);
     this.searchProjetSource.next(mc);
   }
 
   onSelect(projet: Projet) {
     this.selectedProjet = projet;
-    console.log(this.selectedProjet.id);
     this.router.navigate(['finance/detail', this.selectedProjet.id]);
+    this.search('');
   }
 
   closeMessage() {
@@ -164,42 +163,6 @@ export class FinanceComponent implements OnInit{
     }, 5000);
   }
 
-  onAchat(travail: Projet) {
-    this.router.navigate(['finance/achat', travail.id]);
-  }
-  onAutreAchat(travail: Projet) {
-    this.router.navigate(['finance/autreAchat', travail.id]);
-  }
-  onLocation(travail: Projet) {
-    this.router.navigate(['finance/location', travail.id]);
-
-  }
-
-
-  onLoyer(travail: Projet) {
-    this.router.navigate(['finance/loyer', travail.id]);
-
-  }
-
-  onOeuvre(travail: Projet) {
-    this.router.navigate(['finance/oeuvre', travail.id]);
-
-  }
-
-  onTransport(id: number) {
-    //this.router.navigate(['finance/transport', travail.id]);
-    console.log(id);
-    this.dialog.open(ListTransportComponent,{
-      data: {
-        projet: id
-      }
-    });
-
-  }
-
-  onAutres(travail: Projet) {
-    this.router.navigate(['finance/autre', travail.id]);
-  }
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
@@ -208,6 +171,10 @@ export class FinanceComponent implements OnInit{
   }
 
   onSearch() {
+
+  }
+
+  onClose() {
 
   }
 }

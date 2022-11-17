@@ -17,11 +17,9 @@ export class StaionEssenceService {
   form: FormGroup = new FormGroup({
     id: new FormControl(null),
     version: new FormControl(null),
-    nom: new FormControl(''),
-    vidange: new FormControl('' ),
-    prixSuper: new FormControl('' ),
-    prixGazoil: new FormControl('' ),
-    prixHuileMoteur: new FormControl('' ),
+    libelle: new FormControl(''),
+    solde: new FormControl('' ),
+
 
 
   });
@@ -29,11 +27,8 @@ export class StaionEssenceService {
     this.form.setValue({
       id: '',
       version: '' ,
-      nom: '',
-      vidange: '',
-      prixSuper: '',
-      prixGazoil: '',
-      prixHuileMoteur: '',
+      libelle: '',
+      solde: '',
 
     });
   }

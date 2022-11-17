@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Carburant} from '../../../model/carburant';
+import {Prestation} from '../../../model/prestation';
 import {CarburantActions, CarburantsActionsTypes} from './carburant.actions';
 
 export enum CarburantStateEnum{
@@ -12,10 +12,10 @@ export enum CarburantStateEnum{
   UPDATE= 'Update'
 }
 export interface CarburantState{
-  carburants: Carburant[];
+  carburants: Prestation[];
   errorMessage: string;
   dataState: CarburantStateEnum;
-  currentCarburant: Carburant;
+  currentCarburant: Prestation;
 }
 
 const initState: CarburantState = {
@@ -47,7 +47,7 @@ export function carburantReducer(state= initState, action: Action): CarburantSta
     case CarburantsActionsTypes.SAVE_CARUBURANTS:
       return {...state, dataState: CarburantStateEnum.LOADING };
     case CarburantsActionsTypes.SAVE_CARUBURANTS_SUCCESS:
-      const deps: Carburant[] = [...state.carburants];
+      const deps: Prestation[] = [...state.carburants];
       deps.push((action as CarburantActions).payload['body']);
       return {...state, dataState: CarburantStateEnum.LOADED, carburants: deps};
     case CarburantsActionsTypes.SAVE_CARUBURANTS_ERROR:
@@ -63,7 +63,7 @@ export function carburantReducer(state= initState, action: Action): CarburantSta
     case CarburantsActionsTypes.DELETE_CARUBURANTS:
       return {...state, dataState: CarburantStateEnum.LOADING};
     case CarburantsActionsTypes.DELETE_CARUBURANTS_SUCCESS:
-      const dep: Carburant = (action as CarburantActions).payload['body'];
+      const dep: Prestation = (action as CarburantActions).payload['body'];
       const index = state.carburants.indexOf(dep);
       const depList = [...state.carburants];
       depList.splice(index, 1);
@@ -75,8 +75,8 @@ export function carburantReducer(state= initState, action: Action): CarburantSta
     case CarburantsActionsTypes.UPDATE_CARUBURANTS:
       return {...state, dataState: CarburantStateEnum.LOADING };
     case CarburantsActionsTypes.UPDATE_CARUBURANTS_SUCCESS:
-      const updateDepartement: Carburant = (action as CarburantActions).payload['body'];
-      const updatedDepartements: Carburant[] = state.carburants.map(d => (d.id === updateDepartement.id) ? updateDepartement :d);
+      const updateDepartement: Prestation = (action as CarburantActions).payload['body'];
+      const updatedDepartements: Prestation[] = state.carburants.map(d => (d.id === updateDepartement.id) ? updateDepartement :d);
       return {...state, dataState: CarburantStateEnum.LOADED, carburants: updatedDepartements};
     case CarburantsActionsTypes.UPDATE_CARUBURANTS_ERROR:
       return {...state, dataState: CarburantStateEnum.ERROR, errorMessage: (action as CarburantActions).payload};

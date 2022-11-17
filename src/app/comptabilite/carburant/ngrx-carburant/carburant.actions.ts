@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {Resultat} from '../../../model/resultat';
-import {Carburant} from '../../../model/carburant';
+import {Prestation} from '../../../model/prestation';
 
 
 export enum CarburantsActionsTypes{
@@ -48,7 +48,7 @@ export class GetAllCarburantsAction implements Action{
 export class GetAllCarburantsActionSuccess implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTS_SUCCESS;
 
-  constructor(public payload: Resultat<Carburant[]>) {
+  constructor(public payload: Resultat<Prestation[]>) {
   }
 }
 
@@ -69,7 +69,7 @@ export class GetAllCarburantsByVehiculeAction implements Action{
 export class GetAllCarburantsByVehiculeActionSuccess implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.GET_ALL_CARUBURANTSBYVEHICULE_SUCCESS;
 
-  constructor(public payload: Resultat<Carburant[]>) {
+  constructor(public payload: Resultat<Prestation[]>) {
   }
 }
 
@@ -83,20 +83,20 @@ export class GetAllCarburantsByVehiculeActionError implements Action{
 
 export class SaveCarburantsAction implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.SAVE_CARUBURANTS;
-  constructor(public payload: Carburant) {
+  constructor(public payload: Prestation) {
   }
 }
 
 export class SaveCarburantsActionSuccess implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.SAVE_CARUBURANTS_SUCCESS;
 
-  constructor(public payload: Resultat<Carburant>) {
+  constructor(public payload: Resultat<Prestation>) {
   }
 }
 
 export class SaveCarburantsActionError implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.SAVE_CARUBURANTS_ERROR;
-  constructor(public payload: Resultat<Carburant>) {
+  constructor(public payload: Resultat<Prestation>) {
   }
 }
 /* Get Selected Products Actions*/
@@ -109,7 +109,7 @@ export class GetSelectedCarburantsAction implements Action{
 
 export class GetSelectedCarburantsActionSuccess implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.GET_SELECTED_CARUBURANTS_SUCCESS;
-  constructor(public payload: Carburant[]) {
+  constructor(public payload: Prestation[]) {
   }
 }
 
@@ -122,14 +122,14 @@ export class GetSeleCtedcarburantsActionError implements Action{
 
 export class DeleteCarburantsAction implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.DELETE_CARUBURANTS;
-  constructor(public payload: Carburant) {
+  constructor(public payload: Prestation) {
   }
 }
 
 export class DeleteCarburantsActionSuccess implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.DELETE_CARUBURANTS_SUCCESS;
 
-  constructor(public payload: Resultat<Carburant>) {
+  constructor(public payload: Resultat<Prestation>) {
   }
 }
 
@@ -146,20 +146,20 @@ export class DeleteCarburantsActionError implements Action{
 
 export class UpdateCarburantsAction implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.UPDATE_CARUBURANTS;
-  constructor(public payload: Carburant) {
+  constructor(public payload: Prestation) {
   }
 }
 
 export class UpdateCarburantsActionSuccess implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.UPDATE_CARUBURANTS_SUCCESS;
 
-  constructor(public payload: Resultat<Carburant>) {
+  constructor(public payload: Resultat<Prestation>) {
   }
 }
 
 export class UpdateCarburantsActionError implements Action{
   type: CarburantsActionsTypes = CarburantsActionsTypes.UPDATE_CARUBURANTS_ERROR;
-  constructor(public payload: Resultat<Carburant>) {
+  constructor(public payload: Resultat<Prestation>) {
   }
 }
 export type CarburantActions =

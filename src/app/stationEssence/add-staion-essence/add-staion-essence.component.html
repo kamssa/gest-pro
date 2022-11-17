@@ -7,28 +7,14 @@
   <mat-card-header></mat-card-header>
   <form class="example-form" [formGroup]="staionEssenceService.form" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width">
-      <input matInput  placeholder="Nom de la station essence" formControlName="nom">
+      <input matInput  placeholder="Nom de la station essence" formControlName="libelle">
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
-      <input matInput  placeholder="Prix du super" formControlName="prixSuper">
+      <input matInput  placeholder="Solde" formControlName="solde">
     </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput  placeholder="Prix du gazoil" formControlName="prixGazoil">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput  placeholder="Prix de l'huile de moteur" formControlName="prixHuileMoteur">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput  placeholder="Vidange" formControlName="vidange">
-    </mat-form-field>
-    <mat-form-field style="position: relative; margin-top:20px;" class="example-full-width" appearance="fill">
-      <mat-label >Selection un service</mat-label>
-      <mat-select (selectionChange)="greetDep($event)">
-        <mat-option *ngFor="let d of prestationStations" [value]="d.id">
-          {{d.typePrestation}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+
+
     <button type="submit" class="btn btn-primary">Valider</button>
   </form>
 </mat-card>

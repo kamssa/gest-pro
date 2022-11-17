@@ -1,6 +1,6 @@
 <div class="container">
 <mat-toolbar>
-    <span>{{carburantService.form.controls['id'].value?"Modifier":"Achat Carburant"}}</span>
+    <span>{{carburantService.form.controls['id'].value?"Modifier":"Achat Prestation"}}</span>
     <span class="fill-remaining-space"></span>
     <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
   </mat-toolbar>
@@ -24,14 +24,12 @@
             <input matInput formControlName="total"  placeholder="Montant remis">
           </mat-form-field>
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Prestation</mat-label>
-            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                              (optionSelected)="OnHumanSelectedService($event.option)">
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option.nom}}
-              </mat-option>
-            </mat-autocomplete>
+              <mat-select placeholder="titre" formControlName="libelle">
+                <mat-option *ngFor="let t of prestations" [value]=t.name>
+                  {{t.libelle}}
+                </mat-option>
+
+              </mat-select>
           </mat-form-field>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Station Essence</mat-label>
@@ -39,7 +37,7 @@
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
                               (optionSelected)="OnHumanSelected($event.option)">
               <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option.nom}}
+                {{option.libelle}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>

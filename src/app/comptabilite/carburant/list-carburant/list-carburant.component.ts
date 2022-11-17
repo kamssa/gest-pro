@@ -12,7 +12,7 @@ import {MAT_DIALOG_DATA, MatDialog, } from '@angular/material/dialog';
 import {NotificationService} from '../../../helper/notification.service';
 import {Entreprise} from '../../../model/Entreprise';
 
-import {Carburant} from '../../../model/carburant';
+import {Prestation} from '../../../model/prestation';
 import {CarburantState} from '../ngrx-carburant/carburant.reducer';
 import {DeleteCarburantsAction} from '../ngrx-carburant/carburant.actions';
 
@@ -22,8 +22,8 @@ import {DeleteCarburantsAction} from '../ngrx-carburant/carburant.actions';
   styleUrls: ['./list-carburant.component.scss']
 })
 export class ListCarburantComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['date', 'conducteur', 'matriculation',  'prixUnitaire', 'quantite', 'total', 'stationEssence', 'actions'];
-  listData: MatTableDataSource<Resultat<Carburant[]>>;
+  displayedColumns: string[] = ['date', 'conducteur', 'matriculation', 'libelle', 'prixUnitaire', 'quantite', 'total', 'stationEssence', 'actions'];
+  listData: MatTableDataSource<Resultat<Prestation[]>>;
   dataSource: any;
   array: any;
   entreprise: any;

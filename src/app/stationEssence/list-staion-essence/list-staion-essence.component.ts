@@ -20,7 +20,7 @@ import {AuthService} from '../../service/auth.service';
   styleUrls: ['./list-staion-essence.component.scss']
 })
 export class ListStaionEssenceComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['nom', 'prixSuper', 'prixGazoil', 'prixhuileMoteur', 'vidange', 'actions'];
+  displayedColumns: string[] = ['nom', 'solde', 'actions'];
   listData: MatTableDataSource<Resultat<StationEssence[]>>;
   dataSource: any;
   stationEssences: any;

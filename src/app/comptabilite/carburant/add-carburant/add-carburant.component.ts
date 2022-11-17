@@ -6,7 +6,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {AuthService} from '../../../service/auth.service';
 import {NotificationService} from '../../../helper/notification.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Carburant} from '../../../model/carburant';
+import {Prestation} from '../../../model/prestation';
 import {CarburantService} from '../../../service/carburant.service';
 import {Router} from '@angular/router';
 import {SaveCarburantsAction, UpdateCarburantsAction} from '../ngrx-carburant/carburant.actions';
@@ -23,13 +23,19 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class AddCarburantComponent implements OnInit {
 
-  carburant: Carburant;
+  carburant: Prestation;
   vehicule: Vehicule;
   stationEssence: StationEssence[];
   myControl = new FormControl<string | StationEssence>('');
   filteredOptions: Observable<StationEssence[]>;
   stationEssenceSelected: StationEssence;
   stationEssenceSelectedType: StationEssence;
+  prestations = [
+    {libelle: 'Achat Super', name: 'super'},
+    {libelle: 'Achat Gazoil', name: 'gazoil'},
+      {libelle: 'Achat Huile de moteur', name: 'huile_Moteur'},
+      {libelle: 'Vidange', name: 'vidange'}
+  ];
 
   constructor( private store: Store<any>,
                private fb: FormBuilder,
@@ -57,21 +63,21 @@ export class AddCarburantComponent implements OnInit {
           this.filteredOptions = this.myControl.valueChanges.pipe(
             startWith(''),
             map(value => {
-              const nom = typeof value === 'string' ? value : value?.nom;
-              return nom ? this._filter(nom as string) : this.stationEssence.slice();
+              const libelle = typeof value === 'string' ? value : value?.libelle;
+              return libelle ? this._filter(libelle as string) : this.stationEssence.slice();
             }),
           );
         }
       });
   }
   displayFn(stationEssence: StationEssence): string {
-    return stationEssence && stationEssence.nom ? stationEssence.nom : '';
+    return stationEssence && stationEssence.libelle ? stationEssence.libelle : '';
   }
 
   private _filter(chauffeur: string): Vehicule[] {
     const filterValue = chauffeur.toLowerCase();
 
-    return this.stationEssence.filter(option => option.nom.toLowerCase().includes(filterValue));
+    return this.stationEssence.filter(option => option.libelle.toLowerCase().includes(filterValue));
   }
 
   OnHumanSelected(option: MatOption) {
@@ -90,6 +96,7 @@ export class AddCarburantComponent implements OnInit {
     if (!this.carburantService.form.get('id').value){
       this.carburant = {
         date: this.carburantService.form.value.date,
+        libelle: this.carburantService.form.value.libelle,
         nomChauffeur:  this.carburantService.form.value.nomChauffeur,
         total: this.carburantService.form.value.total,
         vehicule: this.data['vehicule'],
@@ -98,7 +105,7 @@ export class AddCarburantComponent implements OnInit {
       };
       console.log(this.carburant);
       this.store.dispatch(new SaveCarburantsAction(this.carburant));
-      this.notificationService.success('Carburant ajouté avec succès');
+      this.notificationService.success('Prestation ajouté avec succès');
       this.router.navigate(['vehicule/listCarburant']);
       this.onClose();
     }else {
@@ -106,14 +113,16 @@ export class AddCarburantComponent implements OnInit {
         id:  this.carburantService.form.value.id,
         version:  this.carburantService.form.value.version,
         date: this.carburantService.form.value.date,
+        libelle: this.carburantService.form.value.libelle,
         nomChauffeur:  this.carburantService.form.value.nomChauffeur,
         prixUnitaire: this.carburantService.form.value.prixUnitaire,
         quantite: this.carburantService.form.value.quantite,
         vehicule: this.data['vehicule'],
+        stationEssence: this.stationEssenceSelected,
         entreprise: this.vehicule.entreprise
       };
       this.store.dispatch(new UpdateCarburantsAction(this.carburant));
-      this.notificationService.success('Carburant modifié avec succès');
+      this.notificationService.success('Prestation modifié avec succès');
       this.router.navigate(['vehicule/listCarburant']);
 
       this.onClose();

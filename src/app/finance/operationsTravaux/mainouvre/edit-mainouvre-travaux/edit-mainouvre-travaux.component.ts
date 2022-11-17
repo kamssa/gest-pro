@@ -3,7 +3,6 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
 import {MainOeuvre} from "../../../../model/MainOeuvre";
 import {MainoeuvreService} from "../../../../service/mainoeuvre.service";
-import {Loyer} from "../../../../model/Loyer";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {NotificationService} from '../../../../helper/notification.service';
 
@@ -134,7 +133,6 @@ export class EditMainouvreTravauxComponent implements OnInit {
       //  this.errorMessage = this.errorHandler.errorMessage;
       console.log('desole');
     });
-
     console.log('voir les main doeuvre', mainoeuvre);
     this.mainOuvreForm.reset();
   }

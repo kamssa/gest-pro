@@ -10,30 +10,15 @@
       <!-- Progress Column -->
       <ng-container matColumnDef="nom">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-        <td mat-cell *matCellDef="let element"> {{element.nom }} </td>
+        <td mat-cell *matCellDef="let element"> {{element.libelle }} </td>
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="prixSuper">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prix Super </th>
-        <td mat-cell *matCellDef="let element"> {{element.prixSuper}} </td>
+      <ng-container matColumnDef="solde">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Solde</th>
+        <td mat-cell *matCellDef="let element"> {{element.solde}} </td>
       </ng-container>
 
-      <!-- Fruit Column -->
-      <ng-container matColumnDef="prixGazoil">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> prix Gazoil </th>
-        <td mat-cell *matCellDef="let element"> {{element.prixGazoil}} </td>
-      </ng-container>
-      <!-- Fruit Column -->
-      <ng-container matColumnDef="prixhuileMoteur">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prix huile de moteur </th>
-        <td mat-cell *matCellDef="let element"> {{element.prixHuileMoteur}} </td>
-      </ng-container>
-      <!-- Fruit Column -->
-      <ng-container matColumnDef="vidange">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> vidange </th>
-        <td mat-cell *matCellDef="let element"> {{element.vidange}} </td>
-      </ng-container>
       <!-- Fruit Column -->
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
