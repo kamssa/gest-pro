@@ -172,10 +172,10 @@ export class EditAutredepenseTravauxComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      date:  [''],
-      designation: [''],
-      prixUnitaire: [''],
-      quantite: [''],
+      date:  ['', Validators.required],
+      designation: ['', Validators.required],
+      prixUnitaire: ['', Validators.required],
+      quantite: ['', Validators.required],
       montant: [''],
       nomPrenom: [''],
       projetId: ['']
@@ -211,22 +211,6 @@ export class EditAutredepenseTravauxComponent implements OnInit {
           formValue['detailAutres']
 
         );
-       /* this.autre = {
-          libelle: this.designationInput.nativeElement.value,
-          date: null,
-          travauxId: this.travauxId,
-          detailAutres: [
-            {
-              date: this.dateInput.nativeElement.value,
-              designation: this.designationInput.nativeElement.value,
-              prixUnitaire:  this.prixUnitaireInput.nativeElement.value,
-              quantite:  this.quantiteInput.nativeElement.value,
-              nomPrenom: this.nomPrenomInput.nativeElement.value,
-
-
-            }
-          ]
-        };*/
         console.log('Voir autre retourne', autre);
         this.autresService.ajoutAutres(autre)
           .subscribe(data => {

@@ -16,10 +16,10 @@ md-chip {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: stretch;
-
 }
 .item{
   margin: 5px;
+  width: 700px!important;
 }
 
 .item:nth-child(1){

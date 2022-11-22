@@ -11,26 +11,27 @@
             <mat-card>
               <div class="achat">
                 <div class="row">
-                  <div formArrayName="detailAutreAchatTravaux">
-                    <div *ngFor="let itemrow of autreAchatTravauxForm.controls.detailAutreAchatTravaux['controls']; let i=index"
-                         [formGroupName]="i">
+                  <div>
+                    <div>
 
-                      <mat-form-field formGroupName="materiaux">
-                        <input  matInput placeholder="Désignation" formControlName="libelle" name="libelle">
-
-                      </mat-form-field>
-                      <mat-form-field>
-                        <input #value matInput type="number" placeholder="Prix unitaire" formControlName="prixUnitaire">
-                      </mat-form-field>
-                      <mat-form-field>
-                        <input  #quantite type="number" matInput placeholder="quantite" formControlName="quantite">
-                      </mat-form-field>
-
-                      <mat-label>
-                        <input matInput #montant  placeholder="{{montant}}"  (click)="getCalcul()">
-                      </mat-label>
-
-
+                      <div class="row">
+                        <div class="col-md-8">
+                          <div class="parent">
+                            <mat-form-field>
+                              <input  matInput type="text" placeholder="Numéro facture" formControlName="numeroFacture" name="numeroFacture">
+                            </mat-form-field>
+                            <mat-form-field>
+                              <input  matInput type="text" placeholder="Libelle" formControlName="libelle" name="libelle">
+                            </mat-form-field>
+                            <mat-form-field>
+                              <input #value matInput type="number" placeholder="Montant" formControlName="montant">
+                            </mat-form-field>
+                            <mat-form-field>
+                              <input  #fournisseur type="text" matInput placeholder="Fournisseur" formControlName="fournisseur">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -75,10 +76,18 @@
       </nav>
       <br>
       <br>
-      <div></div>
+      <div>
+
+      </div>
           <div class="row">
             <div class="col-md-8">
               <div class="parent">
+                <mat-form-field class="example-full-width">
+                  <input #dat matInput [matDatepicker]="picker"  placeholder="Date" formControlName="date" id="date"
+                         readonly (click)="picker.open()">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
                 <mat-form-field>
                   <input  matInput type="text" placeholder="Numéro facture" formControlName="numeroFacture" name="numeroFacture">
                 </mat-form-field>
@@ -93,6 +102,7 @@
                       </ng-container>
                     </mat-chip-list>
                   </div>
+
                   <mat-form-field class="full-width">
                     <input matInput type="text"
                            [placeholder]="placeholder"
@@ -111,12 +121,7 @@
                     </mat-option>
                   </mat-autocomplete>
                 </div>
-                <mat-form-field class="example-full-width">
-                    <input #dat matInput [matDatepicker]="picker"  placeholder="Date" formControlName="date" id="date"
-                           readonly (click)="picker.open()">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
+
 
                 <mat-form-field>
                   <input #value matInput type="number" placeholder="Montant" formControlName="montant">

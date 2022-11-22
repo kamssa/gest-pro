@@ -13,6 +13,9 @@ import {RechercheParDateComponent} from '../../operationsTravaux/cumul-depenses/
 import {Projet} from '../../../model/projet';
 import {ProjetService} from '../../../service/projet.service';
 import {ListTransportComponent} from '../../operationsTravaux/transport/list-transport/list-transport.component';
+import {ListAutreAchatComponent} from '../../operationsTravaux/autreAchatTravaux/list-autre-achat/list-autre-achat.component';
+import {ListAchatComponent} from '../../operationsTravaux/achat/list-achat/list-achat.component';
+import {ListMainDoeuvreComponent} from '../../operationsTravaux/mainouvre/list-main-doeuvre/list-main-doeuvre.component';
 
 @Component({
   selector: 'app-liste-site-travaux-operation',
@@ -194,14 +197,15 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
 
 
   onAchat(id: number) {
-    this.dialog.open(ListTransportComponent,{
+    console.log(id);
+    this.dialog.open(ListAchatComponent,{
       data: {
         projet: id
       }
     });
   }
   onAutreAchat(id: number) {
-    this.dialog.open(ListTransportComponent,{
+    this.dialog.open(ListAutreAchatComponent,{
       data: {
         projet: id
       }
@@ -227,7 +231,7 @@ export class ListeSiteTravauxOperationComponent implements OnInit{
   }
 
   onOeuvre(id: number) {
-    this.dialog.open(ListTransportComponent,{
+    this.dialog.open(ListMainDoeuvreComponent,{
       data: {
         projet: id
       }

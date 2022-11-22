@@ -43,7 +43,7 @@
                 <div *ngFor="let itemrow of autreDepenseForm.controls.detailAutres['controls']; let i=index"
                      [formGroupName]="i">
                   <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                       <ng-container [ngSwitch]="stepperOrientation | async">
                         <div *ngSwitchCase="'horizontal'"></div>
                         <div *ngSwitchCase="'vertical'"></div>
@@ -58,36 +58,35 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
-                      <mat-form-field appearance="fill">
-                        <mat-label>Designation</mat-label>
-                        <input #designation matInput placeholder="Designation" formControlName="designation">
+                      <mat-form-field>
+                        <mat-label>Libelle</mat-label>
+                        <input #designation matInput placeholder="Libelle" formControlName="designation">
                       </mat-form-field>
-                      <mat-form-field appearance="fill">
-                        <mat-label>Prix unitaire</mat-label>
+                      <mat-form-field>
+                        <mat-label>Prix </mat-label>
                         <input #prixUnitaire matInput placeholder="Prix unitaire" formControlName="prixUnitaire">
                       </mat-form-field>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field>
                         <mat-label>Quantite</mat-label>
-                        <input #quantite matInput placeholder="Quantite" formControlName="quantite">
+                        <input #quantite matInput placeholder="Quantite"
+                               formControlName="quantite" matTooltip="Mettre la valeur 1 si la quantité n'est pas définie">
                       </mat-form-field>
                       <mat-form-field  class="example-full-width">
                         <input   #montant type="text" matInput placeholder="{{montant || 0 | number}}" (click)="getCalcul()">
-                        <mat-error>Ce champ est obligatoire.</mat-error>
-                      </mat-form-field>
-                      <div>
-                        <button mat-button matStepperNext type="button">Suivant</button>
-                      </div>
-                    </mat-step>
-                    <mat-step  label="INFORMATIONS COMPLEMENTAIRES">
-                      <mat-form-field  class="example-full-width">
-                        <input  #nomPrenom type="text" matInput placeholder="Nom et Prenom" formControlName="nomPrenom">
-                        <mat-error>Ce champ est obligatoire.</mat-error>
                       </mat-form-field>
                       <div>
                         <button mat-button matStepperPrevious type="button">Retour</button>
                         <button mat-button type="submit" [disabled]="!autreDepenseForm.valid">Engeristrer</button>
                       </div>
                     </mat-step>
+                    <!--<mat-step  label="INFORMATIONS COMPLEMENTAIRES">
+                      <mat-form-field  class="example-full-width">
+                        <input  #nomPrenom type="text" matInput placeholder="Nom et Prenom " formControlName="nomPrenom"
+                                matTooltip="">
+                        <mat-error>Ce champ est obligatoire.</mat-error>
+                      </mat-form-field>
+
+                    </mat-step>-->
                   </mat-stepper>
 
 

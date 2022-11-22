@@ -77,7 +77,7 @@ export class EditLocationTravauxComponent implements OnInit {
     return this.fb.group({
       id: [''],
       version: [''],
-      montant: [''],
+      montant: ['', Validators.required],
       date: ['', Validators.required],
       materiaux: this.fb.group({
         id: [''],

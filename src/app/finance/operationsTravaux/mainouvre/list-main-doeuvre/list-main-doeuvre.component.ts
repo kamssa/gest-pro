@@ -45,7 +45,7 @@ export class ListMainDoeuvreComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     console.log(this.projetId);
-    this.mainoeuvreService.getMainOeuvreByTravaux(this.projetId)
+    this.mainoeuvreService.getMainOeuvreByTravaux(this.data['projet'])
       .subscribe( list => {
         if(list.length !== 0){
           this.array = list.map(item => {

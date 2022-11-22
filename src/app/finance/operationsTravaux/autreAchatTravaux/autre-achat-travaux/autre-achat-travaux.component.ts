@@ -168,9 +168,11 @@ export class AutreAchatTravauxComponent implements OnInit {
                   this.autreAchatTravauxForm = this.fb.group({
                     id: this.autreAchatTravaux.id,
                     version: this.autreAchatTravaux.version,
+                    numeroFacture: this.autreAchatTravaux.numeroFacture,
                     libelle: this.autreAchatTravaux.libelle,
                     date: this.autreAchatTravaux.date,
                     montant: this.autreAchatTravaux.montant,
+                    fournisseur: this.autreAchatTravaux.fournisseur,
                     projetId: this.autreAchatTravaux.projetId,
                     autreDetailAchatTravaux: this.detailAutreAchatTravauxInit,
                   });
@@ -223,9 +225,9 @@ export class AutreAchatTravauxComponent implements OnInit {
       version: '',
       numeroFacture: '',
       libelle: '',
-      montant: '',
+      montant: ['', Validators.required],
       fournisseur: '',
-      date: '',
+      date: ['', Validators.required],
       projetId: '',
       detailAutreAchatTravaux: this.fb.array([this.initItemRows()])
     });
@@ -241,9 +243,9 @@ export class AutreAchatTravauxComponent implements OnInit {
   }
 
   onSubmit() {
-  const libelle = this.lib.toString();
-  console.log(libelle);
     if (!this.editMode) {
+      const libelle = this.lib.toString();
+      console.log(libelle);
       this.materiau = JSON.parse(localStorage.getItem('materiau'));
       let formValue = this.autreAchatTravauxForm.value;
 
@@ -271,6 +273,27 @@ export class AutreAchatTravauxComponent implements OnInit {
       this.selectControl.reset;
       this.autreAchatTravauxForm.reset();
 
+    }else {
+      console.log(this.autreAchatTravauxForm.value);
+      let formValue = this.autreAchatTravauxForm.value;
+      let autreAchatTravaux = {
+        id: this.autreAchatTravaux.id,
+        version: this.autreAchatTravaux.version,
+        numeroFacture: formValue.numeroFacture,
+        libelle: formValue.libelle,
+        date: this.autreAchatTravaux.date,
+        montant: formValue.montant,
+        projetId: this.autreAchatTravaux.projetId,
+        autreDetailAchatTravaux: this.detailAutreAchatTravauxInit,
+      };
+      console.log(autreAchatTravaux);
+      this.autreAchatTravauxService.modifAchatTravaux(formValue)
+        .subscribe(data => {
+          if (data.status === 0){
+            this.autreAchatTravaux = data.body;
+            this.notificationService.warn('Modification effectuée avec succès');
+          }
+        });
     }
     localStorage.removeItem('materiau');
   }

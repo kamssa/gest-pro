@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AutreAchatTravaux} from '../../../../model/AutreAchatTravaux';
 import {Employe} from '../../../../model/Employe';
 import {Observable} from 'rxjs';

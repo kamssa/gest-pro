@@ -103,8 +103,8 @@ export class EditMainouvreTravauxComponent implements OnInit {
       montantVerser: ['', Validators.required],
       reste: [''],
       nbreJours: ['', Validators.required],
-      date: [''],
-      libelle: [''],
+      date: ['', Validators.required],
+      libelle: ['', Validators.required],
       journalier: this.fb.group({
         id: [''],
         version: [''],

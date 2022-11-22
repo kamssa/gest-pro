@@ -13,6 +13,7 @@ import {EditAutreAchatTravauxComponent} from '../edit-autre-achat-travaux/edit-a
 import {EmployeService} from '../../../../service/employe.service';
 import {Projet} from '../../../../model/projet';
 import {AuthService} from '../../../../service/auth.service';
+import {AutreAchatTravauxComponent} from '../autre-achat-travaux/autre-achat-travaux.component';
 
 @Component({
   selector: 'app-list-autre-achat',
@@ -47,7 +48,7 @@ export class ListAutreAchatComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.serviceAutreAchat.getAutreAchatTravauxByTravaux(this.projetId).subscribe(list => {
+    this.serviceAutreAchat.getAutreAchatTravauxByTravaux(this.data['projet']).subscribe(list => {
       if (list.length !== 0){
         this.array = list.map(item => {
           return {
@@ -87,21 +88,17 @@ export class ListAutreAchatComponent implements OnInit {
   }
 
   redirectToUpdate(id: number) {
-    if (this.ROLE_NAME === "ROLE_MANAGER"){
       console.log(id);
-      this.dialog.open(EditAutreAchatTravauxComponent,{
+      this.dialog.open(AutreAchatTravauxComponent,{
         data: {
           autreAchatTravaux: id
         }
       });
-    }else {
-      this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
+
 
   }
 
   redirectToDelete(row) {
-    if (this.ROLE_NAME === "ROLE_MANAGER"){
       if (confirm("Voulez vous vraiment supprimer l'achat ")) {
         this.serviceAutreAchat.supprimerUnAchat(row.id).subscribe(data => {
           if(data.status === 0){
@@ -122,9 +119,7 @@ export class ListAutreAchatComponent implements OnInit {
         });
       }
 
-    }else {
-      this.notificationService.warn('vous n\'êtes pas autorisé !') ;
-    }
+
 
   }
 
